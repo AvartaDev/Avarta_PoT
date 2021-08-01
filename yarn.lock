@@ -5376,6 +5376,18 @@
     "split-on-first" "^1.0.0"
     "strict-uri-encode" "^2.0.0"
 
+"ramda-fantasy@^0.8.0":
+  "integrity" "sha1-now32T7ApweWz8EIc92cUIUDkPY="
+  "resolved" "https://registry.npmjs.org/ramda-fantasy/-/ramda-fantasy-0.8.0.tgz"
+  "version" "0.8.0"
+  dependencies:
+    "ramda" ">=0.15.0"
+
+"ramda@^0.27.1", "ramda@>=0.15.0":
+  "integrity" "sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw=="
+  "resolved" "https://registry.npmjs.org/ramda/-/ramda-0.27.1.tgz"
+  "version" "0.27.1"
+
 "range-parser@~1.2.1":
   "integrity" "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
