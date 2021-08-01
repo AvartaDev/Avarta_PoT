@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {StatusBar} from 'react-native';
+import {ThemeProvider} from 'styled-components';
+import {Provider} from '@hooks/useTheme';
+import Theme from '@libs/Theme';
+import AppNavigator from '@navigation/AppNavigator';
 
 const App = () => {
   return (
-    <View>
-      <Text>Hello Njoku</Text>
-    </View>
+    <Provider>
+      <ThemeProvider theme={Theme}>
+        <StatusBar barStyle="dark-content" setNetworkActivityIndicatorVisible />
+        <AppNavigator />
+      </ThemeProvider>
+    </Provider>
   );
 };
 
