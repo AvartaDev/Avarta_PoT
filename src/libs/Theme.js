@@ -5,6 +5,7 @@ export default {
     secondary: '#2C85FB',
     basic: '#1BCA7F',
     white: '#ffffff',
+    primary_grey: '#C0C6CD',
   },
   responsive: _responsive,
   height: {
@@ -14,6 +15,7 @@ export default {
     sm: 10,
     md: 25,
     lg: 40,
+    bottom: 90,
     header: _responsive([50, 40]),
     SPACING: _responsive([15]),
     statusBar: _responsive([20, 30]),
