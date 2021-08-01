@@ -42,13 +42,6 @@ const Login = ({navigation}) => {
           />
 
           <View
-            style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button
-              text="Sign In"
-              onPress={() => navigation.navigate('dashboard')}
-            />
-          </View>
-          <View
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -80,6 +73,13 @@ const Login = ({navigation}) => {
               }}>
               Restore Wallet
             </Text>
+          </View>
+          <View
+            style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
+            <Button
+              text="Sign In"
+              onPress={() => navigation.navigate('dashboard')}
+            />
           </View>
           <Text
             style={{
