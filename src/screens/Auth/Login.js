@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
@@ -29,33 +35,51 @@ const Login = ({navigation}) => {
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
           <LabelInput
-            label="Email Address"
-            placeholder="John.doe@gmail.com"
-            placeholderTextColor={colors.primary_grey}
-          />
-          <LabelInput
             label="Password"
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
           />
 
-          <Text
-            style={{
-              color: colors.basic,
-              fontWeight: '500',
-              textAlign: 'center',
-              paddingTop: 20,
-            }}>
-            Forgot Password ?
-          </Text>
-
           <View
-            style={{display: 'flex', alignItems: 'center', marginTop: '13%'}}>
+            style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
             <Button
               text="Sign In"
               onPress={() => navigation.navigate('dashboard')}
             />
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: gutter.md,
+            }}>
+            <Text
+              style={{
+                color: colors.white,
+                fontWeight: 'bold',
+                fontSize: 16,
+                textAlign: 'left',
+              }}>
+              Sign In with face ID
+            </Text>
+            <TouchableOpacity style={{padding: gutter.sm}}>
+              <Image
+                source={require('@assets/images/face-id.png')}
+                style={{tintColor: colors.white, width: 28, height: 28}}
+              />
+            </TouchableOpacity>
+
+            <Text
+              style={{
+                color: colors.basic,
+                fontWeight: 'bold',
+                marginLeft: gutter.lg,
+                textAlign: 'right',
+              }}>
+              Restore Wallet
+            </Text>
           </View>
           <Text
             style={{
@@ -64,13 +88,14 @@ const Login = ({navigation}) => {
               textAlign: 'center',
               marginTop: gutter.bottom,
             }}>
-            Don't have an account ?
+            New to avarta?
             <Text
               style={{
                 color: colors.basic,
                 fontWeight: 'bold',
               }}>
-              Sign Up here
+              {' '}
+              Create Wallet
             </Text>
           </Text>
         </View>

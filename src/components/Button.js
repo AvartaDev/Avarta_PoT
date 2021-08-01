@@ -5,7 +5,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {colors} from '@libs/style_helpers';
 
 const _Button = styled(TouchableOpacity)`
-  width: 40%;
+  width: 100%;
   border-radius: 30px;
   padding: 15px 30px;
   ${a =>
