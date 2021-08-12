@@ -44,10 +44,11 @@ const StyledPrimaryButton = styled(_Button)`
   ${noShadow}
 `;
 
-export const Button = ({text, onPress, style, ...props}) => {
+export const Button = ({text, onPress, textColor, style, ...props}) => {
   return (
     <StyledPrimaryButton style={[style]} onPress={onPress} {...props}>
-      <ButtonText style={{color: 'white', textAlign: 'center'}}>
+      <ButtonText
+        style={{color: textColor ? textColor : 'white', textAlign: 'center'}}>
         {text}
       </ButtonText>
     </StyledPrimaryButton>

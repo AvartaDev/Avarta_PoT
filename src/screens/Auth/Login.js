@@ -10,9 +10,13 @@ import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import Button from '../../components/Button';
+import {PrimaryModal} from '../../components/Modal';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const Login = ({navigation}) => {
   const {colors, gutter} = useTheme();
+  const [modalVisible, setModalVisible] = React.useState(false);
+
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
@@ -77,7 +81,7 @@ const Login = ({navigation}) => {
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
             <Button
-              text="Sign In"
+              text="LOG IN"
               onPress={() => navigation.navigate('dashboard')}
             />
           </View>
@@ -86,19 +90,102 @@ const Login = ({navigation}) => {
               color: colors.white,
               fontWeight: '500',
               textAlign: 'center',
-              marginTop: gutter.bottom,
+              marginHorizontal: gutter.md,
+              marginTop: gutter.lg,
             }}>
-            New to avarta?
-            <Text
-              style={{
-                color: colors.basic,
-                fontWeight: 'bold',
-              }}>
-              {' '}
-              Create Wallet
-            </Text>
+            Can't login? You can ERASE your current wallet and setup a new one
+          </Text>
+          <Text
+            onPress={() => setModalVisible(true)}
+            style={{
+              color: colors.basic,
+              textAlign: 'center',
+              paddingTop: gutter.md,
+              fontWeight: 'bold',
+            }}>
+            {' '}
+            Reset Wallet
           </Text>
         </View>
+        <PrimaryModal visible={modalVisible}>
+          <View style={{display: 'flex', alignItems: 'center'}}>
+            <Image
+              source={require('@assets/images/alert.png')}
+              style={{width: 50, height: 50}}
+            />
+            <Text
+              style={{
+                fontWeight: '500',
+                fontSize: 18,
+                paddingVertical: gutter.md,
+                textAlign: 'center',
+                color: colors.danger,
+              }}>
+              Are you sure you want to erase your wallet?
+            </Text>
+            <Text
+              style={{
+                fontWeight: '300',
+                fontSize: 14,
+                letterSpacing: 1.5,
+                paddingVertical: gutter.sm,
+                textAlign: 'center',
+              }}>
+              You can ONLY recover this wallet with your {''}
+              <Text style={{fontWeight: 'bold'}}>
+                Secret Recovery Phase
+              </Text>{' '}
+              Avarta foes not have your Secret Revovery Phase
+            </Text>
+            <Text
+              style={{
+                fontWeight: '300',
+                fontSize: 14,
+                letterSpacing: 1.5,
+                textAlign: 'center',
+              }}>
+              Your current wallet, accounts and assets will be {''}
+              <Text style={{fontWeight: 'bold'}}>
+                removed from this app permanently.
+              </Text>{' '}
+              This action cannot be undone.
+            </Text>
+          </View>
+          <View
+            style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
+            <Button
+              style={{
+                backgroundColor: colors.danger,
+                color: colors.white,
+                borderWidth: 1,
+                borderColor: colors.primary_grey,
+              }}
+              text="I understand, continue"
+              onPress={() => {
+                navigation.navigate('dashboard');
+                setModalVisible(false);
+              }}
+            />
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: '7%',
+            }}>
+            <Button
+              style={{
+                backgroundColor: colors.white,
+                color: colors.primary,
+                borderWidth: 1,
+                borderColor: colors.primary_grey,
+              }}
+              text="Cancel"
+              textColor={colors.primary}
+              onPress={() => setModalVisible(false)}
+            />
+          </View>
+        </PrimaryModal>
       </BgView>
     </ImageBackground>
   );

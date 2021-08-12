@@ -6,6 +6,7 @@ export default {
     basic: '#1BCA7F',
     white: '#ffffff',
     primary_grey: '#C0C6CD',
+    danger: 'crimson',
   },
   responsive: _responsive,
   height: {
