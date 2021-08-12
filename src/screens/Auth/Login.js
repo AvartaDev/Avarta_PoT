@@ -162,7 +162,7 @@ const Login = ({navigation}) => {
               }}
               text="I understand, continue"
               onPress={() => {
-                navigation.navigate('dashboard');
+                navigation.navigate('register');
                 setModalVisible(false);
               }}
             />

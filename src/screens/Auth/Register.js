@@ -49,7 +49,7 @@ const Register = ({navigation}) => {
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
             <Button
-              text="Register"
+              text="Create Wallet"
               onPress={() => navigation.navigate('dashboard')}
             />
           </View>
