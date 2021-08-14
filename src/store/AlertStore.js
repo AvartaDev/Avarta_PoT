@@ -1,4 +1,4 @@
-import {makeStore} from './makeStore';
+import {makeStore} from './MakeStore';
 import {SET_ALERT, REMOVE_ALERT, HIDE_ALERT} from './types';
 
 export const reducer = (state, action) => {

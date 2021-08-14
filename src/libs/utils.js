@@ -53,6 +53,13 @@ export function renderAccountName(address, identities) {
  * @param {String} private_key - String corresponding to a private key
  * @returns {Promise} - Returns a promise
  */
+export async function importAccountFromPrivateKey(private_key) {
+  if (isDevelopment()) {
+    return;
+  }
+  //   const account = await importAccount(private_key);
+  //   await saveAccount(account);
+}
 
 /**
  * Determines if a given string looks like a valid Ethereum address
