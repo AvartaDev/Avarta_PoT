@@ -2,7 +2,10 @@ import * as R from 'ramda';
 import {Maybe} from 'ramda-fantasy';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {toChecksumAddress} from 'ethereumjs-util';
-
+import {BigNumber} from '@ethersproject/bignumber';
+import {isHexString as isEthersHexString} from '@ethersproject/bytes';
+import {isValidMnemonic as ethersIsValidMnemonic} from '@ethersproject/hdnode';
+import {get, replace, startsWith} from 'lodash';
 /**
  * Returns full checksummed address
  *
@@ -14,6 +17,31 @@ export function renderFullAddress(address) {
     ? toChecksumAddress(address)
     : 'transactions.tx_details_not_available';
 }
+/**
+ * @desc check if hex string
+ * @param {String} value
+ * @return {Boolean}
+ */
+export const isHexString = value => isEthersHexString(value);
+
+export const toHex = value => BigNumber.from(value).toHexString();
+
+export const isHexStringIgnorePrefix = value => {
+  if (!value) return false;
+  const trimmedValue = value.trim();
+  const updatedValue = addHexPrefix(trimmedValue);
+  return isHexString(updatedValue);
+};
+
+export const addHexPrefix = value =>
+  startsWith(value, '0x') ? value : `0x${value}`;
+
+/**
+ * @desc is valid mnemonic
+ * @param {String} value
+ * @return {Boolean}
+ */
+export const isValidMnemonic = value => ethersIsValidMnemonic(value);
 
 /**
  * Returns short address format

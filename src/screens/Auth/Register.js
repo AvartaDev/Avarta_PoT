@@ -11,8 +11,16 @@ import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import Button from '../../components/Button';
 
+import useWallet from '@hooks/useWallet';
+
 const Register = ({navigation}) => {
   const {colors, gutter} = useTheme();
+  const {createWallet, wallet} = useWallet();
+
+  const onClick = () => {
+    createWallet();
+    () => navigation.navigate('dashboard', {wallet});
+  };
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
@@ -48,10 +56,7 @@ const Register = ({navigation}) => {
           />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button
-              text="Create Wallet"
-              onPress={() => navigation.navigate('dashboard')}
-            />
+            <Button text="Create Wallet" onPress={onClick()} />
           </View>
           <Text
             style={{

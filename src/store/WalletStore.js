@@ -3,9 +3,40 @@ const initialState = {
   walletError: null,
   totalWalletBalance: {eth: null},
   currentChainId: 1,
+  usersWallet: null,
+  fundWalletData: null,
 };
 
-export const reducer = (state, action) => {};
+export const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE_WALLET':
+      return {
+        ...state,
+        usersWallet: action.payload,
+        walletError: null,
+      };
+    case 'CREATE_WALLET_FROMKEY':
+      return {
+        ...state,
+        usersWallet: action.payload,
+        walletError: null,
+      };
+    case 'FUND_WALLET':
+      return {
+        ...state,
+        fundWalletData: action.payload,
+        walletError: null,
+      };
+
+    case 'CHANGE_CHAIN_ID':
+      return {
+        ...state,
+        currentChainId: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 export const {useDispatch, useStore, Provider} = makeStore(
   'WalletStore',
@@ -16,11 +47,11 @@ export const {useDispatch, useStore, Provider} = makeStore(
 export const actions = {
   //wallet actions
   CREATE_WALLET: 'CREATE_WALLET',
+  CREATE_WALLET_FROMKEY: 'CREATE_WALLET_FROMKEY',
   RETRIEVE_WALLET: 'RETRIEVE_WALLET',
   SIGN_DATA: 'SIGN_DATA',
   FUND_WALLET: 'FUND_WALLET',
-  CREATE_WALLET_ERROR: 'CREATE_WALLET_ERROR',
-  RETRIEVE_WALLET_ERROR: 'RETRIEVE_WALLET_ERROR',
+  WALLET_ERROR: 'WALLET_ERROR',
   SIGN_DATA_ERROR: 'SIGN_DATA_ERROR',
   FUND_WALLET_ERROR: 'FUND_WALLET_ERROR',
 

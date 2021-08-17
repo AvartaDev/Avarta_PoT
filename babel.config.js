@@ -23,7 +23,7 @@ module.exports = {
           '@components': './src/components',
           '@navigation': './src/navigation',
           '@libs': './src/libs/',
-          '@store': './src/context',
+          '@store': './src/store',
           '@constants': './src/constants',
         },
       },
