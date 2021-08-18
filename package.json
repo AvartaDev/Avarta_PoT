@@ -45,6 +45,7 @@
     "react-native": "0.64.2",
     "react-native-crypto": "^2.2.0",
     "react-native-device-info": "^8.3.0",
+    "react-native-dotenv": "^3.2.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-ionicons": "^4.6.5",

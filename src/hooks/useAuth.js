@@ -1,18 +1,34 @@
 import React from 'react';
-import {attachLoader} from '../libs/utils';
+import {attachLoader, addHexPrefix} from '../libs/utils';
 import {useStore, useDispatch, actions} from '../store/AuthStore';
+import {useWallet} from '@hooks/useWallet';
 import {Wallet} from '@ethersproject/wallet';
-import useWallet from '@hooks/useWallet';
-import {mnemonicToSeed, generateMnemonic} from 'bip39';
-import Buffer from 'buffer';
-import {addHexPrefix, isValidAddress, toChecksumAddress} from 'ethereumjs-util';
-import {Linking, NativeModules, Platform} from 'react-native';
+import {captureException} from '@sentry/react-native';
+import {AVARTA_MASTER_KEY} from '@env';
+import {ACCESSIBLE, getSupportedBiometryType} from 'react-native-keychain';
+import AesEncryptor from '@libs/aesEncryption';
+import * as keychain from '@libs/keychain';
+import {
+  pinKey,
+  addressKey,
+  privateKeyKey,
+  seedPhraseKey,
+} from '@libs/keychainConstants';
+import logger from 'logger';
+
+import {Linking, NativeModules, Alert, Platform} from 'react-native';
 import {hdkey} from 'ethereumjs-wallet';
+import {generateMnemonic} from 'bip39';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
+export const publicAccessControlOptions = {
+  accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY,
+};
 
 export const useAuth = () => {
+  const {deriveAccountFromMnemonic} = useWallet();
+  const encryptor = new AesEncryptor();
   const {RNBip39} = NativeModules;
   const [loading, setLoading] = React.useState({});
 
@@ -22,9 +38,165 @@ export const useAuth = () => {
 
   const dispatch = useDispatch();
 
+  const getExistingPassword = async () => {
+    try {
+      const encryptedPassword = await keychain.loadString(pinKey);
+      // The user has a Password already, we need to decrypt it
+      if (encryptedPassword) {
+        const userPassword = await encryptor.decrypt(
+          AVARTA_MASTER_KEY,
+          encryptedPassword,
+        );
+        return userPassword;
+      }
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
+    return null;
+  };
+
+  const savePassword = async password => {
+    try {
+      const encryptedPassword = await encryptor.encrypt(
+        AVARTA_MASTER_KEY,
+        password,
+      );
+      if (encryptedPassword) {
+        await keychain.saveString(pinKey, encryptedPassword);
+      }
+    } catch (e) {
+      logger.sentry('Error saving pin');
+      captureException(e);
+    }
+  };
+  const saveAddress = async (
+    address,
+    accessControlOptions = publicAccessControlOptions,
+  ) => {
+    return keychain.saveString(addressKey, address, accessControlOptions);
+  };
+
+  const saveSeedPhrase = async (seedphrase, keychain_id) => {
+    const privateAccessControlOptions =
+      await keychain.getPrivateAccessControlOptions();
+    const key = `${keychain_id}_${seedPhraseKey}`;
+    const val = {
+      id: keychain_id,
+      seedphrase,
+    };
+
+    return keychain.saveObject(key, val, privateAccessControlOptions);
+  };
+  const savePrivateKey = async (address, privateKey) => {
+    const privateAccessControlOptions =
+      await keychain.getPrivateAccessControlOptions();
+
+    const key = `${address}_${privateKeyKey}`;
+    const val = {
+      address,
+      privateKey,
+    };
+
+    await keychain.saveObject(key, val, privateAccessControlOptions);
+  };
+
+  const getPrivateKey = async address => {
+    try {
+      const key = `${address}_${privateKeyKey}`;
+      const pkey = await keychain.loadObject(key);
+
+      if (pkey === -2) {
+        Alert.alert(
+          'Error',
+          'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris.',
+        );
+        return null;
+      }
+
+      return pkey || null;
+    } catch (error) {
+      logger.sentry('Error in getPrivateKey');
+      captureException(error);
+      return null;
+    }
+  };
+
+  const getSeedPhrase = async address => {
+    try {
+      const key = `${address}_${seedPhraseKey}`;
+      const seedPhraseData = await keychain.loadObject(key);
+
+      if (seedPhraseData === -2) {
+        Alert.alert(
+          'Error',
+          'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris',
+        );
+        return null;
+      }
+
+      return seedPhraseData || null;
+    } catch (error) {
+      logger.sentry('Error in getSeedPhrase');
+      captureException(error);
+      return null;
+    }
+  };
+
+  //   const createWallet = async () => {
+  //     try {
+  //       const seedPhrase = await RNBip39.generateSeedPhrase();
+  //       const wallet = await Wallet.createWallet(seedPhrase);
+  //       const hdPath = DEFAULT_HD_PATH;
+  //       const hdKey = await hdkey(wallet.getAddressString(hdPath));
+  //       const address = await hdKey.getAddressString();
+  //       await savePassword(wallet.getPassword());
+  //       await saveAddress(address);
+  //       await savePassword(wallet.getPassword());
+  //       await saveAddress(address);
+  //       return wallet;
+  //     } catch (e) {
+  //       logger.sentry('Error creating wallet');
+  //       captureException(e);
+  //     }
+  //   };
+
+  const createWallet = async (seed = null, userPassword) => {
+    logger.sentry('Creating Wallet');
+    if (!seed) {
+      logger.sentry('Generating new seed phrase');
+    }
+    const walletSeed = seed || generateMnemonic();
+
+    const newWallet = await deriveAccountFromMnemonic(walletSeed);
+
+    let pKey = walletSeed;
+    if (!newWallet.wallet) return null;
+    const walletAddress = newWallet.address;
+
+    if (newWallet.isHDWallet) {
+      pKey = addHexPrefix(newWallet.wallet.getPrivateKey().toString('hex'));
+    }
+    // encrypt wallet seed with password
+    const encryptedSeed = await encryptor.encrypt(userPassword, walletSeed);
+
+    await saveSeedPhrase(encryptedSeed, walletAddress);
+
+    await saveAddress(walletAddress);
+
+    //encrypt privatekey with password
+    const encryptedPrivateKey = await encryptor.encrypt(userPassword, pKey);
+
+    //save encrypted private key
+    await savePrivateKey(walletAddress, encryptedPrivateKey);
+  };
+
   return {
     setPassword: store.setPassword,
     loading: loading,
+    savePassword,
+    getExistingPassword,
+    getPrivateKey,
+    saveAddress,
+    createWallet,
   };
 };
 
