@@ -5,20 +5,36 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import Button from '../../components/Button';
 
-import useWallet from '@hooks/useWallet';
+import useAuth from '@hooks/useAuth';
 
 const Register = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {createWallet, wallet} = useWallet();
+  const {createWallet} = useAuth();
 
-  const onClick = () => {
-    createWallet();
+  const [formData, setFormData] = React.useState({
+    password: '',
+    confirmPassword: '',
+  });
+
+  const {password, confirmPassword} = formData;
+
+  const handleChange = field => value => {
+    setFormData({...formData, [field]: value});
+  };
+
+  const onClick = async () => {
+    if (password !== confirmPassword && password.length < 5) {
+      Alert.alert('password does not match');
+      return;
+    }
+    await createWallet(password);
     () => navigation.navigate('dashboard', {wallet});
   };
   return (
@@ -44,19 +60,24 @@ const Register = ({navigation}) => {
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
           <LabelInput
             label="Password"
+            value={formData.password}
+            required
+            onChangeText={handleChange('password')}
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
           />
           <LabelInput
             label="Enter Password Again"
+            value={formData.confirmPassword}
+            onChangeText={handleChange('confirmPassword')}
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
           />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button text="Create Wallet" onPress={onClick()} />
+            <Button text="Create Wallet" onPress={() => onClick()} />
           </View>
           <Text
             style={{

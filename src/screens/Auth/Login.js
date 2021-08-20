@@ -11,7 +11,6 @@ import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import Button from '../../components/Button';
 import {PrimaryModal} from '../../components/Modal';
-import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const Login = ({navigation}) => {
   const {colors, gutter} = useTheme();

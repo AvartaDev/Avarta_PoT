@@ -2,7 +2,6 @@ import React from 'react';
 import {attachLoader, addHexPrefix} from '../libs/utils';
 import {useStore, useDispatch, actions} from '../store/AuthStore';
 import {useWallet} from '@hooks/useWallet';
-import {Wallet} from '@ethersproject/wallet';
 import {captureException} from '@sentry/react-native';
 import {AVARTA_MASTER_KEY} from '@env';
 import {ACCESSIBLE, getSupportedBiometryType} from 'react-native-keychain';
@@ -14,11 +13,10 @@ import {
   privateKeyKey,
   seedPhraseKey,
 } from '@libs/keychainConstants';
-import logger from 'logger';
 
 import {Linking, NativeModules, Alert, Platform} from 'react-native';
-import {hdkey} from 'ethereumjs-wallet';
-import {generateMnemonic} from 'bip39';
+import {hdkey, Wallet} from 'ethereumjs-wallet';
+import bip39 from 'react-native-bip39';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
@@ -64,7 +62,7 @@ export const useAuth = () => {
         await keychain.saveString(pinKey, encryptedPassword);
       }
     } catch (e) {
-      logger.sentry('Error saving pin');
+      console.log('Error saving pin');
       captureException(e);
     }
   };
@@ -114,7 +112,7 @@ export const useAuth = () => {
 
       return pkey || null;
     } catch (error) {
-      logger.sentry('Error in getPrivateKey');
+      console.log('Error in getPrivateKey');
       captureException(error);
       return null;
     }
@@ -135,39 +133,23 @@ export const useAuth = () => {
 
       return seedPhraseData || null;
     } catch (error) {
-      logger.sentry('Error in getSeedPhrase');
+      console.log('Error in getSeedPhrase');
       captureException(error);
       return null;
     }
   };
 
-  //   const createWallet = async () => {
-  //     try {
-  //       const seedPhrase = await RNBip39.generateSeedPhrase();
-  //       const wallet = await Wallet.createWallet(seedPhrase);
-  //       const hdPath = DEFAULT_HD_PATH;
-  //       const hdKey = await hdkey(wallet.getAddressString(hdPath));
-  //       const address = await hdKey.getAddressString();
-  //       await savePassword(wallet.getPassword());
-  //       await saveAddress(address);
-  //       await savePassword(wallet.getPassword());
-  //       await saveAddress(address);
-  //       return wallet;
-  //     } catch (e) {
-  //       logger.sentry('Error creating wallet');
-  //       captureException(e);
-  //     }
-  //   };
-
   const createWallet = async (seed = null, userPassword) => {
-    logger.sentry('Creating Wallet');
+    console.log('Creating Wallet');
     if (!seed) {
-      logger.sentry('Generating new seed phrase');
+      console.log('Generating new seed phrase');
     }
-    const walletSeed = seed || generateMnemonic();
+    const walletSeed = await generateMnemonic();
+    console.log(walletSeed, 'wallet seed');
 
     const newWallet = await deriveAccountFromMnemonic(walletSeed);
 
+    console.log(newWallet, 'new wallet');
     let pKey = walletSeed;
     if (!newWallet.wallet) return null;
     const walletAddress = newWallet.address;
@@ -187,6 +169,8 @@ export const useAuth = () => {
 
     //save encrypted private key
     await savePrivateKey(walletAddress, encryptedPrivateKey);
+
+    dispatch({type: actions.CREATE_WALLET, payload: newWallet});
   };
 
   return {
@@ -195,6 +179,7 @@ export const useAuth = () => {
     savePassword,
     getExistingPassword,
     getPrivateKey,
+    getSeedPhrase,
     saveAddress,
     createWallet,
   };

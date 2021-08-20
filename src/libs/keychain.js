@@ -1,7 +1,6 @@
 import {captureException, captureMessage} from '@sentry/react-native';
 import {forEach, isNil} from 'lodash';
 import DeviceInfo from 'react-native-device-info';
-import '';
 import {
   ACCESS_CONTROL,
   ACCESSIBLE,
@@ -18,29 +17,26 @@ import {
   setInternetCredentials,
   UserCredentials,
 } from 'react-native-keychain';
-import logger from 'logger';
 import {Platform} from 'react-native';
 
 export async function saveString(key, value, accessControlOptions) {
   return new Promise(async (resolve, reject) => {
     try {
       await setInternetCredentials(key, key, value, accessControlOptions);
-      logger.sentry(`Keychain: saved string for key: ${key}`);
+      console.log(`Keychain: saved string for key: ${key}`);
       resolve();
     } catch (e) {
-      logger.sentry(`Keychain: failed to save string for key: ${key}`, e);
+      console.log(`Keychain: failed to save string for key: ${key}`, e);
       captureMessage('Keychain write first attempt failed');
       // wait for 1000ms using settimeout
       setTimeout(() => {}, 1000);
 
       try {
         await setInternetCredentials(key, key, value, accessControlOptions);
-        logger.sentry(
-          `Keychain: saved string for key: ${key} on second attempt`,
-        );
+        console.log(`Keychain: saved string for key: ${key} on second attempt`);
         resolve();
       } catch (e) {
-        logger.sentry(`Keychain: failed to save string for key: ${key}`, e);
+        console.log(`Keychain: failed to save string for key: ${key}`, e);
         captureMessage('Keychain write second attempt failed');
         reject(e);
       }
@@ -52,10 +48,10 @@ export async function loadString(key, options = {}) {
   try {
     const credentials = await getInternetCredentials(key, options);
     if (credentials) {
-      logger.log(`Keychain: loaded string for key: ${key}`);
+      console.log(`Keychain: loaded string for key: ${key}`);
       return credentials.password;
     }
-    logger.sentry(`Keychain: string does not exist for key: ${key}`);
+    console.log(`Keychain: string does not exist for key: ${key}`);
   } catch (err) {
     if (err.toString() === 'Error: User canceled the operation.') {
       return -1;
@@ -63,7 +59,7 @@ export async function loadString(key, options = {}) {
     if (err.toString() === 'Error: Wrapped error: User not authenticated') {
       return -2;
     }
-    logger.sentry(
+    console.log(
       `Keychain: failed to load string for key: ${key} error: ${err}`,
     );
     captureException(err);
@@ -84,10 +80,10 @@ export async function loadObject(key, options = {}) {
   }
   try {
     const objectValue = JSON.parse(jsonValue);
-    logger.log(`Keychain: parsed object for key: ${key}`);
+    console.log(`Keychain: parsed object for key: ${key}`);
     return objectValue;
   } catch (err) {
-    logger.sentry(
+    console.log(
       `Keychain: failed to parse object for key: ${key} error: ${err}`,
     );
     captureException(err);
@@ -98,9 +94,9 @@ export async function loadObject(key, options = {}) {
 export async function remove(key) {
   try {
     await resetInternetCredentials(key);
-    logger.log(`Keychain: removed value for key: ${key}`);
+    console.log(`Keychain: removed value for key: ${key}`);
   } catch (err) {
-    logger.log(
+    console.log(
       `Keychain: failed to remove value for key: ${key} error: ${err}`,
     );
     captureException(err);
@@ -114,7 +110,7 @@ export async function loadAllKeys() {
       return response.results;
     }
   } catch (err) {
-    logger.sentry(`Keychain: failed to loadAllKeys error: ${err}`);
+    console.log(`Keychain: failed to loadAllKeys error: ${err}`);
     captureException(err);
   }
   return null;
@@ -140,7 +136,7 @@ export async function loadAllKeysOnly() {
       return response.results;
     }
   } catch (err) {
-    logger.log(`Keychain: failed to loadAllKeys error: ${err}`);
+    console.log(`Keychain: failed to loadAllKeys error: ${err}`);
     captureException(err);
   }
   return null;
@@ -151,7 +147,7 @@ export async function hasKey(key) {
     const result = await hasInternetCredentials(key);
     return result;
   } catch (err) {
-    logger.sentry(
+    console.log(
       `Keychain: failed to check if key ${key} exists -  error: ${err}`,
     );
     captureException(err);
@@ -166,10 +162,10 @@ export async function wipeKeychain() {
       await Promise.all(
         results?.map(result => resetInternetCredentials(result.username)),
       );
-      logger.log('keychain wiped!');
+      console.log('keychain wiped!');
     }
   } catch (e) {
-    logger.sentry('error while wiping keychain');
+    console.log('error while wiping keychain');
     captureException(e);
   }
 }
@@ -190,9 +186,6 @@ export async function getPrivateAccessControlOptions() {
 
     let isSimulator = false;
 
-    if (canAuthenticate) {
-      isSimulator = __DEV__ && (await DeviceInfo.isEmulator());
-    }
     if (canAuthenticate && !isSimulator) {
       res = {
         accessControl:
