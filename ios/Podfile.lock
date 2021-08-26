@@ -254,11 +254,7 @@ PODS:
   - React-jsinspector (0.64.2)
   - react-native-randombytes (3.6.1):
     - React-Core
-  - react-native-safe-area-context (3.3.0):
-    - React-Core
   - react-native-splash-screen (3.2.0):
-    - React
-  - react-native-udp (2.7.0):
     - React
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
@@ -326,8 +322,6 @@ PODS:
     - React-perflogger (= 0.64.2)
   - RNCAsyncStorage (1.15.6):
     - React-Core
-  - RNCMaskedView (0.1.11):
-    - React
   - RNDeviceInfo (8.3.0):
     - React-Core
   - RNGestureHandler (1.10.3):
@@ -365,9 +359,6 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.5.0):
-    - React-Core
-    - React-RCTImage
   - RNSentry (2.6.2):
     - React-Core
     - Sentry (= 7.1.4)
@@ -418,9 +409,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
-  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
-  - react-native-udp (from `../node_modules/react-native-udp`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -434,13 +423,11 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
-  - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNOS (from `../node_modules/react-native-os`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
-  - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - TcpSockets (from `../node_modules/react-native-tcp`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -494,12 +481,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
-  react-native-safe-area-context:
-    :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
-  react-native-udp:
-    :path: "../node_modules/react-native-udp"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -526,8 +509,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
-  RNCMaskedView:
-    :path: "../node_modules/@react-native-community/masked-view"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
@@ -538,8 +519,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-os"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
-  RNScreens:
-    :path: "../node_modules/react-native-screens"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
   TcpSockets:
@@ -575,9 +554,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
-  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-udp: ff9d13e523f2b58e6bc5d4d32321ac60671b5dc9
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -591,13 +568,11 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9904c6d0218fb9f8b19d6dd88607225927668f9
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   RNCAsyncStorage: b7c6564ce662366dd44d0189456183ef7eda2d4d
-  RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNDeviceInfo: 1c15bd65d0555a4246107dd9b5b9d9095aa6ad76
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
   RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
-  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
   RNSentry: 68644ef607b780551cc555f084869764f2566652
   Sentry: 1d3eb1a25f8c5333c88dd5603904a6d461cd9fcf
   TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797

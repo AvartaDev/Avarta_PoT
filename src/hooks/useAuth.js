@@ -144,7 +144,7 @@ export const useAuth = () => {
     if (!seed) {
       console.log('Generating new seed phrase');
     }
-    const walletSeed = await generateMnemonic();
+    const walletSeed = await RNBip39.generateMnemonic();
     console.log(walletSeed, 'wallet seed');
 
     const newWallet = await deriveAccountFromMnemonic(walletSeed);
