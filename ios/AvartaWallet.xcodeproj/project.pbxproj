@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00DE26994BFD4D08BFBA64B0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2D496DCC44D454599A760E0 /* Ionicons.ttf */; };
 		00E356F31AD99517003FC87E /* AvartaWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AvartaWalletTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -40,6 +41,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AvartaWallet/main.m; sourceTree = "<group>"; };
 		4168FD1D9E4B503CBD352DB1 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AvartaWallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A2D496DCC44D454599A760E0 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		B7157E699D657D6C7D7BC3DD /* libPods-AvartaWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EFF522914C702D6AF2EC05DA /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				243D89AF9EC24C0F0785FD59 /* Pods */,
+				F57BD730BA2245EA8733747C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -146,6 +149,15 @@
 				00E356EE1AD99517003FC87E /* AvartaWalletTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F57BD730BA2245EA8733747C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A2D496DCC44D454599A760E0 /* Ionicons.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +256,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				00DE26994BFD4D08BFBA64B0 /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

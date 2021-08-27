@@ -14,6 +14,8 @@ target 'AvartaWallet' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'AvartaWalletTests' do
     inherit! :complete
     # Pods for testing

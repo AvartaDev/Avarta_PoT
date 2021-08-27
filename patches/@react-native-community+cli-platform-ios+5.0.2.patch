@@ -1,8 +1,8 @@
 diff --git a/node_modules/@react-native-community/cli-platform-ios/native_modules.rb b/node_modules/@react-native-community/cli-platform-ios/native_modules.rb
-index 1b6eece..602faea 100644
+index 1b6eece..e81ed71 100644
 --- a/node_modules/@react-native-community/cli-platform-ios/native_modules.rb
 +++ b/node_modules/@react-native-community/cli-platform-ios/native_modules.rb
-@@ -43,6 +43,17 @@ def use_native_modules!(config = nil)
+@@ -43,6 +43,18 @@ def use_native_modules!(config = nil)
    found_pods = []
  
    packages.each do |package_name, package|
@@ -14,6 +14,7 @@ index 1b6eece..602faea 100644
 +    @react-native-community/masked-view
 +    react-native-safe-area-context
 +    react-native-udp
++    react-native-tcp
 +    # ADD ANY MORE CONFLICTING DEPENDENCIES HERE
 +    # OR REMOVE THE DEPS ABOVE IF THEY ARE NOT CONFLICTING
 +  ).include?(package_name)

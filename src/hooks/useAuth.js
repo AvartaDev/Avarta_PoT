@@ -15,8 +15,7 @@ import {
 } from '@libs/keychainConstants';
 
 import {Linking, NativeModules, Alert, Platform} from 'react-native';
-import {hdkey, Wallet} from 'ethereumjs-wallet';
-import bip39 from 'react-native-bip39';
+import {generateMnemonic} from '../libs/bip39/index';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
@@ -144,7 +143,7 @@ export const useAuth = () => {
     if (!seed) {
       console.log('Generating new seed phrase');
     }
-    const walletSeed = await RNBip39.generateMnemonic();
+    const walletSeed = await generateMnemonic();
     console.log(walletSeed, 'wallet seed');
 
     const newWallet = await deriveAccountFromMnemonic(walletSeed);
