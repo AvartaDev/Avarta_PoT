@@ -50,6 +50,23 @@ export const useAuth = () => {
     } catch (e) {}
     return null;
   };
+  const loginUser = activate('login', async password => {
+    const pward = await getExistingPassword();
+    if (pward && pward !== password) {
+      Alert.alert(
+        'Wrong Password',
+        'You have entered a wrong password, please try again.',
+        [{text: 'OK', onPress: () => {}}],
+      );
+      return;
+    }
+    try {
+      const wallet = await encryptor.decrypt(password, privateKeyKey);
+      dispatch({type: actions.CREATE_WALLET, payload: wallet});
+    } catch (e) {
+      dispatch({type: actions.LOGIN_FAILED, payload: null});
+    }
+  });
 
   const savePassword = async password => {
     try {
@@ -94,6 +111,7 @@ export const useAuth = () => {
     };
 
     await keychain.saveObject(key, val, privateAccessControlOptions);
+    console.log('saved pk');
   };
 
   const getPrivateKey = async address => {
@@ -176,10 +194,8 @@ export const useAuth = () => {
     setPassword: store.setPassword,
     loading: loading,
     savePassword,
-    getExistingPassword,
-    getPrivateKey,
-    getSeedPhrase,
     saveAddress,
+    loginUser,
     createWallet,
   };
 };

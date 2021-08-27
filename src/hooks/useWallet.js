@@ -24,23 +24,27 @@ export const useWallet = () => {
     'retrieveWallet',
     async (mnemonic, index = 0) => {
       let seed;
+      console.log('seed', seed);
       if (Platform.OS == 'ios') {
         seed = await mnemonicToSeed(mnemonic);
       } else {
         const res = await mnemonicToSeed({mnemonic, passphrase: null});
         seed = new Buffer(res, 'base64');
       }
+      console.log('before hd');
       const hdWallet = hdkey.fromMasterSeed(seed);
+
       const root = hdWallet.derivePath(DEFAULT_HD_PATH);
       const child = root.deriveChild(index);
       const wallet = child.getWallet();
       const newWallet = {
-        address: toChecksumAddress(wallet.getAddress().toString('hex')),
+        address: toChecksumAddress(`0x${wallet.getAddress().toString('hex')}`),
         isHDWallet: true,
         root,
         wallet,
       };
       dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: newWallet});
+      return newWallet;
     },
   );
 
@@ -52,6 +56,7 @@ export const useWallet = () => {
       root: null,
       wallet: ethersWallet,
     };
+
     dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: wallet});
   };
 

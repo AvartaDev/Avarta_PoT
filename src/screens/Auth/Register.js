@@ -11,7 +11,6 @@ import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import Button from '../../components/Button';
-
 import useAuth from '@hooks/useAuth';
 
 const Register = ({navigation}) => {
@@ -35,7 +34,7 @@ const Register = ({navigation}) => {
       return;
     }
     await createWallet(password);
-    () => navigation.navigate('dashboard', {wallet});
+    navigation.navigate('dashboard');
   };
   return (
     <ImageBackground

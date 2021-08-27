@@ -8,13 +8,26 @@ import {
 } from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
-import {LabelInput} from '../../components/Input';
-import Button from '../../components/Button';
-import {PrimaryModal} from '../../components/Modal';
+import {LabelInput} from '@components/Input';
+import Button from '@components/Button';
+import {PrimaryModal} from '@components/Modal';
+import useAuth from '@hooks/useAuth';
 
 const Login = ({navigation}) => {
+  const [password, setPassword] = React.useState('');
+  const {loginUser} = useAuth();
+
+  const handleChange = field => value => {
+    setPassword({...password, [field]: value});
+  };
+
   const {colors, gutter} = useTheme();
   const [modalVisible, setModalVisible] = React.useState(false);
+
+  const onClick = async () => {
+    await loginUser(password);
+    navigation.navigate('dashboard');
+  };
 
   return (
     <ImageBackground
@@ -39,6 +52,9 @@ const Login = ({navigation}) => {
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
           <LabelInput
             label="Password"
+            value={password}
+            required
+            onChangeText={handleChange('password')}
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
@@ -79,10 +95,7 @@ const Login = ({navigation}) => {
           </View>
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button
-              text="LOG IN"
-              onPress={() => navigation.navigate('dashboard')}
-            />
+            <Button text="LOG IN" onPress={onClick} />
           </View>
           <Text
             style={{
