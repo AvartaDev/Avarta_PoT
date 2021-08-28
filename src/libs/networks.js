@@ -10,7 +10,6 @@ import {
   BSC_TEST,
   BSC,
 } from './networkConstants.js';
-import {util} from '@metamask/controllers';
 
 /**
  * List of the supported networks
