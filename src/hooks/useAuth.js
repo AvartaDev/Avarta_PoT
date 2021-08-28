@@ -120,10 +120,7 @@ export const useAuth = () => {
       const pkey = await keychain.loadObject(key);
 
       if (pkey === -2) {
-        Alert.alert(
-          'Error',
-          'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris.',
-        );
+        Alert.alert('Error', 'Authentication method not secure');
         return null;
       }
 
@@ -141,10 +138,7 @@ export const useAuth = () => {
       const seedPhraseData = await keychain.loadObject(key);
 
       if (seedPhraseData === -2) {
-        Alert.alert(
-          'Error',
-          'Your current authentication method (Face Recognition) is not secure enough, please go to "Settings > Biometrics & Security" and enable an alternative biometric method like Fingerprint or Iris',
-        );
+        Alert.alert('Error', 'Authentication method not secure');
         return null;
       }
 
