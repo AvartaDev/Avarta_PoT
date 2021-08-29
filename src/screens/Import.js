@@ -20,8 +20,8 @@ const Import = ({navigation}) => {
     setFormData({...formData, [field]: value});
   };
   const onClick = async () => {
-    await deriveAccountFromMnemonic(
-      'frown holiday catalog rough exit body sister doll strong toward actual effort',
+    await deriveAccountFromPrivateKey(
+      '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
     );
     navigation.navigate('home');
   };
