@@ -9,17 +9,10 @@ const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {wallet, getWalletBalance, walletBalance} = useWallet();
 
-  React.useEffect(() => {
-    async () => {
-      await getWalletBalance('0x41De1a4764378Ad92890d18F06BcA05aBe827763');
-    };
-  }, []);
-
   async function onPress() {
-    await getWalletBalance('0x41De1a4764378Ad92890d18F06BcA05aBe827763');
+    await getWalletBalance(wallet.address);
   }
 
-  console.log(walletBalance, 'walletBalance');
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
@@ -46,7 +39,16 @@ const Home = ({navigation}) => {
             }}>
             {wallet.address}
           </Text>
-          <Text>Wallet: {walletBalance}</Text>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              marginTop: gutter.lg,
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            Wallet: {walletBalance} BNB
+          </Text>
           <View style={{marginTop: '10%'}}>
             <Button text="Retrieve Bnb balance" onPress={onPress} />
           </View>
@@ -54,6 +56,12 @@ const Home = ({navigation}) => {
             <Button
               text="Import Wallet"
               onPress={() => navigation.navigate('import')}
+            />
+          </View>
+          <View style={{marginTop: '10%'}}>
+            <Button
+              text="Transfer"
+              onPress={() => navigation.navigate('transfer')}
             />
           </View>
         </View>

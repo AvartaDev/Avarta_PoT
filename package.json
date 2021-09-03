@@ -37,6 +37,7 @@
     "@sentry/react-native": "^2.6.2",
     "@tradle/react-native-http": "^2.0.1",
     "assert": "^2.0.0",
+    "axios": "^0.21.1",
     "base-64": "^1.0.0",
     "bip39": "^3.0.4",
     "browserify-zlib": "^0.1.4",

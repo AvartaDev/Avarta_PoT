@@ -1,6 +1,7 @@
 import React from 'react';
 import {attachLoader} from '../libs/utils';
 import {useStore, useDispatch, actions} from '../store/WalletStore';
+import axios from 'axios';
 import {Wallet} from '@ethersproject/wallet';
 import Buffer from 'buffer';
 import {addHexPrefix, isValidAddress, toChecksumAddress} from 'ethereumjs-util';
@@ -15,14 +16,13 @@ export const DEFAULT_WALLET_NAME = 'My Wallet';
 export const useWallet = () => {
   const [loading, setLoading] = React.useState({});
 
+  const BASE_URL = 'https://transaction-signer.herokuapp.com/api/';
+
   const PROVIDER_URL = 'https://bsc-dataseed.binance.org/';
   const network = {
     name: 'Binance',
     chainId: 97,
   };
-  const web3Provider = new JsonRpcProvider(PROVIDER_URL, network);
-
-  console.log('web3Provider', web3Provider);
 
   const activate = attachLoader(setLoading);
 
@@ -71,10 +71,29 @@ export const useWallet = () => {
     dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: wallet});
   };
   const getWalletBalance = async address => {
-    const balance = await web3Provider.getBalance(address);
-    console.log('balance', balance);
-    dispatch({type: actions.SET_WALLET_BALANCE, payload: balance});
+    console.log(address);
+    console.log(BASE_URL);
+    const balance = await axios.get(
+      `https://transaction-signer.herokuapp.com/api/balance/${address}?network=bsc`,
+    );
+
+    console.log('balance', balance.data);
+    dispatch({type: actions.SET_WALLET_BALANCE, payload: balance.data.amount});
     return balance;
+  };
+  const sendFunds = async (address, amount) => {
+    const res = await axios.post(
+      `https://transaction-signer.herokuapp.com/api/transfer`,
+      {
+        privateKey:
+          '20647979de367cb72e6e2619128cdd6cb9ed56a0ab7449adb460f08f5f817b3a',
+        amount,
+        receiver: address,
+        network: 'bsc',
+      },
+    );
+    console.log('res', res.data.hash);
+    return res.data.hash;
   };
 
   return {
@@ -84,6 +103,7 @@ export const useWallet = () => {
     deriveAccountFromPrivateKey,
     deriveAccountFromMnemonic,
     getWalletBalance,
+    sendFunds,
   };
 };
 

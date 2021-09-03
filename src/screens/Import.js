@@ -21,7 +21,7 @@ const Import = ({navigation}) => {
   };
   const onClick = async () => {
     await deriveAccountFromPrivateKey(
-      '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
+      '20647979de367cb72e6e2619128cdd6cb9ed56a0ab7449adb460f08f5f817b3a',
     );
     navigation.navigate('home');
   };

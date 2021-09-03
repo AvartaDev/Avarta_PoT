@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '@screens/Home';
 import Import from '@screens/Import';
+import Transfer from '@screens/Transfer';
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,7 @@ const DashboardNavigation = () => {
       }}>
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="import" component={Import} />
+      <Stack.Screen name="transfer" component={Transfer} />
     </Stack.Navigator>
   );
 };
