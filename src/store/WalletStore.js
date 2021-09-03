@@ -2,6 +2,7 @@ import {makeStore} from './MakeStore';
 const initialState = {
   walletError: null,
   totalWalletBalance: {eth: null},
+  walletBalance: null,
   currentChainId: 1,
   usersWallet: null,
   fundWalletData: null,
@@ -13,6 +14,12 @@ export const reducer = (state, action) => {
       return {
         ...state,
         usersWallet: action.payload,
+        walletError: null,
+      };
+    case 'SET_WALLET_BALANCE':
+      return {
+        ...state,
+        walletBalance: action.payload,
         walletError: null,
       };
     case 'CREATE_WALLET_FROMKEY':
@@ -54,7 +61,7 @@ export const actions = {
   WALLET_ERROR: 'WALLET_ERROR',
   SIGN_DATA_ERROR: 'SIGN_DATA_ERROR',
   FUND_WALLET_ERROR: 'FUND_WALLET_ERROR',
-
+  SET_WALLET_BALANCE: 'SET_WALLET_BALANCE',
   //network action
   SWITCH_NETWORK: 'SWITCH_NETWORK',
   SWITCH_NETWORK_ERROR: 'SWITCH_NETWORK_ERROR',

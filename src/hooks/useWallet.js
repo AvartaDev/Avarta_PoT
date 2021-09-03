@@ -6,6 +6,7 @@ import Buffer from 'buffer';
 import {addHexPrefix, isValidAddress, toChecksumAddress} from 'ethereumjs-util';
 import {Linking, NativeModules, Platform} from 'react-native';
 import {hdkey} from 'ethereumjs-wallet';
+import {JsonRpcProvider} from '@ethersproject/providers';
 import {mnemonicToSeed} from '../libs/bip39/index';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
@@ -13,6 +14,15 @@ export const DEFAULT_WALLET_NAME = 'My Wallet';
 
 export const useWallet = () => {
   const [loading, setLoading] = React.useState({});
+
+  const PROVIDER_URL = 'https://bsc-dataseed.binance.org/';
+  const network = {
+    name: 'Binance',
+    chainId: 97,
+  };
+  const web3Provider = new JsonRpcProvider(PROVIDER_URL, network);
+
+  console.log('web3Provider', web3Provider);
 
   const activate = attachLoader(setLoading);
 
@@ -50,6 +60,7 @@ export const useWallet = () => {
 
   const deriveAccountFromPrivateKey = privateKey => {
     const ethersWallet = new Wallet(addHexPrefix(privateKey));
+    console.log(Wallet);
     const wallet = {
       address: ethersWallet.address,
       isHDWallet: false,
@@ -59,12 +70,20 @@ export const useWallet = () => {
 
     dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: wallet});
   };
+  const getWalletBalance = async address => {
+    const balance = await web3Provider.getBalance(address);
+    console.log('balance', balance);
+    dispatch({type: actions.SET_WALLET_BALANCE, payload: balance});
+    return balance;
+  };
 
   return {
     wallet: store.usersWallet,
+    walletBalance: store.walletBalance,
     loading: loading,
     deriveAccountFromPrivateKey,
     deriveAccountFromMnemonic,
+    getWalletBalance,
   };
 };
 

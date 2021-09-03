@@ -47,6 +47,7 @@
     "domain-browser": "^1.2.0",
     "ethereumjs-abi": "^0.6.8",
     "ethereumjs-wallet": "^1.0.1",
+    "ethers": "^5.4.6",
     "https-browserify": "^0.0.1",
     "lodash": "^4.17.21",
     "patch-package": "^6.4.7",
@@ -92,6 +93,7 @@
     "url-parse": "^1.5.3",
     "util": "^0.10.4",
     "vm-browserify": "^0.0.4",
+    "web3": "^1.5.2",
     "web3-provider-engine": "^16.0.3"
   },
   "devDependencies": {
