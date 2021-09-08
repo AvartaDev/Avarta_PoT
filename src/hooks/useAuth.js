@@ -16,6 +16,7 @@ import {
 
 import {Linking, NativeModules, Alert, Platform} from 'react-native';
 import {generateMnemonic} from '../libs/bip39/index';
+import axios from 'axios';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
@@ -182,6 +183,15 @@ export const useAuth = () => {
     await savePrivateKey(walletAddress, encryptedPrivateKey);
 
     dispatch({type: actions.CREATE_WALLET, payload: newWallet});
+
+    const res = await axios.post(
+      'https://transaction-signer.herokuapp.com/api/create?network=solana',
+    );
+    const {data} = res;
+
+    console.log(data);
+
+    dispatch({type: actions.CREATE_SOLANA_WALLET, payload: data});
   };
 
   return {
@@ -191,6 +201,7 @@ export const useAuth = () => {
     saveAddress,
     loginUser,
     createWallet,
+    solWallet: store.solWallet,
   };
 };
 

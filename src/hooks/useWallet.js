@@ -18,12 +18,6 @@ export const useWallet = () => {
 
   const BASE_URL = 'https://transaction-signer.herokuapp.com/api/';
 
-  const PROVIDER_URL = 'https://bsc-dataseed.binance.org/';
-  const network = {
-    name: 'Binance',
-    chainId: 97,
-  };
-
   const activate = attachLoader(setLoading);
 
   const store = useStore();
@@ -70,15 +64,26 @@ export const useWallet = () => {
 
     dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: wallet});
   };
-  const getWalletBalance = async address => {
+  const getWalletBalance = async (address, solanaAddress) => {
     console.log(address);
-    console.log(BASE_URL);
-    const balance = await axios.get(
-      `https://transaction-signer.herokuapp.com/api/balance/${address}?network=bsc`,
-    );
-
+    let balance;
+    if (address) {
+      balance = await axios.get(
+        `https://transaction-signer.herokuapp.com/api/balance/${address}?network=bsc`,
+      );
+    }
+    let solBalance;
+    if (solanaAddress) {
+      solBalance = await axios.get(
+        `https://transaction-signer.herokuapp.com/api/balance/${solanaAddress}?network=solana`,
+      );
+    }
     console.log('balance', balance.data);
-    dispatch({type: actions.SET_WALLET_BALANCE, payload: balance.data.amount});
+    const balanceData = {
+      bsc: balance.data.amount,
+      solana: solBalance.data.amount,
+    };
+    dispatch({type: actions.SET_WALLET_BALANCE, payload: balanceData});
     return balance;
   };
   const sendFunds = async (address, amount) => {
@@ -86,10 +91,23 @@ export const useWallet = () => {
       `https://transaction-signer.herokuapp.com/api/transfer`,
       {
         privateKey:
-          '20647979de367cb72e6e2619128cdd6cb9ed56a0ab7449adb460f08f5f817b3a',
+          '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
         amount,
         receiver: address,
         network: 'bsc',
+      },
+    );
+    console.log('res', res.data.hash);
+    return res.data.hash;
+  };
+  const sendSolana = async (address, amount, privateKey) => {
+    const res = await axios.post(
+      `https://transaction-signer.herokuapp.com/api/transfer`,
+      {
+        privateKey: privateKey,
+        amount,
+        receiver: address,
+        network: 'solana',
       },
     );
     console.log('res', res.data.hash);
@@ -104,6 +122,7 @@ export const useWallet = () => {
     deriveAccountFromMnemonic,
     getWalletBalance,
     sendFunds,
+    sendSolana,
   };
 };
 

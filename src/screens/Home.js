@@ -4,13 +4,15 @@ import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import useWallet from '../hooks/useWallet';
 import Button from '@components/Button';
+import useAuth from '@hooks/useAuth';
 
 const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {wallet, getWalletBalance, walletBalance} = useWallet();
+  const {solWallet} = useAuth();
 
   async function onPress() {
-    await getWalletBalance(wallet.address);
+    await getWalletBalance(wallet.address, solWallet.address);
   }
 
   return (
@@ -37,7 +39,7 @@ const Home = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            {wallet.address}
+            BSC: {wallet.address}
           </Text>
           <Text
             style={{
@@ -47,10 +49,30 @@ const Home = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            Wallet: {walletBalance} BNB
+            SOL: {solWallet.address}
+          </Text>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              marginTop: gutter.lg,
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            {/* BNB balance: {walletBalance.bsc} */}
+          </Text>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              marginTop: gutter.lg,
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            {/* Sol balance: {walletBalance.solana} sol */}
           </Text>
           <View style={{marginTop: '10%'}}>
-            <Button text="Retrieve Bnb balance" onPress={onPress} />
+            <Button text="Retrieve balance" onPress={onPress} />
           </View>
           <View style={{marginTop: '10%'}}>
             <Button
@@ -62,6 +84,12 @@ const Home = ({navigation}) => {
             <Button
               text="Transfer"
               onPress={() => navigation.navigate('transfer')}
+            />
+          </View>
+          <View style={{marginTop: '10%'}}>
+            <Button
+              text="Transfer Sol"
+              onPress={() => navigation.navigate('transferSol')}
             />
           </View>
         </View>

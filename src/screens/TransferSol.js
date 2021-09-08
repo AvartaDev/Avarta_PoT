@@ -12,10 +12,12 @@ import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
 import Button from '@components/Button';
 import useWallet from '@hooks/useWallet';
+import useAuth from '../hooks/useAuth';
 
-const Transfer = ({navigation}) => {
+const TransferSol = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds} = useWallet();
+  const {sendSolana} = useWallet();
+  const {solWallet} = useAuth();
 
   const [formData, setFormData] = React.useState({
     amount: '',
@@ -33,9 +35,10 @@ const Transfer = ({navigation}) => {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendFunds(
-      '0x527981E7f813bCefC8a6729C96eB2b41c09Cc49B',
+    let txHash = await sendSolana(
+      'Dxf13sCV1wpxUkbMjeudBAzCi7PA499PwGUuX4paSXD2',
       amount,
+      solWallet.privateKey,
     );
     Alert.alert('Transaction successful');
     console.log(txHash, 'txhash');
@@ -54,7 +57,7 @@ const Transfer = ({navigation}) => {
             justifyContent: 'center',
           }}>
           <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 29}}>
-            Transfer
+            Transfer Sol
           </Text>
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
@@ -69,7 +72,7 @@ const Transfer = ({navigation}) => {
             label="Enter Recepient's Address"
             value={formData.recepient}
             onChangeText={handleChange('recepient')}
-            placeholder="0x31...19Dd"
+            placeholder="DrbfT....ru1ywtTr1mG"
             placeholderTextColor={colors.primary_grey}
           />
           <View
@@ -82,4 +85,4 @@ const Transfer = ({navigation}) => {
   );
 };
 
-export default Transfer;
+export default TransferSol;
