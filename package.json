@@ -49,6 +49,7 @@
     "ethereumjs-wallet": "^1.0.1",
     "ethers": "^5.4.6",
     "https-browserify": "^0.0.1",
+    "keccak": "^3.0.2",
     "lodash": "^4.17.21",
     "patch-package": "^6.4.7",
     "path": "^0.12.7",
