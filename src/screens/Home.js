@@ -51,7 +51,7 @@ const Home = ({navigation}) => {
             }}>
             SOL: {solWallet.address}
           </Text>
-          <Text
+          {/* <Text
             style={{
               color: colors.white,
               textAlign: 'center',
@@ -59,7 +59,7 @@ const Home = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            {/* BNB balance: {walletBalance.bsc} */}
+            BNB balance: {walletBalance.bsc}
           </Text>
           <Text
             style={{
@@ -69,8 +69,8 @@ const Home = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 16,
             }}>
-            {/* Sol balance: {walletBalance.solana} sol */}
-          </Text>
+            Sol balance: {walletBalance.solana} sol
+          </Text> */}
           <View style={{marginTop: '10%'}}>
             <Button text="Retrieve balance" onPress={onPress} />
           </View>
@@ -90,6 +90,12 @@ const Home = ({navigation}) => {
             <Button
               text="Transfer Sol"
               onPress={() => navigation.navigate('transferSol')}
+            />
+          </View>
+          <View style={{marginTop: '10%'}}>
+            <Button
+              text="NFT"
+              onPress={() => navigation.navigate('nft')}
             />
           </View>
         </View>
