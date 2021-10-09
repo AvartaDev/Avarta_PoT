@@ -1,0 +1,6 @@
+framework module InMobileMME {
+  umbrella header "InMobileMME.h"
+
+  export *
+  module * { export * }
+}

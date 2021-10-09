@@ -1,0 +1,6 @@
+framework module Solus_DLock_SDK {
+  umbrella header "Solus_DLock_SDK.h"
+
+  export *
+  module * { export * }
+}
