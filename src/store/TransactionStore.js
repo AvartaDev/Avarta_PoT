@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:522f35b0c00a8c646d66c8ebaf7c3c1d6db1373a4b62ecb47958073527393c70
-size 793
+import {makeStore} from './MakeStore';
+const initialState = {
+  transactionTx: false,
+  transactionTxError: false,
+};
+
+export const reducer = (state, action) => {
+  switch (action.type) {
+    case 'TRANSACTION_SUCCESS':
+      return {
+        ...state,
+        setPassword: action.payload,
+        walletError: null,
+      };
+    case 'TRANSACTION_FAILED':
+      return {
+        ...state,
+        setPassword: false,
+        walletError: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const {useDispatch, useStore, Provider} = makeStore(
+  'TransactionStore',
+  initialState,
+  reducer,
+);
+
+export const actions = {
+  //transaction actions
+  TRANSACTION_SUCCESS: 'TRANSACTION_SUCCESS',
+  TRANSACTION_FAILED: 'TRANSACTION_FAILED',
+  CLEAR_ERRORS: 'CLEAR_ERRORS',
+};

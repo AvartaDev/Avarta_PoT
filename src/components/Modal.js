@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a6f159d0ea8e7eede5656ffef954cb11e2194c66f17e243b180c63691404a47e
-size 659
+import React from 'react';
+import {View, Text} from 'react-native';
+import {BgView} from './Layout';
+import useTheme from '@hooks/useTheme';
+import Modal from 'react-native-modal';
+
+export const PrimaryModal = ({visible, children}) => {
+  const {colors, gutter} = useTheme();
+  return (
+    <Modal
+      isVisible={visible}
+      backdropOpacity={0.9}
+      backdropColor={colors.primary}>
+      <View
+        style={{
+          display: 'flex',
+          paddingVertical: gutter.md,
+          borderRadius: 10,
+          backgroundColor: colors.white,
+          paddingHorizontal: gutter.md,
+        }}>
+        {children}
+      </View>
+    </Modal>
+  );
+};

@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:be2e57e27f446a9eb5b38ce52788ea0836b8d429944e20592276cb30e8f28693
-size 694
+## Avarta Mobile Wallet
+
+- Clone this repo and install our dependencies:
+
+```bash
+git clone ...
+cd AvartaWallet
+yarn install
+yarn run postinstall # this will run a lengthy postinstall flow
+cd ios && pod install && cd .. # install pods for iOS
+```
+#### iOS
+
+- Install the iOS dependencies
+  - [React Native Getting Started - iOS](https://facebook.github.io/react-native/docs/getting-started.html#installing-dependencies-1) _(React Native CLI Quickstart -> [your OS] -> iOS)_
+    - You do **not** need CocoaPods
+- Install the correct simulator
+  - **iOS OS Version:** Latest, unless told otherwise
+  - **Device:** iPhone 11 Pro
+
+```bash
+yarn start:ios
+```
+
+```bash
+yarn start # run app metro
+```

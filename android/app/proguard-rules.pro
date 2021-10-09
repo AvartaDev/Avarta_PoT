@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:426b908d7c5dac3db6648e2b21e3762ad9639e4976f7a2eb4e72d60d51b08ef2
-size 435
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in /usr/local/Cellar/android-sdk/24.3.3/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the proguardFiles
+# directive in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
