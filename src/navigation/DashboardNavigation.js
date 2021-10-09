@@ -1,24 +1,3 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import Home from '@screens/Home';
-import Import from '@screens/Import';
-import Transfer from '@screens/Transfer';
-import TransferSol from '../screens/TransferSol';
-
-const Stack = createStackNavigator();
-
-const DashboardNavigation = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="home" component={Home} />
-      <Stack.Screen name="import" component={Import} />
-      <Stack.Screen name="transfer" component={Transfer} />
-      <Stack.Screen name="transferSol" component={TransferSol} />
-    </Stack.Navigator>
-  );
-};
-
-export default DashboardNavigation;
+version https://git-lfs.github.com/spec/v1
+oid sha256:f92412d7e6952a6f113fa9c6b537956fb163ac6263ce30736b986513b9ac78ad
+size 724

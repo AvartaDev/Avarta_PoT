@@ -1,7 +1,3 @@
-//error types
-export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-
-//alert types
-export const SET_ALERT = 'SET_ALERT';
-export const REMOVE_ALERT = 'CLEAR_ALERT';
-export const HIDE_ALERT = 'HIDE_ALERT';
+version https://git-lfs.github.com/spec/v1
+oid sha256:59beca551fd0acbcc50a8a4649bdfb6ba1407569316ea1fa6e08932a76cea6f3
+size 194

@@ -1,26 +1,3 @@
-if (typeof __dirname === 'undefined') global.__dirname = '/'
-if (typeof __filename === 'undefined') global.__filename = ''
-if (typeof process === 'undefined') {
-  global.process = require('process')
-} else {
-  const bProcess = require('process')
-  for (var p in bProcess) {
-    if (!(p in process)) {
-      process[p] = bProcess[p]
-    }
-  }
-}
-
-process.browser = false
-if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
-
-// global.location = global.location || { port: 80 }
-const isDev = typeof __DEV__ === 'boolean' && __DEV__
-process.env['NODE_ENV'] = isDev ? 'development' : 'production'
-if (typeof localStorage !== 'undefined') {
-  localStorage.debug = isDev ? '*' : ''
-}
-
-// If using the crypto shim, uncomment the following line to ensure
-// crypto is loaded first, so it can populate global.crypto
-// require('crypto')
+version https://git-lfs.github.com/spec/v1
+oid sha256:bf229db353940d3b8f94faf3a7d4e4e7b4f0d6816d42d0871fb1b4f958d4a8bb
+size 851
