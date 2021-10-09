@@ -1,11 +1,3 @@
-diff --git a/node_modules/cipher-base/index.js b/node_modules/cipher-base/index.js
-index 6728005..16426bf 100644
---- a/node_modules/cipher-base/index.js
-+++ b/node_modules/cipher-base/index.js
-@@ -1,5 +1,5 @@
- var Buffer = require('safe-buffer').Buffer
--var Transform = require('stream').Transform
-+var Transform = require('readable-stream').Transform
- var StringDecoder = require('string_decoder').StringDecoder
- var inherits = require('inherits')
- 
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac9f064caa9c9bee0bb3aaa5b59d86304e0e5e1a2e044d49056f4426ca6d6dfb
+size 451

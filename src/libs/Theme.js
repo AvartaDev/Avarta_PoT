@@ -1,25 +1,3 @@
-import {_responsive} from '@libs/style_helpers';
-export default {
-  colors: {
-    primary: '#041C3F',
-    secondary: '#2C85FB',
-    basic: '#1BCA7F',
-    white: '#ffffff',
-    primary_grey: '#C0C6CD',
-    danger: 'crimson',
-  },
-  responsive: _responsive,
-  height: {
-    Header: 60,
-  },
-  gutter: {
-    sm: 10,
-    md: 25,
-    lg: 40,
-    bottom: 90,
-    header: _responsive([50, 40]),
-    SPACING: _responsive([15]),
-    statusBar: _responsive([20, 30]),
-    padded: _responsive([15, 30]),
-  },
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:ffa9087b4434e655460b2c036a50b2208602a448b281010e0d6ac46af58974fc
+size 501

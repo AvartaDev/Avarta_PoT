@@ -1,20 +1,3 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import Login from '@screens/Auth/Login';
-import Register from '@screens/Auth/Register';
-
-const Stack = createStackNavigator();
-
-const AuthNavigation = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="login" component={Login} />
-      <Stack.Screen name="register" component={Register} />
-    </Stack.Navigator>
-  );
-};
-
-export default AuthNavigation;
+version https://git-lfs.github.com/spec/v1
+oid sha256:0359e647256d14c2253431a22b3aa3e2c8ed5b0f35c1a0b04144474c7fdfc3cf
+size 518

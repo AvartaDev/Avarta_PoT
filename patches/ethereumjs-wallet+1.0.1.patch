@@ -1,26 +1,3 @@
-diff --git a/node_modules/ethereumjs-wallet/dist/index.js b/node_modules/ethereumjs-wallet/dist/index.js
-index c06843c..b7e3d72 100644
---- a/node_modules/ethereumjs-wallet/dist/index.js
-+++ b/node_modules/ethereumjs-wallet/dist/index.js
-@@ -47,7 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
-     }
- };
- Object.defineProperty(exports, "__esModule", { value: true });
--var crypto = require("crypto");
-+var crypto = require("react-native-crypto");
- var ethereumjs_util_1 = require("ethereumjs-util");
- var scrypt_js_1 = require("scrypt-js");
- var hdkey_1 = require("./hdkey");
-diff --git a/node_modules/ethereumjs-wallet/dist/thirdparty.js b/node_modules/ethereumjs-wallet/dist/thirdparty.js
-index 88226cc..2edd0ff 100644
---- a/node_modules/ethereumjs-wallet/dist/thirdparty.js
-+++ b/node_modules/ethereumjs-wallet/dist/thirdparty.js
-@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
- };
- Object.defineProperty(exports, "__esModule", { value: true });
- exports.fromQuorumWallet = exports.fromKryptoKit = exports.fromEtherCamp = exports.fromEtherWallet = void 0;
--var crypto = require("crypto");
-+var crypto = require("react-native-crypto");
- var ethereumjs_util_1 = require("ethereumjs-util");
- var scrypt_js_1 = require("scrypt-js");
- var index_1 = require("./index");
+version https://git-lfs.github.com/spec/v1
+oid sha256:16a7feff8fb44353f7ef62f844fe9fb01fac0e0bdfcda8e8dd0dfa27fd3c3320
+size 1349

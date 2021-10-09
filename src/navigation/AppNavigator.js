@@ -1,24 +1,3 @@
-import React from 'react';
-import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import AuthNavigation from '@navigation/AuthNavigation';
-import DashboardNavigation from '@navigation/DashboardNavigation';
-const Stack = createStackNavigator();
-
-const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        // initialRouteName="auth"
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="auth" component={AuthNavigation} />
-        <Stack.Screen name="dashboard" component={DashboardNavigation} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-export default AppNavigator;
+version https://git-lfs.github.com/spec/v1
+oid sha256:e163be9cfaf11d1e32b2e61fe7c63daec285c4e49d68213348c6960efd435b71
+size 772

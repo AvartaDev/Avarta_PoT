@@ -1,12 +1,3 @@
-import React from 'react';
-import Theme from '@libs/Theme';
-
-const ctx = React.createContext(Theme);
-
-export const Provider = ({children}) => (
-  <ctx.Provider value={Theme}>{children}</ctx.Provider>
-);
-
-export const useTheme = () => React.useContext(ctx);
-
-export default useTheme;
+version https://git-lfs.github.com/spec/v1
+oid sha256:2cc235aa8e8a068e1bf4a46c79b799be13b55f97b6a4fee6a6adfbbcd9a5cff0
+size 283
