@@ -52,8 +52,8 @@ export const useAuth = () => {
     return null;
   };
   const loginUser = activate('login', async password => {
-    const pward = await getExistingPassword();
-    if (pward && pward !== password) {
+    const oldPwd = await getExistingPassword();
+    if (oldPwd && oldPwd !== password) {
       Alert.alert(
         'Wrong Password',
         'You have entered a wrong password, please try again.',
