@@ -7,14 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00DE26994BFD4D08BFBA64B0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2D496DCC44D454599A760E0 /* Ionicons.ttf */; };
 		00E356F31AD99517003FC87E /* AvartaWalletTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AvartaWalletTests.m */; };
+		0456234726D75488004C9A26 /* ZoomConfigurationForTestApplication.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0456233D26D75488004C9A26 /* ZoomConfigurationForTestApplication.xcconfig */; };
+		0456234826D75488004C9A26 /* SOLUSNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0456233E26D75488004C9A26 /* SOLUSNetworkManager.m */; };
+		0456234926D75488004C9A26 /* SOLUSBSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0456233F26D75488004C9A26 /* SOLUSBSManager.m */; };
+		0456234A26D75488004C9A26 /* Zoom.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0456234226D75488004C9A26 /* Zoom.strings */; };
+		0456235326D754F8004C9A26 /* _25519.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0456234E26D754F8004C9A26 /* _25519.framework */; };
+		0456235426D754F8004C9A26 /* FaceTecSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0456234F26D754F8004C9A26 /* FaceTecSDK.framework */; };
+		0456235626D754F8004C9A26 /* Solus_DLock_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0456235126D754F8004C9A26 /* Solus_DLock_SDK.framework */; };
+		0456235D26D7556E004C9A26 /* _25519.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0456234E26D754F8004C9A26 /* _25519.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0456235E26D7556E004C9A26 /* FaceTecSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0456234F26D754F8004C9A26 /* FaceTecSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0456235F26D7556E004C9A26 /* Solus_DLock_SDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0456235126D754F8004C9A26 /* Solus_DLock_SDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		045623CC26D76566004C9A26 /* BehavioSecIOSSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 0456234426D75488004C9A26 /* BehavioSecIOSSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		045623CE26D7656A004C9A26 /* SOLUSNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0456234126D75488004C9A26 /* SOLUSNetworkManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0456240026D76859004C9A26 /* BehavioSecIOSSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 045623FF26D76858004C9A26 /* BehavioSecIOSSDK.a */; };
+		045E2F1826E0FE9C0098EFC9 /* Rnsolus.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E2F1626E0FE9C0098EFC9 /* Rnsolus.m */; };
+		045E2F1926E0FE9C0098EFC9 /* Rnsolus.h in Headers */ = {isa = PBXBuildFile; fileRef = 045E2F1726E0FE9C0098EFC9 /* Rnsolus.h */; };
+		049EA18C26E2468E00549A62 /* SolusIntegrationLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049EA18B26E2468E00549A62 /* SolusIntegrationLibrary.framework */; };
+		049EA18D26E2469A00549A62 /* SolusIntegrationLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 049EA18B26E2468E00549A62 /* SolusIntegrationLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		70F9B6EE3A2B1BE6C0C0C343 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */; };
-		7F49CB4828C2C9E6FF21F15A /* libPods-AvartaWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */; };
+		1CF386067A2689B2139ED7C9 /* Pods_AvartaWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88073E8AEF0A4677DFBA2012 /* Pods_AvartaWallet.framework */; };
+		7268610626E1DDF2009A7777 /* server_keys_message_hosted.json in Resources */ = {isa = PBXBuildFile; fileRef = 7268610426E1DDF2009A7777 /* server_keys_message_hosted.json */; };
+		7268610726E1DDF2009A7777 /* InMobileMME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7268610526E1DDF2009A7777 /* InMobileMME.framework */; };
+		7268610926E1DE09009A7777 /* InMobileMME.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7268610526E1DDF2009A7777 /* InMobileMME.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7268617826E1DF7E009A7777 /* SOLUSInAuthManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7268617626E1DF7E009A7777 /* SOLUSInAuthManager.m */; };
+		7268617926E1DF7E009A7777 /* SOLUSInAuthManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7268617726E1DF7E009A7777 /* SOLUSInAuthManager.h */; };
+		726861A026E20292009A7777 /* SOLUSStorageModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7268619E26E20292009A7777 /* SOLUSStorageModel.h */; };
+		726861A126E20292009A7777 /* SOLUSStorageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7268619F26E20292009A7777 /* SOLUSStorageModel.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9238684112618BDAD5B4F507 /* Pods_AvartaWallet_AvartaWalletTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAA64E27C875DBEAE89D637 /* Pods_AvartaWallet_AvartaWalletTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,25 +50,62 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0456235B26D7555C004C9A26 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				049EA18D26E2469A00549A62 /* SolusIntegrationLibrary.framework in CopyFiles */,
+				7268610926E1DE09009A7777 /* InMobileMME.framework in CopyFiles */,
+				0456235D26D7556E004C9A26 /* _25519.framework in CopyFiles */,
+				0456235E26D7556E004C9A26 /* FaceTecSDK.framework in CopyFiles */,
+				0456235F26D7556E004C9A26 /* Solus_DLock_SDK.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* AvartaWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AvartaWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AvartaWalletTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AvartaWalletTests.m; sourceTree = "<group>"; };
+		0456233D26D75488004C9A26 /* ZoomConfigurationForTestApplication.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = ZoomConfigurationForTestApplication.xcconfig; sourceTree = "<group>"; };
+		0456233E26D75488004C9A26 /* SOLUSNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOLUSNetworkManager.m; sourceTree = "<group>"; };
+		0456233F26D75488004C9A26 /* SOLUSBSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOLUSBSManager.m; sourceTree = "<group>"; };
+		0456234026D75488004C9A26 /* SOLUSBSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOLUSBSManager.h; sourceTree = "<group>"; };
+		0456234126D75488004C9A26 /* SOLUSNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOLUSNetworkManager.h; sourceTree = "<group>"; };
+		0456234226D75488004C9A26 /* Zoom.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Zoom.strings; sourceTree = "<group>"; };
+		0456234426D75488004C9A26 /* BehavioSecIOSSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BehavioSecIOSSDK.h; sourceTree = "<group>"; };
+		0456234E26D754F8004C9A26 /* _25519.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = _25519.framework; path = Frameworks/_25519.framework; sourceTree = "<group>"; };
+		0456234F26D754F8004C9A26 /* FaceTecSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FaceTecSDK.framework; path = Frameworks/FaceTecSDK.framework; sourceTree = "<group>"; };
+		0456235026D754F8004C9A26 /* ZoomAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZoomAuthentication.framework; path = Frameworks/ZoomAuthentication.framework; sourceTree = "<group>"; };
+		0456235126D754F8004C9A26 /* Solus_DLock_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Solus_DLock_SDK.framework; path = Frameworks/Solus_DLock_SDK.framework; sourceTree = "<group>"; };
+		045623FF26D76858004C9A26 /* BehavioSecIOSSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = BehavioSecIOSSDK.a; sourceTree = "<group>"; };
+		045E2F1626E0FE9C0098EFC9 /* Rnsolus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rnsolus.m; sourceTree = "<group>"; };
+		045E2F1726E0FE9C0098EFC9 /* Rnsolus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rnsolus.h; sourceTree = "<group>"; };
+		049EA18B26E2468E00549A62 /* SolusIntegrationLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SolusIntegrationLibrary.framework; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AvartaWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvartaWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AvartaWallet/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = AvartaWallet/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AvartaWallet/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AvartaWallet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AvartaWallet/main.m; sourceTree = "<group>"; };
-		3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.debug.xcconfig"; sourceTree = "<group>"; };
-		43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FAA64E27C875DBEAE89D637 /* Pods_AvartaWallet_AvartaWalletTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AvartaWallet_AvartaWalletTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BD553FFBFCD1FFA4DC36D46 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7268610426E1DDF2009A7777 /* server_keys_message_hosted.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = server_keys_message_hosted.json; sourceTree = "<group>"; };
+		7268610526E1DDF2009A7777 /* InMobileMME.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = InMobileMME.framework; sourceTree = "<group>"; };
+		7268617626E1DF7E009A7777 /* SOLUSInAuthManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOLUSInAuthManager.m; sourceTree = "<group>"; };
+		7268617726E1DF7E009A7777 /* SOLUSInAuthManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOLUSInAuthManager.h; sourceTree = "<group>"; };
+		7268619E26E20292009A7777 /* SOLUSStorageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOLUSStorageModel.h; sourceTree = "<group>"; };
+		7268619F26E20292009A7777 /* SOLUSStorageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOLUSStorageModel.m; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AvartaWallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet-AvartaWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2D496DCC44D454599A760E0 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
-		DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.release.xcconfig"; sourceTree = "<group>"; };
+		88073E8AEF0A4677DFBA2012 /* Pods_AvartaWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AvartaWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D423DF5EED0CA965A4A940EC /* Pods-AvartaWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F84E2B2558AC71200E4E8F94 /* Pods-AvartaWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.debug.xcconfig"; sourceTree = "<group>"; };
+		FBAC0FC3D6A5989604E4113A /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F9B6EE3A2B1BE6C0C0C343 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */,
+				9238684112618BDAD5B4F507 /* Pods_AvartaWallet_AvartaWalletTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +121,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F49CB4828C2C9E6FF21F15A /* libPods-AvartaWallet.a in Frameworks */,
+				0456235626D754F8004C9A26 /* Solus_DLock_SDK.framework in Frameworks */,
+				7268610726E1DDF2009A7777 /* InMobileMME.framework in Frameworks */,
+				049EA18C26E2468E00549A62 /* SolusIntegrationLibrary.framework in Frameworks */,
+				0456235326D754F8004C9A26 /* _25519.framework in Frameworks */,
+				0456235426D754F8004C9A26 /* FaceTecSDK.framework in Frameworks */,
+				0456240026D76859004C9A26 /* BehavioSecIOSSDK.a in Frameworks */,
+				1CF386067A2689B2139ED7C9 /* Pods_AvartaWallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,30 +164,58 @@
 			name = AvartaWallet;
 			sourceTree = "<group>";
 		};
-		243D89AF9EC24C0F0785FD59 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */,
-				DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */,
-				97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */,
-				DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7268610526E1DDF2009A7777 /* InMobileMME.framework */,
+				0456234E26D754F8004C9A26 /* _25519.framework */,
+				0456234F26D754F8004C9A26 /* FaceTecSDK.framework */,
+				0456235126D754F8004C9A26 /* Solus_DLock_SDK.framework */,
+				0456235026D754F8004C9A26 /* ZoomAuthentication.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */,
-				9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */,
+				88073E8AEF0A4677DFBA2012 /* Pods_AvartaWallet.framework */,
+				2FAA64E27C875DBEAE89D637 /* Pods_AvartaWallet_AvartaWalletTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7268610326E1DDF2009A7777 /* inauth */ = {
+			isa = PBXGroup;
+			children = (
+				7268610426E1DDF2009A7777 /* server_keys_message_hosted.json */,
+			);
+			path = inauth;
+			sourceTree = "<group>";
+		};
+		82282B97B732487F6439A9DB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F84E2B2558AC71200E4E8F94 /* Pods-AvartaWallet.debug.xcconfig */,
+				D423DF5EED0CA965A4A940EC /* Pods-AvartaWallet.release.xcconfig */,
+				4BD553FFBFCD1FFA4DC36D46 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */,
+				FBAC0FC3D6A5989604E4113A /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				045E2F1726E0FE9C0098EFC9 /* Rnsolus.h */,
+				045E2F1626E0FE9C0098EFC9 /* Rnsolus.m */,
+				7268619E26E20292009A7777 /* SOLUSStorageModel.h */,
+				7268619F26E20292009A7777 /* SOLUSStorageModel.m */,
+				7268617726E1DF7E009A7777 /* SOLUSInAuthManager.h */,
+				7268617626E1DF7E009A7777 /* SOLUSInAuthManager.m */,
+				045623FF26D76858004C9A26 /* BehavioSecIOSSDK.a */,
+				0456234426D75488004C9A26 /* BehavioSecIOSSDK.h */,
+				0456234026D75488004C9A26 /* SOLUSBSManager.h */,
+				0456233F26D75488004C9A26 /* SOLUSBSManager.m */,
+				0456234126D75488004C9A26 /* SOLUSNetworkManager.h */,
+				0456233E26D75488004C9A26 /* SOLUSNetworkManager.m */,
+				0456234226D75488004C9A26 /* Zoom.strings */,
+				0456233D26D75488004C9A26 /* ZoomConfigurationForTestApplication.xcconfig */,
+				7268610326E1DDF2009A7777 /* inauth */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -129,13 +223,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				049EA18B26E2468E00549A62 /* SolusIntegrationLibrary.framework */,
 				13B07FAE1A68108700A75B9A /* AvartaWallet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AvartaWalletTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				243D89AF9EC24C0F0785FD59 /* Pods */,
-				F57BD730BA2245EA8733747C /* Resources */,
+				82282B97B732487F6439A9DB /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -151,28 +245,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F57BD730BA2245EA8733747C /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				A2D496DCC44D454599A760E0 /* Ionicons.ttf */,
-			);
-			name = Resources;
-			path = "";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		045623CB26D76559004C9A26 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7268617926E1DF7E009A7777 /* SOLUSInAuthManager.h in Headers */,
+				045623CC26D76566004C9A26 /* BehavioSecIOSSDK.h in Headers */,
+				045E2F1926E0FE9C0098EFC9 /* Rnsolus.h in Headers */,
+				045623CE26D7656A004C9A26 /* SOLUSNetworkManager.h in Headers */,
+				726861A026E20292009A7777 /* SOLUSStorageModel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		00E356ED1AD99517003FC87E /* AvartaWalletTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AvartaWalletTests" */;
 			buildPhases = (
-				B0C26404830EC7F1417D1A62 /* [CP] Check Pods Manifest.lock */,
+				5599815E422FD994080448F7 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C3C9461237060989FC1EE7CC /* [CP] Embed Pods Frameworks */,
-				1889702FEE463553CE9A4D40 /* [CP] Copy Pods Resources */,
+				E65D00BDF57671DDE6214FB7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,14 +287,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AvartaWallet" */;
 			buildPhases = (
-				04495521A1BC12BA8211AEB9 /* [CP] Check Pods Manifest.lock */,
+				AF0C27BA31F29C425EAB57A8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
+				045623CB26D76559004C9A26 /* Headers */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				E81D575C36EF058B00F3A559 /* [CP] Embed Pods Frameworks */,
-				189A164214871067041D8124 /* [CP] Copy Pods Resources */,
+				B87B28CD59E5D8D4DC1BCACC /* [CP] Embed Pods Frameworks */,
+				0456235B26D7555C004C9A26 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -254,9 +354,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7268610626E1DDF2009A7777 /* server_keys_message_hosted.json in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				0456234A26D75488004C9A26 /* Zoom.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				00DE26994BFD4D08BFBA64B0 /* Ionicons.ttf in Resources */,
+				0456234726D75488004C9A26 /* ZoomConfigurationForTestApplication.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,63 +379,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		04495521A1BC12BA8211AEB9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AvartaWallet-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1889702FEE463553CE9A4D40 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		189A164214871067041D8124 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B0C26404830EC7F1417D1A62 /* [CP] Check Pods Manifest.lock */ = {
+		5599815E422FD994080448F7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -355,24 +401,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C3C9461237060989FC1EE7CC /* [CP] Embed Pods Frameworks */ = {
+		AF0C27BA31F29C425EAB57A8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AvartaWallet-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E81D575C36EF058B00F3A559 /* [CP] Embed Pods Frameworks */ = {
+		B87B28CD59E5D8D4DC1BCACC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -387,6 +438,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E65D00BDF57671DDE6214FB7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -424,7 +492,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				7268617826E1DF7E009A7777 /* SOLUSInAuthManager.m in Sources */,
+				0456234926D75488004C9A26 /* SOLUSBSManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				726861A126E20292009A7777 /* SOLUSStorageModel.m in Sources */,
+				045E2F1826E0FE9C0098EFC9 /* Rnsolus.m in Sources */,
+				0456234826D75488004C9A26 /* SOLUSNetworkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +514,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */;
+			baseConfigurationReference = 4BD553FFBFCD1FFA4DC36D46 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -449,7 +522,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AvartaWalletTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -468,12 +541,12 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */;
+			baseConfigurationReference = FBAC0FC3D6A5989604E4113A /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = AvartaWalletTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -492,17 +565,28 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */;
+			baseConfigurationReference = F84E2B2558AC71200E4E8F94 /* Pods-AvartaWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RQ55V4N3N;
+				DEVELOPMENT_TEAM = 7S93L236D6;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/SolusIntegrationLibrary",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AvartaWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -519,16 +603,26 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */;
+			baseConfigurationReference = D423DF5EED0CA965A4A940EC /* Pods-AvartaWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RQ55V4N3N;
+				DEVELOPMENT_TEAM = 7S93L236D6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/SolusIntegrationLibrary",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AvartaWallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -575,7 +669,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -591,7 +685,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -604,6 +698,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -640,7 +735,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -649,7 +744,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -662,6 +757,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
