@@ -612,7 +612,7 @@ RCT_EXPORT_METHOD(Authenticate:(NSString *)name pwd:(NSString *)password ){
   
   
   UIAlertController * alert = [UIAlertController
-                               alertControllerWithTitle:@"SolusDemo"
+                               alertControllerWithTitle:@"AvartaWallet"
                                message:msg
                                preferredStyle:UIAlertControllerStyleAlert];
 
