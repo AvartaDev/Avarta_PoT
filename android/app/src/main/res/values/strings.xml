@@ -1,3 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a89553e180439f6717dce583fed0689c3907bfb2c3eb67d3ed839f6811994c60
-size 75
+<resources>
+    <string name="app_name">AvartaWallet</string>
+</resources>

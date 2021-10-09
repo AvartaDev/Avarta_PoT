@@ -1,3 +1,3 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a70afcecf7a5f15912e65bf8d3376d9f7145e174245e79b8d460c5ce46965b47
-size 43
+# Windows files
+[*.bat]
+end_of_line = crlf

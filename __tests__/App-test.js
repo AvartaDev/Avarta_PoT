@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3448db8c676a934ccce6257aed3eeb88a6335c156a779fd48b3b78abb70eb440
-size 266
+/**
+ * @format
+ */
+
+import 'react-native';
+import React from 'react';
+import App from '../App';
+
+// Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
+
+it('renders correctly', () => {
+  renderer.create(<App />);
+});

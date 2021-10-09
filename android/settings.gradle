@@ -1,3 +1,7 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:83cd9b35a95ba1af5d9c32fad9af3057b81b40770dbc122792fdd10df1322e3f
-size 556
+rootProject.name = 'AvartaWallet'
+include ':react-native-safe-area-context'
+project(':react-native-safe-area-context').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-safe-area-context/android')
+include ':react-native-device-info'
+project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
