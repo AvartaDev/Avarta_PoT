@@ -35,3 +35,16 @@ index ded93b6..6bc1b0b 100755
  RCT_EXPORT_METHOD(hmac256:(NSString *)base64 key:(NSString *)key
                    resolver:(RCTPromiseResolveBlock)resolve
                    rejecter:(RCTPromiseRejectBlock)reject) {
+diff --git a/node_modules/react-native-aes-crypto/react-native-aes.podspec b/node_modules/react-native-aes-crypto/react-native-aes.podspec
+index ec50163..a54683b 100644
+--- a/node_modules/react-native-aes-crypto/react-native-aes.podspec
++++ b/node_modules/react-native-aes-crypto/react-native-aes.podspec
+@@ -1,7 +1,7 @@
+ 
+ Pod::Spec.new do |s|
+   s.name          = 'react-native-aes'
+-  s.version       = '1.3.10'
++  s.version       = '1.3.9'
+   s.summary       = 'Native module for AES encryption'
+   s.author        = "tectiv3"
+   s.license       = 'MIT'
