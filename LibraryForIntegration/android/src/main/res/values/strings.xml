@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SolusDemoApp</string>
+
+    <string name="error_user_not_authenticated">User not Authenticated</string>
+    <string name="error_user_not_found_on_device">User already enrolled. Please de-enroll first.</string>
+    <string name="no_internet_connection">No internet connection.</string><!-- Sorry. Not verified -->
+    <string name="error_user_not_verified">Sorry. Not verified.</string><!-- Sorry. Not verified -->
+
+    <string name="actionbar_registration">Enrollment</string>
+    <string name="actionbar_authorization">Verification</string>
+    <string name="error_user_canceled">Sorry. Verification has been canceled</string>
+    <string name="error_gcm">Error! Current GCM token is empty</string>
+    <string name="error_user_not_enrolled_on_this_device"> User not enrolled on this device</string>
+
+</resources>

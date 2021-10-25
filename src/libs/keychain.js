@@ -1,6 +1,6 @@
 import {captureException, captureMessage} from '@sentry/react-native';
 import {forEach, isNil} from 'lodash';
-import DeviceInfo from 'react-native-device-info';
+// import DeviceInfo from 'react-native-device-info';
 import {
   ACCESS_CONTROL,
   ACCESSIBLE,

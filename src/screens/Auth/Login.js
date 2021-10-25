@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import {
   View,
   Text,
@@ -198,6 +198,19 @@ const Login = ({navigation}) => {
             />
           </View>
         </PrimaryModal>
+        <Text
+        onPress={()=>{navigation.navigate('SolusLibrary')}}
+              style={{
+                position:'absolute',
+                top:30,
+                left:-5,
+                color: colors.basic,
+                fontWeight: 'bold',
+                marginLeft: gutter.lg,
+                textAlign: 'right',
+              }}>
+              Go to Library
+            </Text>
       </BgView>
     </ImageBackground>
   );

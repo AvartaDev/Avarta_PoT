@@ -12,7 +12,7 @@ target 'AvartaWallet' do
     :hermes_enabled => false
   )
 
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  # pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
