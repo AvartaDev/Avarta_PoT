@@ -51,6 +51,8 @@ now run your project
 
 ## ANDROID Installation
 
+open build.gradle inside the android folder and change the value of compileSdkVersion to 31
+
 add these files in the `AndroidManifest.xml` of your project
 
 > `xmlns:tools="http://schemas.android.com/tools"` inside the `Manifest` tag at the top
@@ -114,6 +116,8 @@ now run the following command
 #### To Start the Procedures
 
     Solus.onCreate(DeviceKeyIdentifier,FaceScanEncryptionKey,SERVER_BASE_URL,ORGANISATION_KEY)
+
+    it should be called at the start of app and it should be inside componentdidMount() or useEffect.
 
 #### For Enrolling the User
 
