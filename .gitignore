@@ -3,6 +3,13 @@
 .DS_Store
 .env
 
+# VSC
+*.project
+*.classpath
+*.settings
+
+#java
+*.hprof
 # Xcode
 #
 build/

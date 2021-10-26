@@ -46,7 +46,7 @@
     "dns.js": "^1.0.1",
     "domain-browser": "^1.2.0",
     "ethereumjs-abi": "^0.6.8",
-    "ethereumjs-wallet": "^1.0.1",
+    "ethereumjs-wallet": "1.0.1",
     "ethers": "^5.4.6",
     "https-browserify": "^0.0.1",
     "keccak": "^3.0.2",
