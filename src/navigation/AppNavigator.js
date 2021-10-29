@@ -2,7 +2,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import AuthNavigation from '@navigation/AuthNavigation';
+import AuthNavigator from '@navigation/AuthNavigator';
 import DashboardNavigation from '@navigation/DashboardNavigation';
 const Stack = createStackNavigator();
 
@@ -14,7 +14,7 @@ const AppNavigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="auth" component={AuthNavigation} />
+        <Stack.Screen name="auth" component={AuthNavigator} />
         <Stack.Screen name="dashboard" component={DashboardNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
