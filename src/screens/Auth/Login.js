@@ -202,7 +202,7 @@ const Login = ({navigation}) => {
         onPress={()=>{navigation.navigate('SolusLibrary')}}
               style={{
                 position:'absolute',
-                top:30,
+                top:40,
                 left:-5,
                 color: colors.basic,
                 fontWeight: 'bold',

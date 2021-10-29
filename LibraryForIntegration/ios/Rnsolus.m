@@ -25,8 +25,9 @@ typedef void (^Completion)(NSString* token);
   
 }
 
-
 @property (nonatomic, strong, nonnull) SOLUSIntegrationLibrary *library;
+@property (nonatomic, strong, nonnull) RCTPromiseResolveBlock resolver;
+@property (nonatomic, strong, nonnull) RCTPromiseRejectBlock rejecter;
 @property (nonnull, nonatomic, strong) SOLUSInAuthManager *inAuthManager;
 @property ( nonatomic) SolusWorkflowType currentWorkflowType;
 @property (nonatomic, strong, nonnull) SolusDlock *solusDlock;
@@ -36,6 +37,7 @@ typedef void (^Completion)(NSString* token);
 
 @property (nonnull, nonatomic, strong) NSString *currentUsername;
 @property (nonnull, nonatomic, strong) NSString *currentPassword;
+@property (nonnull, nonatomic, strong) NSString *status;
 @property(nonnull,strong) NSURLSessionDataTask *latestNetworkRequest;
 @property (nonatomic, nonnull, strong) SOLUSStorageModel *storage;
 
@@ -71,63 +73,79 @@ RCT_EXPORT_METHOD(onCreate:(NSString *)DeviceKeyIdentifier FaceScanEncryptionKey
   }
 }
 
-RCT_EXPORT_METHOD(EnrollProcess:(NSString *)name pwd:(NSString *)password ){
+RCT_EXPORT_METHOD(EnrollProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject
+){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self EnrollProcess];
+  [self EnrollProcessresolver:resolve rejecter:reject];
+    
 }
 
-RCT_EXPORT_METHOD(DeEnrollProcess:(NSString *)name pwd:(NSString *)password ){
+RCT_EXPORT_METHOD(DeEnrollProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self DeEnrollProcess];
+  [self DeEnrollProcessresolver:resolve rejecter:reject];
 }
 
-RCT_EXPORT_METHOD(AuthenticationProcess:(NSString *)name pwd:(NSString *)password ){
+RCT_EXPORT_METHOD(AuthenticationProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self SignInProcess];
+  [self SignInProcessresolver:resolve rejecter:reject];
 }
 
-RCT_EXPORT_METHOD(StepUpProcess:(NSString *)name pwd:(NSString *)password ){
+RCT_EXPORT_METHOD(StepUpProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self StepUpProcess];
+  [self StepUpProcessresolver:resolve rejecter:reject];
 }
 
-RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)password ){
+RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self StepUpElevated];
+  [self StepUpElevatedProcessresolver:resolve rejecter:reject];
 }
 
 
--(void)DeEnrollProcess {
+-(void)DeEnrollProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
   self.currentWorkflowType = SolusDeleteWorkflow;
+    self.resolver = resolve;
+    self.rejecter = reject;
   [self.library initialize];
   [self deleteUserWithUsername:self.currentUsername andCompletion:^(NSError * _Nullable error, BOOL deleted) {
     [self showALert:@"De Enroll User successfully"];
+      self.resolver(@"De Enroll User successfully");
+//      NSString *code = [NSString stringWithFormat: @"%ld", (long)error.code];
+//      NSString *errorValue = [NSString stringWithFormat: @"%@", error.localizedDescription];
+//      self.rejecter(code, @"De Enrolling failed", errorValue);
    }];
 }
 
 
--(void)EnrollProcess{
+-(void)EnrollProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  = SolusEnrollWorkflow;
+  self.resolver = resolve;
+  self.rejecter = reject;
   [self.library initialize];
 }
 
--(void)SignInProcess{
+-(void)SignInProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  = SolusVerifyWorkflow;
+    self.resolver = resolve;
+    self.rejecter = reject;
   [self.library initialize];
 }
 
--(void)StepUpProcess{
+-(void)StepUpProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  =  SolusStepUpWorkflow;
+    self.resolver = resolve;
+    self.rejecter = reject;
   [self.library initialize];
 }
 
--(void)StepUpElevated{
+-(void)StepUpElevatedProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  =  SolusStepUpElevatedWorkflow;
+    self.resolver = resolve;
+    self.rejecter = reject;
   [self.library initialize];
 }
 
@@ -538,18 +556,26 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 {
   NSLog(@"Solus Workflow failed with error :%@",error.localizedDescription);
   [self showALert:[NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription]];
+//    NSString *code = [NSString stringWithFormat: @"%ld", (long)error.code];
+    NSString *errorValue = [NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription];
+//    self.rejecter(code, @"Solus Workflow failed with error", errorValue);
+    self.resolver(errorValue);
 }
 
 -(void)solusIntegrationLibrary:(SOLUSIntegrationLibrary *)library workflowCompleted:(SolusWorkflowType)workflowType deviceBased:(BOOL)deviceBased withFullName:(NSString *)fullName
 {
   NSLog(@"Workflow completed successfully");
   [self showALert:@"Workflow completed successfully"];
+    self.resolver(@"Workflow completed successfully");
 }
 
 -(void)solusIntegrationLibrary:(SOLUSIntegrationLibrary *)library workflowCanceled:(SolusWorkflowType)workflowType
 {
   NSLog(@"Workflow cancelled");
   [self showALert:@"Workflow cancelled"];
+    self.resolver(@"Workflow Cancelled");
+  //  self.rejecter(nil, @"WorkFlow Cancelled",nil);
+//    self.status = @"Workflow cancelled";
 }
 
 #pragma mark - Dlock Methods...

@@ -107,9 +107,11 @@ public class SolusModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void EnrollProcess(String Username, String Password
+  public void EnrollProcess(String Username, String Password , Promise promise
 //          , String SERVER_BASE_URL, String ORGANISATION_KEY
           ){
+            try{
+
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
 
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
@@ -131,44 +133,53 @@ public class SolusModule extends ReactContextBaseJavaModule {
         if (resultCode == Activity.RESULT_OK && resultData != null) {
 //                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
           Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+          promise.resolve("InAuth."+resultData.getString("message"));
         } else {
           Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+          promise.reject(null,"InAuth.Error");
         }
+
       }
     });
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    }catch(Exception e) {
+              Log.d("", "EnrollProcess: ",e);
+            }
   }
 
   @ReactMethod
   public void AuthenticationProcess(String Username, String Password
 //          , String SERVER_BASE_URL, String ORGANISATION_KEY
   ){
-    initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
-    mIntegrationApiManager.setProcessListener(workflowProccessListener);
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Authenticate Process Start.",Toast.LENGTH_LONG).show();
-    mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.AUTH.toString(), userData.getUsername(), false);
+      
+        initializeIntigration(Username, Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
+        mIntegrationApiManager.setProcessListener(workflowProccessListener);
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Solus Loaded ...", Toast.LENGTH_LONG).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Authenticate Process Start.", Toast.LENGTH_LONG).show();
+        mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.AUTH.toString(), userData.getUsername(), false);
 
-    Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
-    inauthService.setAction(SolusConstants.ACTION_SEND_INAUTH_LOGS);
-    inauthService.putExtra("workflowtype", WorkflowType.AUTH);
-    inauthService.putExtra("username", userData.getUsername());
-    inauthService.putExtra("url", BASE_URL);
-    inauthService.putExtra("organizationkey", ORGANISATIONKEY);
-    inauthService.putExtra("RECEIVER_CALLBACK", new ResultReceiver(new Handler(Looper.getMainLooper())) {
-      @Override
-      protected void onReceiveResult(int resultCode, Bundle resultData) {
-        super.onReceiveResult(resultCode, resultData);
+        Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
+        inauthService.setAction(SolusConstants.ACTION_SEND_INAUTH_LOGS);
+        inauthService.putExtra("workflowtype", WorkflowType.AUTH);
+        inauthService.putExtra("username", userData.getUsername());
+        inauthService.putExtra("url", BASE_URL);
+        inauthService.putExtra("organizationkey", ORGANISATIONKEY);
+        inauthService.putExtra("RECEIVER_CALLBACK", new ResultReceiver(new Handler(Looper.getMainLooper())) {
+          @Override
+          protected void onReceiveResult(int resultCode, Bundle resultData) {
+            super.onReceiveResult(resultCode, resultData);
 
-        if (resultCode == Activity.RESULT_OK && resultData != null) {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
-        } else {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error",Toast.LENGTH_LONG).show();
-        }
-      }
-    });
-    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+            if (resultCode == Activity.RESULT_OK && resultData != null) {
+              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth." + resultData.getString("message"), Toast.LENGTH_LONG).show();
+             
+            } else {
+              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth.Error", Toast.LENGTH_LONG).show();
+             
+            }
+          }
+        });
+        InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
 
   }
 
@@ -181,7 +192,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
     mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.REMOVE.toString(), userData.getUsername(), false);
-  }
+}
 
 
 

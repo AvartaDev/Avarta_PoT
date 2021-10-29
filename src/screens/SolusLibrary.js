@@ -28,7 +28,7 @@ export default function SolusLibrary() {
     '8QIDAQAB\n' +
     '-----END PUBLIC KEY-----';
 
-  const EnrollProcess = () => {
+  const EnrollProcess = async () => {
     if (UserName == '') {
       alert('UserName Required Some Value');
       return false;
@@ -36,10 +36,15 @@ export default function SolusLibrary() {
       alert('Password Required Some Value');
       return false;
     } else {
-      Solus.EnrollProcess(UserName, Password);
+      try {
+        const promise = await Solus.EnrollProcess(UserName, Password);
+        console.log(`${promise}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
-  const AuthenticationProcess = () => {
+  const AuthenticationProcess = async () => {
     if (UserName == '') {
       alert('UserName Required Some Value');
       return false;
@@ -47,12 +52,30 @@ export default function SolusLibrary() {
       alert('Password Required Some Value');
       return false;
     } else {
-      Solus.AuthenticationProcess(UserName, Password);
+      try {
+        const promise = await Solus.AuthenticationProcess(UserName, Password);
+        console.log(`${promise}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
-  const DeEnrollProcess = () => {
-    Solus.DeEnrollProcess(UserName, Password);
+  const DeEnrollProcess = async () => {
+    if (UserName == '') {
+      alert('UserName Required Some Value');
+      return false;
+    } else if (Password == '') {
+      alert('Password Required Some Value');
+      return false;
+    } else {
+      try {
+        const promise = await Solus.DeEnrollProcess(UserName, Password);
+        console.log(`${promise}`);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   };
 
   const onCreate = () => {
@@ -63,7 +86,7 @@ export default function SolusLibrary() {
       ORGANISATION_KEY,
     );
   };
-  const StepUpProcess = () => {
+  const StepUpProcess =async () => {
     if (UserName == '') {
       alert('UserName Required Some Value');
       return false;
@@ -71,11 +94,16 @@ export default function SolusLibrary() {
       alert('Password Required Some Value');
       return false;
     } else {
-      Solus.StepUpProcess(UserName,Password)
+      try {
+        const promise = await Solus.StepUpProcess(UserName, Password);
+        console.log(`${promise}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
-  const StepUpElevatedProcess = () => {
+  const StepUpElevatedProcess = async () => {
     if (UserName == '') {
       alert('UserName Required Some Value');
       return false;
@@ -83,7 +111,12 @@ export default function SolusLibrary() {
       alert('Password Required Some Value');
       return false;
     } else {
-      Solus.StepUpElevatedProcess(UserName,Password)
+      try {
+        const promise = await Solus.StepUpElevatedProcess(UserName, Password);
+        console.log(`${promise}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
