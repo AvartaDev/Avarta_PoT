@@ -89,6 +89,18 @@ RCT_EXPORT_METHOD(AuthenticationProcess:(NSString *)name pwd:(NSString *)passwor
   [self SignInProcess];
 }
 
+RCT_EXPORT_METHOD(StepUpProcess:(NSString *)name pwd:(NSString *)password ){
+  self.currentUsername = name;
+  self.currentPassword = password;
+  [self StepUpProcess];
+}
+
+RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)password ){
+  self.currentUsername = name;
+  self.currentPassword = password;
+  [self StepUpElevated];
+}
+
 
 -(void)DeEnrollProcess {
   self.currentWorkflowType = SolusDeleteWorkflow;
@@ -106,6 +118,16 @@ RCT_EXPORT_METHOD(AuthenticationProcess:(NSString *)name pwd:(NSString *)passwor
 
 -(void)SignInProcess{
   self.currentWorkflowType  = SolusVerifyWorkflow;
+  [self.library initialize];
+}
+
+-(void)StepUpProcess{
+  self.currentWorkflowType  =  SolusStepUpWorkflow;
+  [self.library initialize];
+}
+
+-(void)StepUpElevated{
+  self.currentWorkflowType  =  SolusStepUpElevatedWorkflow;
   [self.library initialize];
 }
 
@@ -467,14 +489,19 @@ RCT_EXPORT_METHOD(AuthenticationProcess:(NSString *)name pwd:(NSString *)passwor
 }
 
 -(void)updateBehaviosecDataWithSummary :(NSString*)summury {
-  
-  [self.library behaviosecRegisterWithUsername:self.currentUsername workflowType:self.currentWorkflowType summary:summury andCompletion:^(NSError * _Nullable error, SOLUSBehavioSecModel * _Nullable model) {
+    if(self.currentWorkflowType == SolusEnrollWorkflow)
+    {
+        [self.library behaviosecRegisterWithUsername:self.currentUsername workflowType:self.currentWorkflowType summary:summury andCompletion:^(NSError * _Nullable error, SOLUSBehavioSecModel * _Nullable model) {
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
+        });
+        
+       }];
+    }  else {
+    [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
+    }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
-    });
-    
-  }];
 }
 
 

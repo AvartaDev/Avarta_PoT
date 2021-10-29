@@ -183,6 +183,73 @@ public class SolusModule extends ReactContextBaseJavaModule {
     mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.REMOVE.toString(), userData.getUsername(), false);
   }
 
+
+
+  @ReactMethod
+  public void StepUpProcess(String Username, String Password){
+    initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
+
+    mIntegrationApiManager.setProcessListener(workflowProccessListener);
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Process Start.",Toast.LENGTH_LONG).show();
+    mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.STEPUP.toString(), Username, false);
+
+    Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
+    inauthService.setAction(SolusConstants.ACTION_SEND_INAUTH_LOGS);
+    inauthService.putExtra("workflowtype", WorkflowType.STEPUP);
+    inauthService.putExtra("username", userData.getUsername());
+    inauthService.putExtra("url", BASE_URL);
+    inauthService.putExtra("organizationkey", ORGANISATIONKEY);
+    inauthService.putExtra("RECEIVER_CALLBACK", new ResultReceiver(new Handler(Looper.getMainLooper())) {
+      @Override
+      protected void onReceiveResult(int resultCode, Bundle resultData) {
+        super.onReceiveResult(resultCode, resultData);
+
+        if (resultCode == Activity.RESULT_OK && resultData != null) {
+//                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+        } else {
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+        }
+      }
+    });
+    //  startService(inauthService);
+    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+  }
+
+
+  @ReactMethod
+  public void StepUpElevatedProcess(String Username, String Password){
+    initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
+
+    mIntegrationApiManager.setProcessListener(workflowProccessListener);
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Elevated Process Start.",Toast.LENGTH_LONG).show();
+    mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.STEPUP_ELEVATED.toString(), Username, false);
+
+    Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
+    inauthService.setAction(SolusConstants.ACTION_SEND_INAUTH_LOGS);
+    inauthService.putExtra("workflowtype", WorkflowType.STEPUP_ELEVATED);
+    inauthService.putExtra("username", userData.getUsername());
+    inauthService.putExtra("url", BASE_URL);
+    inauthService.putExtra("organizationkey", ORGANISATIONKEY);
+    inauthService.putExtra("RECEIVER_CALLBACK", new ResultReceiver(new Handler(Looper.getMainLooper())) {
+      @Override
+      protected void onReceiveResult(int resultCode, Bundle resultData) {
+        super.onReceiveResult(resultCode, resultData);
+
+        if (resultCode == Activity.RESULT_OK && resultData != null) {
+//                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+        } else {
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+        }
+      }
+    });
+    //  startService(inauthService);
+    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+  }
+
   private void initializeIntigration(String username, String password) {
 
     userData = new com.reactnativesolus.UserData();

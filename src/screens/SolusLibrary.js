@@ -63,6 +63,29 @@ export default function SolusLibrary() {
       ORGANISATION_KEY,
     );
   };
+  const StepUpProcess = () => {
+    if (UserName == '') {
+      alert('UserName Required Some Value');
+      return false;
+    } else if (Password == '') {
+      alert('Password Required Some Value');
+      return false;
+    } else {
+      Solus.StepUpProcess(UserName,Password)
+    }
+  };
+
+  const StepUpElevatedProcess = () => {
+    if (UserName == '') {
+      alert('UserName Required Some Value');
+      return false;
+    } else if (Password == '') {
+      alert('Password Required Some Value');
+      return false;
+    } else {
+      Solus.StepUpElevatedProcess(UserName,Password)
+    }
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -133,6 +156,42 @@ export default function SolusLibrary() {
           }}>
           <Text style={{color: '#ffffff', fontSize: 15, textAlign: 'center'}}>
             Authenticate
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          marginTop: '5%',
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+        }}>
+        <TouchableOpacity
+          onPress={() => StepUpProcess()}
+          style={{
+            backgroundColor: '#1E90FF',
+            height: 50,
+            width: '30%',
+            borderRadius: 5,
+            justifyContent: 'center',
+          }}>
+          <Text style={{color: '#ffffff', fontSize: 15, textAlign: 'center'}}>
+            StepUp
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => StepUpElevatedProcess()}
+          style={{
+            backgroundColor: '#1E90FF',
+            height: 50,
+            width: '30%',
+            borderRadius: 5,
+            justifyContent: 'center',
+          }}>
+          <Text style={{color: '#ffffff', fontSize: 15, textAlign: 'center'}}>
+            StepUp Elevated
           </Text>
         </TouchableOpacity>
       </View>
