@@ -64,7 +64,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     public SolusModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
-
+    Promise promised;
 
   @Override
     @NonNull
@@ -111,7 +111,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 //          , String SERVER_BASE_URL, String ORGANISATION_KEY
           ){
             try{
-
+    promised=promise;
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
 
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
@@ -133,10 +133,10 @@ public class SolusModule extends ReactContextBaseJavaModule {
         if (resultCode == Activity.RESULT_OK && resultData != null) {
 //                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
           Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
-          promise.resolve("InAuth."+resultData.getString("message"));
+          //promised.resolve("InAuth."+resultData.getString("message"));
         } else {
           Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
-          promise.reject(null,"InAuth.Error");
+         // promised.reject(null,"InAuth.Error");
         }
 
       }
@@ -149,10 +149,11 @@ public class SolusModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void AuthenticationProcess(String Username, String Password
+  public void AuthenticationProcess(String Username, String Password,Promise promise
 //          , String SERVER_BASE_URL, String ORGANISATION_KEY
   ){
-      
+    try {
+        promised=promise;
         initializeIntigration(Username, Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
         mIntegrationApiManager.setProcessListener(workflowProccessListener);
         Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Solus Loaded ...", Toast.LENGTH_LONG).show();
@@ -172,34 +173,40 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
             if (resultCode == Activity.RESULT_OK && resultData != null) {
               Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth." + resultData.getString("message"), Toast.LENGTH_LONG).show();
-             
             } else {
               Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth.Error", Toast.LENGTH_LONG).show();
-             
             }
           }
         });
         InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
-
+    }catch (Exception e){
+      Log.d("", "AuthenticationProcess: ",e);
+    }
   }
 
   @ReactMethod
-  public void DeEnrollProcess(String Username, String Password
+  public void DeEnrollProcess(String Username, String Password,Promise promise
 //          , String SERVER_BASE_URL, String ORGANISATION_KEY
   ){
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"DeEnrollment Process Start.",Toast.LENGTH_LONG).show();
-    userData = new com.reactnativesolus.UserData();
-    initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
-    mIntegrationApiManager.setProcessListener(workflowProccessListener);
-    mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.REMOVE.toString(), userData.getUsername(), false);
-}
+    try{
+        promised=promise;
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"DeEnrollment Process Start.",Toast.LENGTH_LONG).show();
+        userData = new com.reactnativesolus.UserData();
+        initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
+        mIntegrationApiManager.setProcessListener(workflowProccessListener);
+        mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.REMOVE.toString(), userData.getUsername(), false);
+    }catch(Exception e){
+      Log.d("", "DeEnrollProcess: ",e);
+    }
+  }
 
 
 
   @ReactMethod
-  public void StepUpProcess(String Username, String Password){
+  public void StepUpProcess(String Username, String Password,Promise promise){
+    try{
+      promised=promise;
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
-
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
     Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
     Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Process Start.",Toast.LENGTH_LONG).show();
@@ -226,13 +233,17 @@ public class SolusModule extends ReactContextBaseJavaModule {
     });
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+  }catch (Exception e){
+      Log.d("", "StepUpProcess: ",e);
+    }
   }
 
 
   @ReactMethod
-  public void StepUpElevatedProcess(String Username, String Password){
-    initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
-
+  public void StepUpElevatedProcess(String Username, String Password , Promise promise){
+    try{
+    promised=promise;
+    initializeIntigration(Username,Password);
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
     Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
     Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Elevated Process Start.",Toast.LENGTH_LONG).show();
@@ -259,6 +270,9 @@ public class SolusModule extends ReactContextBaseJavaModule {
     });
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+  }catch (Exception e) {
+      Log.d("", "StepUpElevatedProcess: ",e);
+    }
   }
 
   private void initializeIntigration(String username, String password) {
@@ -292,6 +306,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
       @Override
       public void onError(Exception e) {
         Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User not verified message from calculateUserScore",Toast.LENGTH_LONG).show();
+        promised.reject(null,"Solus workflow failed : User not verified");
       }
     });
   }
@@ -300,9 +315,10 @@ public class SolusModule extends ReactContextBaseJavaModule {
     if (!isAfterError) {
       DbUserController.saveUser(userData.getUsername());
       Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Verification done successfully",Toast.LENGTH_LONG).show();
-
+      promised.reject(null,"Solus workflow failed");
     } else {
       Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Sorry. Not verified.",Toast.LENGTH_LONG).show();
+      promised.reject(null,"Solus workflow failed : User not verified");
     }
   }
 
@@ -316,7 +332,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
   IWorkflowProccessListener workflowProccessListener = new IWorkflowProccessListener() {
     @Override
-    public void onWorkflowError(Throwable throwable, String workflow, String s1) {
+    public void onWorkflowError(Throwable throwable, String workflow, String s1 ) {
       throwable.printStackTrace();
       WorkflowType workflowType = WorkflowType.fromKey(workflow);
       final String errorMessage = tryParseSCExceptionMessage(throwable);
@@ -346,6 +362,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 //                            Log.e("+++++++++++++++", "Solus workflow failed with :"+error );
             Toast.makeText(SolusModule.this.getCurrentActivity(),"Solus workflow failed with : " + error,Toast.LENGTH_LONG).show();
 //                            txtErrorMessage.setText("Solus workflow failed with : " + error);
+            promised.reject(null,"Solus workflow failed with : "+error);
             return;
 
           case AUTH:
@@ -353,6 +370,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
             if (tryToParseSCExceptionCode(throwable) == ApiErrorCode.USER_NOT_ENROLLED) {
               Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus workflow failed with : user_not_enrolled_on_this_device " ,Toast.LENGTH_LONG).show();
 //                                txtErrorMessage.setText("Solus workflow failed with : " + getString(R.string.error_user_not_enrolled_on_this_device));
+              promised.reject(null,"Solus workflow failed with : user_not_enrolled_on_this_device");
               return;
             }
             break;
@@ -383,6 +401,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
     @Override
     public void onWorkflowAbort(String s, String s1) {
+
+      promised.reject(null,"Process Abort");
       Log.e("workflow abort", "workflowabort");
     }
 
@@ -412,6 +432,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
           break;
       }
       Toast.makeText(SolusModule.this.getCurrentActivity(),"Process Completed: "+workflowType,Toast.LENGTH_LONG).show();
+      promised.resolve("Process Completed: "+workflowType);
     }
   };
 
