@@ -7,6 +7,7 @@ import {Provider as AuthProvider} from './store/AuthStore';
 import {Provider} from '@hooks/useTheme';
 import Theme from '@libs/Theme';
 import AppNavigator from '@navigation/AppNavigator';
+import '../shim.js';
 
 const App = () => {
   return (

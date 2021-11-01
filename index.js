@@ -1,4 +1,3 @@
-import './shim.js';
 /**
  * @format
  */

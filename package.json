@@ -29,7 +29,8 @@
     "@ethersproject/units": "^5.0.8",
     "@ethersproject/wallet": "^5.0.9",
     "@metamask/controllers": "^14.2.0",
-    "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-clipboard/clipboard": "^1.9.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.0",
     "@react-navigation/native": "^5.6.1",
@@ -54,6 +55,7 @@
     "https-browserify": "^0.0.1",
     "keccak": "^3.0.2",
     "lodash": "^4.17.21",
+    "node-libs-browser": "^2.2.1",
     "patch-package": "^6.4.7",
     "path": "^0.12.7",
     "path-browserify": "^0.0.0",
@@ -101,8 +103,9 @@
     "url-parse": "^1.5.3",
     "util": "^0.10.4",
     "vm-browserify": "^0.0.4",
-    "web3": "^1.5.2",
+    "web3": "^1.6.0",
     "web3-eth": "^1.6.0",
+    "web3-eth-accounts": "^1.6.0",
     "web3-provider-engine": "^16.0.3"
   },
   "devDependencies": {
@@ -111,11 +114,11 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "7.14.0",
+    "eslint": "^8.1.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.64.0",
     "react-test-renderer": "17.0.1",
-    "rn-nodeify": "^10.2.0"
+    "rn-nodeify": "^10.3.0"
   },
   "jest": {
     "preset": "react-native"

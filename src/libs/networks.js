@@ -9,7 +9,7 @@ import {
   SOLANA_TEST,
   BSC_TEST,
   BSC,
-} from './networkConstants.js';
+} from '../constants/networkConstants.js';
 
 /**
  * List of the supported networks
@@ -18,7 +18,7 @@ import {
  * This values are used in certain places like
  * navbar and the network switcher.
  */
-const NetworkList = {
+export const NetworkList = {
   [MAINNET]: {
     name: 'Ethereum Main Network',
     shortName: 'Ethereum',

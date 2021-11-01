@@ -6,11 +6,15 @@ import * as bip39 from "react-native-bip39"
 import BigText from '@components/text/BigText';
 import { deriveAccountFromMnemonic } from '@libs/WalletUtils';
 import SmallText from '@components/text/SmallText';
+import { storeWallet } from '@libs/localPersistenceUtils';
+import { HOME } from '@constants/navigation';
 
-const CreateViewDetails = ({ route, navigation }) => {
+
+const CreateWalletDetailsScreen = ({ route, navigation }) => {
   const { token } = route.params
   const [wallet, setWallet] = useState(null)
   const [mnemonic, setMnemonic] = useState(null)
+
 
   const PhraseView = () =>
     <BgView>
@@ -26,14 +30,18 @@ const CreateViewDetails = ({ route, navigation }) => {
 
   const WalletView = () =>
     <BgView>
-      <SmallText text={"Address"}/>
+      <SmallText text={"Address"} />
       <SmallText text={wallet.address} />
-      <SmallText text={"hd wallet"}/>
+      <SmallText text={"hd wallet"} />
       <SmallText text={wallet.isHDWallet.toString()} />
-      <SmallText text={"public extended key base64"}/>
+      <SmallText text={"public extended key base64"} />
       <SmallText text={wallet.publicExtendedKey} />
-      <SmallText text={"prv extended key base64"}/>
+      <SmallText text={"prv extended key base64"} />
       <SmallText text={wallet.privateExtendedKey} />
+      <Button text={"Save and go back to home page"} onPress={async () => {
+        await storeWallet(token, wallet)
+        navigation.navigate(HOME)
+      }} />
     </BgView>
 
 
@@ -58,4 +66,4 @@ const CreateViewDetails = ({ route, navigation }) => {
   );
 };
 
-export default CreateViewDetails;
+export default CreateWalletDetailsScreen;

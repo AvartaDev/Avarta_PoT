@@ -3,7 +3,10 @@ import { View, ImageBackground } from 'react-native';
 import { BgView } from '@components/Layout';
 import Button from '@components/Button';
 import BigText from '@components/text/BigText';
-const CreateMain = ({ navigation }) => {
+import { ETH_WALLET_KEY } from '@constants/keys';
+import { CREATE_WALLET_DETAILS } from '@constants/navigation';
+
+const CreateWalletMainScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
@@ -13,11 +16,11 @@ const CreateMain = ({ navigation }) => {
         <BigText text={"Choose Wallet"}/>
         <View
           style={{ display: 'flex', alignItems: 'center', marginTop: '7%' }}>
-          <Button text="Ethereum" onPress={() => { navigation.navigate('createviewdetails', { token: "ETHEREUM" }) }} />
+          <Button text="Ethereum" onPress={() => { navigation.navigate(CREATE_WALLET_DETAILS, { token: ETH_WALLET_KEY }) }} />
         </View>
       </BgView>
     </ImageBackground>
   );
 };
 
-export default CreateMain;
+export default CreateWalletMainScreen;

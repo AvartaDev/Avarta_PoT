@@ -12,7 +12,6 @@ const SmallText = (params) => {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14,
-    ...params.style
   }
   return <Text style={smallTextStyle}>{params.text}</Text>
 }

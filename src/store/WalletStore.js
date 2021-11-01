@@ -3,7 +3,7 @@ const initialState = {
   walletError: null,
   totalWalletBalance: {eth: null},
   walletBalance: null,
-  currentChainId: 1,
+  currentChainId: 1, // TODO: THIS IS MAINNET HELLO?
   usersWallet: null,
   fundWalletData: null,
 };

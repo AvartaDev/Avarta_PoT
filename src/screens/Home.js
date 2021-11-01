@@ -1,37 +1,49 @@
-import React from 'react';
-import { View, ImageBackground, Text } from 'react-native';
-import { BgView } from '@components/Layout';
+import React, {useEffect, useState} from 'react';
+import {View, ImageBackground, Text} from 'react-native';
+import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
-import useWallet from '../hooks/useWallet';
 import Button from '@components/Button';
-import useAuth from '@hooks/useAuth';
+import {getAllWallets} from '@libs/localPersistenceUtils';
+import {ETH_WALLET_KEY} from '@constants/keys';
+import {CREATE_WALLET_FLOW, VIEW_WALLET_DASHBOARD} from '@constants/navigation';
+import WalletCard from '@components/WalletCard';
 
-const WalletEntry = (coin, text) => <Text
-  style={{
-    color: colors.white,
-    textAlign: 'center',
-    marginTop: gutter.lg,
-    fontWeight: 'bold',
-    fontSize: 16,
-  }}>
-  {`${coin}: ${text}`}
-</Text>
+const Home = ({navigation}) => {
+  const {colors, gutter} = useTheme();
+  const [allWallets, setAllWallets] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
-const Home = ({ navigation }) => {
-  const { colors, gutter } = useTheme();
-  const { wallet, getWalletBalance, walletBalance } = useWallet();
-  const { solWallet } = useAuth();
+  const initWallets = async () => {
+    setLoaded(false);
+    const res = await getAllWallets();
+    const parsedRes = JSON.parse(res);
+    setAllWallets(parsedRes);
+    setLoaded(true);
+  };
 
-  async function onPress() {
-    await getWalletBalance(wallet.address, solWallet.address);
-  }
+  useEffect(() => {
+    initWallets();
+  }, []);
+
+  const Wallet = ({token}) => (
+    <WalletCard
+      wallet={allWallets[token]}
+      token={token}
+      onPress={() =>
+        navigation.navigate(VIEW_WALLET_DASHBOARD, {
+          wallet: allWallets[token],
+          token,
+        })
+      }
+    />
+  );
 
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
-      style={{ width: '100%', height: '100%' }}>
+      style={{width: '100%', height: '100%'}}>
       <BgView>
-        <View style={{ marginHorizontal: gutter.md }}>
+        <View style={{marginHorizontal: gutter.md}}>
           <Text
             style={{
               color: colors.white,
@@ -40,11 +52,23 @@ const Home = ({ navigation }) => {
               fontWeight: 'bold',
               fontSize: 26,
             }}>
-            Wallet Address
+            HOME
           </Text>
+          {loaded ? <Wallet token={ETH_WALLET_KEY} /> : null}
 
-          <View style={{ marginTop: '10%' }}>
-            <Button text="Create Wallet" onPress={() => {navigation.navigate('create')}} />
+          <View style={{marginTop: '10%'}}>
+            <Button
+              text="Create Wallet"
+              onPress={() => {
+                navigation.navigate(CREATE_WALLET_FLOW);
+              }}
+            />
+            <Button
+              text="Refresh"
+              onPress={() => {
+                initWallets();
+              }}
+            />
           </View>
         </View>
       </BgView>

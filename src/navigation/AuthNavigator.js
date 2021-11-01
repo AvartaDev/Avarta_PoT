@@ -15,11 +15,11 @@ const AuthNavigator = () => {
   
   const checkFirstTime = async () => {
     //check if file exists
-    const tmp = await FileSystem.getInfoAsync(fileName)
+    // const tmp = await FileSystem.getInfoAsync(fileName)
     // setFirstTime(tmp.exists)
-    setFirstTime(true)
-    if(!tmp.exists)
-      FileSystem.writeAsStringAsync(fileName, "junk")
+    // setFirstTime(true)
+    // if(!tmp.exists)
+    //   FileSystem.writeAsStringAsync(fileName, "junk")
     setLoaded(true)
   }
 

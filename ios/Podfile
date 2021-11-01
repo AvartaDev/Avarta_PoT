@@ -18,6 +18,8 @@ target 'AvartaWallet' do
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
+  pod 'react-native-randombytes', :path => '../node_modules/react-native-randombytes'
+
   target 'AvartaWalletTests' do
     inherit! :complete
     # Pods for testing

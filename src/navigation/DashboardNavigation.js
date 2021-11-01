@@ -1,27 +1,22 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '@screens/Home';
-import Import from '@screens/Import';
-import Transfer from '@screens/Transfer';
-import TransferSol from '../screens/TransferSol';
-import CreateMain from '@screens/wallet/create/CreateMain'
-import NFT from '../screens/NFT';
 import CreateWalletNavigation from './CreateWalletNavigation';
+import { CREATE_WALLET_FLOW, HOME, VIEW_WALLET_DASHBOARD } from '@constants/navigation';
+import MainWalletScreen from '@screens/wallet/main/MainWalletScreen';
 
 const Stack = createStackNavigator();
 
 const DashboardNavigation = () => {
   return (
     <Stack.Navigator
+      initialRouteName={'home'}
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="home" component={Home} />
-      <Stack.Screen name="import" component={Import} />
-      <Stack.Screen name="transfer" component={Transfer} />
-      <Stack.Screen name="transferSol" component={TransferSol} />
-      <Stack.Screen name="create" component={CreateWalletNavigation}/>
-      <Stack.Screen name="nft" component={NFT} />
+      <Stack.Screen name={HOME} component={Home} />
+      <Stack.Screen name={CREATE_WALLET_FLOW} component={CreateWalletNavigation} />
+      <Stack.Screen name={VIEW_WALLET_DASHBOARD} component={MainWalletScreen}/>
     </Stack.Navigator>
   );
 };
