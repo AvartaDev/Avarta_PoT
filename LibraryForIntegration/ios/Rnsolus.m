@@ -340,7 +340,13 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
         [self.library processStringData:jsonString forActivity:self.currentActivity];
                 
     }else{
-        [self.library processStringData:data forActivity:self.currentActivity];
+
+        NSDictionary *zoom = @{@"ZOOM" : @{@"Secret":@"00000000-0000-0000-0000-000000000000", @"Description" : @"Undetermined",@"Liveness":@"0"}};
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:zoom options:NSJSONWritingPrettyPrinted error:&error];
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+        [self.library processStringData:jsonString forActivity:self.currentActivity];
     }
 }
 
@@ -457,8 +463,14 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
   }else if(self.currentWorkflowType == SolusVerifyWorkflow) {
     [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusVerifyWorkflow workflowKey:nil];
     [self inauthSendLogs:self.currentUsername];
-  }
-  else {
+  } else if (self.currentWorkflowType == SolusStepUpWorkflow) {
+    [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusStepUpWorkflow workflowKey:nil];
+      [self inauthSendLogs:self.currentUsername];
+  }else if (self.currentWorkflowType == SolusStepUpElevatedWorkflow) {
+      [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusStepUpElevatedWorkflow workflowKey:nil];
+        [self inauthSendLogs:self.currentUsername];
+    }
+  else if (self.currentWorkflowType == SolusDeleteWorkflow) {
     [self.library startWorkflowWithUserName:self.currentUsername checkStatus:NO andType:SolusDeleteWorkflow workflowKey:nil];
     [self inauthSendLogs:self.currentUsername];
   }
