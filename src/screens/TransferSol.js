@@ -35,11 +35,7 @@ const TransferSol = ({navigation}) => {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendSolana(
-      'Dxf13sCV1wpxUkbMjeudBAzCi7PA499PwGUuX4paSXD2',
-      amount,
-      solWallet.privateKey,
-    );
+    let txHash = await sendSolana(recepient, amount, solWallet.privateKey);
     Alert.alert('Transaction successful');
     console.log(txHash, 'txhash');
     // navigation.navigate('dashboard');

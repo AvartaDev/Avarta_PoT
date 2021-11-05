@@ -45,6 +45,7 @@ export const useAuth = () => {
           AVARTA_MASTER_KEY,
           encryptedPassword,
         );
+        console.log(userPassword);
         return userPassword;
       }
       // eslint-disable-next-line no-empty
@@ -63,7 +64,7 @@ export const useAuth = () => {
     }
     try {
       const wallet = await encryptor.decrypt(password, privateKeyKey);
-      dispatch({type: actions.CREATE_WALLET, payload: wallet});
+      dispatch({type: actions.LOGIN_SUCCESS, payload: true});
     } catch (e) {
       dispatch({type: actions.LOGIN_FAILED, payload: null});
     }

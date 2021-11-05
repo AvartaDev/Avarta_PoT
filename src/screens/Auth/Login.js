@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, {Component, useEffect} from 'react';
 import {
   View,
   Text,
@@ -17,9 +17,9 @@ const Login = ({navigation}) => {
   const [password, setPassword] = React.useState('');
   const {loginUser} = useAuth();
 
-  const handleChange = field => value => {
-    setPassword({...password, [field]: value});
-  };
+  // const handleChange = field => value => {
+  //   setPassword({...password, [field]: value});
+  // };
 
   const {colors, gutter} = useTheme();
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
             label="Password"
             value={password}
             required
-            onChangeText={handleChange('password')}
+            onChangeText={setPassword}
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
@@ -199,18 +199,20 @@ const Login = ({navigation}) => {
           </View>
         </PrimaryModal>
         <Text
-        onPress={()=>{navigation.navigate('SolusLibrary')}}
-              style={{
-                position:'absolute',
-                top:40,
-                left:-5,
-                color: colors.basic,
-                fontWeight: 'bold',
-                marginLeft: gutter.lg,
-                textAlign: 'right',
-              }}>
-              Go to Library
-            </Text>
+          onPress={() => {
+            navigation.navigate('SolusLibrary');
+          }}
+          style={{
+            position: 'absolute',
+            top: 40,
+            left: -5,
+            color: colors.basic,
+            fontWeight: 'bold',
+            marginLeft: gutter.lg,
+            textAlign: 'right',
+          }}>
+          Go to Library
+        </Text>
       </BgView>
     </ImageBackground>
   );

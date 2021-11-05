@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import Solus from 'rnsolus';
 
-export default function SolusLibrary() {
-  const [UserName, setUserName] = useState('hemangi.vekaria');
-  const [Password, setPassword] = useState('Hemangi123');
+const SolusLibrary = ({navigation}) => {
+  const [UserName, setUserName] = useState('');
+  const [Password, setPassword] = useState('');
 
   const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
   const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
@@ -86,7 +86,7 @@ export default function SolusLibrary() {
       ORGANISATION_KEY,
     );
   };
-  const StepUpProcess =async () => {
+  const StepUpProcess = async () => {
     if (UserName == '') {
       alert('UserName Required Some Value');
       return false;
@@ -96,7 +96,7 @@ export default function SolusLibrary() {
     } else {
       try {
         const promise = await Solus.StepUpProcess(UserName, Password);
-        console.log(`${promise}`);
+        navigation.navigate('landing');
       } catch (e) {
         console.log(e);
       }
@@ -246,4 +246,5 @@ export default function SolusLibrary() {
       </TouchableOpacity>
     </SafeAreaView>
   );
-}
+};
+export default SolusLibrary;

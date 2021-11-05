@@ -101,17 +101,22 @@ export const useWallet = () => {
     return res.data.hash;
   };
   const sendSolana = async (address, amount, privateKey) => {
-    const res = await axios.post(
-      `https://transaction-signer.herokuapp.com/api/transfer`,
-      {
-        privateKey: privateKey,
-        amount,
-        receiver: address,
-        network: 'solana',
-      },
-    );
-    console.log('res', res.data.hash);
-    return res.data.hash;
+    console.log('HERE:____', address, amount, privateKey);
+    try {
+      const res = await axios.post(
+        `https://transaction-signer.herokuapp.com/api/transfer`,
+        {
+          privateKey: privateKey,
+          amount,
+          receiver: address,
+          network: 'solana',
+        },
+      );
+      console.log('res', res.data.hash);
+      return res.data.hash;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return {

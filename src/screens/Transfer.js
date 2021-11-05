@@ -33,10 +33,7 @@ const Transfer = ({navigation}) => {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendFunds(
-      '0x527981E7f813bCefC8a6729C96eB2b41c09Cc49B',
-      amount,
-    );
+    let txHash = await sendFunds(recepient, amount);
     Alert.alert('Transaction successful');
     console.log(txHash, 'txhash');
     // navigation.navigate('dashboard');
