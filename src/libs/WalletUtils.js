@@ -10,8 +10,14 @@ import {hdkey} from 'ethereumjs-wallet';
 import {JsonRpcProvider} from '@ethersproject/providers';
 import * as Bip39 from 'react-native-bip39';
 import {mnemonicToSeed} from './bip39/index';
-import {ETH_WALLET_KEY} from '@constants/keys';
-import { getEthBalance } from './BlockchainUtils';
+import {BSC_WALLET_KEY, ETH_WALLET_KEY} from '@constants/keys';
+import {
+  getBscBalance,
+  getEthBalance,
+  sendBsc,
+  sendEth,
+} from './BlockchainUtils';
+import Toast from 'react-native-toast-message';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
@@ -52,14 +58,41 @@ export const deriveAccountFromMnemonic = async (mnemonic, index = 0) => {
   return res;
 };
 
+const tokenGetterMap = {
+  [ETH_WALLET_KEY]: getEthBalance,
+  [BSC_WALLET_KEY]: getBscBalance,
+};
+
 export const getWalletBalance = async (address, token) => {
-  switch (token) {
-    case ETH_WALLET_KEY:
-      console.log("fetching ETH")
-      return getEthBalance(address)
-    default:
-      break;
+  console.log(`GETTING ${token} BALANCE`);
+  return await tokenGetterMap[token](address);
+};
+
+const tokenTransferMap = {
+  [ETH_WALLET_KEY]: sendEth,
+  [BSC_WALLET_KEY]: sendBsc,
+};
+
+export const sendTokens = async (targetAddr, value, token, wallet) => {
+  const currBalance = parseFloat(await getWalletBalance(wallet.address, token));
+  const transferAmount = parseFloat(value);
+  let res;
+  if (value > currBalance) {
+    Toast.show({
+      type: 'error',
+      text1: 'Insufficient amount',
+      text2: 'Wallet lacks funds to perform transfer',
+    });
+    res = null;
+  } else {
+    console.log(
+      `SENDING ${value} on ${token} to ${targetAddr}, balance: ${currBalance}`,
+    );
+    await tokenTransferMap[token](targetAddr, value, wallet);
+    res = true
   }
+
+  return res;
 };
 
 // export const useWallet = () => {

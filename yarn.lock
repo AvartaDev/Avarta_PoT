@@ -1111,7 +1111,7 @@
     crc-32 "^1.2.0"
     ethereumjs-util "^7.1.1"
 
-"@ethereumjs/tx@^3.2.1", "@ethereumjs/tx@^3.3.0":
+"@ethereumjs/tx@^3.2.1", "@ethereumjs/tx@^3.3.0", "@ethereumjs/tx@^3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@ethereumjs/tx/-/tx-3.3.2.tgz#348d4624bf248aaab6c44fec2ae67265efe3db00"
   integrity sha512-6AaJhwg4ucmwTvw/1qLaZUX5miWrwZ4nLOUsKyb/HtzS3BMw/CasKhdi1ims9mBKeK9sOJCH4qGKOBGyJCeeog==
@@ -10060,6 +10060,11 @@ react-native-tcp@^3.3.2:
     ip-regex "^1.0.3"
     process "^0.11.9"
     util "^0.10.3"
+
+react-native-toast-message@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.0.0.tgz#a98fcdf6e1e3788915c1ee3e657ffcfd08007b1f"
+  integrity sha512-lofG5pXuG4BUzlAiD1l99IW+kEsd+IDgQ78zkj3h9HLUVJCgY8fSjDpT8FDA3411L/o+O0qKQR94uGwhAvE/Cg==
 
 react-native-udp@^2.7.0:
   version "2.7.0"

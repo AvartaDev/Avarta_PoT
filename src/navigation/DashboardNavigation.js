@@ -2,8 +2,8 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '@screens/Home';
 import CreateWalletNavigation from './CreateWalletNavigation';
-import { CREATE_WALLET_FLOW, HOME, VIEW_WALLET_DASHBOARD } from '@constants/navigation';
-import MainWalletScreen from '@screens/wallet/main/MainWalletScreen';
+import { CREATE_WALLET_FLOW, HOME, VIEW_WALLET_DASHBOARD, WALLET_NAVIGATOR } from '@constants/navigation';
+import WalletNavigation from './WalletNavigation';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +16,7 @@ const DashboardNavigation = () => {
       }}>
       <Stack.Screen name={HOME} component={Home} />
       <Stack.Screen name={CREATE_WALLET_FLOW} component={CreateWalletNavigation} />
-      <Stack.Screen name={VIEW_WALLET_DASHBOARD} component={MainWalletScreen}/>
+      <Stack.Screen name={WALLET_NAVIGATOR} component={WalletNavigation}/>
     </Stack.Navigator>
   );
 };

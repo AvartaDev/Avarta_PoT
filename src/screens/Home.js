@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, ImageBackground, Text} from 'react-native';
+import {View, ImageBackground, Text, ScrollView} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import Button from '@components/Button';
 import {getAllWallets} from '@libs/localPersistenceUtils';
-import {ETH_WALLET_KEY} from '@constants/keys';
-import {CREATE_WALLET_FLOW, VIEW_WALLET_DASHBOARD} from '@constants/navigation';
+import {BSC_WALLET_KEY, ETH_WALLET_KEY} from '@constants/keys';
+import {CREATE_WALLET_FLOW, VIEW_WALLET_DASHBOARD, WALLET_NAVIGATOR} from '@constants/navigation';
 import WalletCard from '@components/WalletCard';
 
 const Home = ({navigation}) => {
@@ -17,6 +17,8 @@ const Home = ({navigation}) => {
     setLoaded(false);
     const res = await getAllWallets();
     const parsedRes = JSON.parse(res);
+    parsedRes[BSC_WALLET_KEY] = parsedRes[ETH_WALLET_KEY];
+    console.log(parsedRes);
     setAllWallets(parsedRes);
     setLoaded(true);
   };
@@ -30,47 +32,65 @@ const Home = ({navigation}) => {
       wallet={allWallets[token]}
       token={token}
       onPress={() =>
-        navigation.navigate(VIEW_WALLET_DASHBOARD, {
-          wallet: allWallets[token],
-          token,
-        })
+        navigation.navigate(WALLET_NAVIGATOR,{
+          screen: VIEW_WALLET_DASHBOARD,
+          params:{
+            wallet: allWallets[token],
+            token,
+          } 
+        } )
       }
     />
   );
 
+  const activatedWallets = [ETH_WALLET_KEY, BSC_WALLET_KEY];
+
+  const getMappedWallets = () => {
+    console.log('GETMAPPEDWALLETS');
+    return activatedWallets.map(token => {
+      console.log(token);
+      return <Wallet key={token} token={token} />;
+    });
+  };
+
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
-      style={{width: '100%', height: '100%'}}>
+      style={{
+        width: '100%',
+        height: '100%',
+      }}>
       <BgView>
-        <View style={{marginHorizontal: gutter.md}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              marginTop: gutter.lg,
-              fontWeight: 'bold',
-              fontSize: 26,
-            }}>
-            HOME
-          </Text>
-          {loaded ? <Wallet token={ETH_WALLET_KEY} /> : null}
+        <ScrollView style={{marginHorizontal: gutter.md}}>
+          <View >
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                marginTop: gutter.lg,
+                fontWeight: 'bold',
+                fontSize: 26,
+              }}>
+              HOME
+            </Text>
+            {loaded ? getMappedWallets() : null}
 
-          <View style={{marginTop: '10%'}}>
-            <Button
-              text="Create Wallet"
-              onPress={() => {
-                navigation.navigate(CREATE_WALLET_FLOW);
-              }}
-            />
-            <Button
-              text="Refresh"
-              onPress={() => {
-                initWallets();
-              }}
-            />
+            <View style={{marginTop: '10%'}}>
+              <Button
+                text="Create Wallet"
+                onPress={() => {
+                  navigation.navigate(CREATE_WALLET_FLOW);
+                }}
+              />
+              <Button
+                text="Refresh"
+                onPress={() => {
+                  initWallets();
+                }}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </BgView>
     </ImageBackground>
   );

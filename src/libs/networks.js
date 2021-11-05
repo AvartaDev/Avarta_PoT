@@ -34,7 +34,7 @@ export const NetworkList = {
     shortName: 'Ropsten',
     networkId: 3,
     chainId: 3,
-    rpcUrl: 'https://ropsten.infura.io/v3/e9c4665d91a343e295308d5995ff5a72',
+    rpcUrl: 'wss://ropsten.infura.io/ws/v3/e9c4665d91a343e295308d5995ff5a72',
     hexChainId: '0x3',
     color: '#ff4a8d',
     networkType: 'ropsten',

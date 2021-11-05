@@ -6,11 +6,13 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "build": "react-native bundle",
     "test": "jest",
-    "lint": "eslint .",
-    "postinstall": "patch-package"
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@ethereumjs/common": "^2.5.0",
+    "@ethereumjs/tx": "^3.3.2",
     "@ethersproject/abi": "^5.0.9",
     "@ethersproject/abstract-provider": "^5.0.7",
     "@ethersproject/abstract-signer": "^5.0.9",
@@ -84,6 +86,7 @@
     "react-native-screens": "^2.9.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-tcp": "^3.3.2",
+    "react-native-toast-message": "^2.0.0",
     "react-native-udp": "^2.7.0",
     "react-native-vector-icons": "^8.1.0",
     "react-navigation": "^4.4.0",
