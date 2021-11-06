@@ -203,6 +203,7 @@ export const useAuth = () => {
     loginUser,
     createWallet,
     solWallet: store.solWallet,
+    wallet: store.wallet,
   };
 };
 

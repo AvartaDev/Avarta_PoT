@@ -54,7 +54,6 @@ export const useWallet = () => {
 
   const deriveAccountFromPrivateKey = privateKey => {
     const ethersWallet = new Wallet(addHexPrefix(privateKey));
-    console.log(Wallet);
     const wallet = {
       address: ethersWallet.address,
       isHDWallet: false,
@@ -86,22 +85,25 @@ export const useWallet = () => {
     dispatch({type: actions.SET_WALLET_BALANCE, payload: balanceData});
     return balance;
   };
-  const sendFunds = async (address, amount) => {
-    const res = await axios.post(
-      `https://transaction-signer.herokuapp.com/api/transfer`,
-      {
-        privateKey:
-          '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
-        amount,
-        receiver: address,
-        network: 'bsc',
-      },
-    );
-    console.log('res', res.data.hash);
-    return res.data.hash;
+  const sendFunds = async (address, amount, network, privateKey) => {
+    try {
+      const res = await axios.post(
+        `https://transaction-signer.herokuapp.com/api/transfer`,
+        {
+          privateKey:
+            '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
+          amount,
+          receiver: address,
+          network: network,
+        },
+      );
+      console.log('res', res.data.hash);
+      return res.data.hash;
+    } catch (err) {
+      console.log(err);
+    }
   };
   const sendSolana = async (address, amount, privateKey) => {
-    console.log('HERE:____', address, amount, privateKey);
     try {
       const res = await axios.post(
         `https://transaction-signer.herokuapp.com/api/transfer`,

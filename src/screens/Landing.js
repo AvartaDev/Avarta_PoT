@@ -43,7 +43,7 @@ const Landing = ({navigation}) => {
           <View style={{marginTop: '10%'}}>
             <Button
               text="Homepage"
-              onPress={() => navigation.navigate('home')}
+              onPress={() => navigation.navigate('dashboard')}
             />
           </View>
         </View>

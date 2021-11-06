@@ -13,7 +13,7 @@ import {LabelInput} from '@components/Input';
 import Button from '@components/Button';
 import useWallet from '@hooks/useWallet';
 
-const Transfer = ({navigation}) => {
+const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {sendFunds} = useWallet();
 
@@ -33,7 +33,7 @@ const Transfer = ({navigation}) => {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendFunds(recepient, amount, 'bsc');
+    let txHash = await sendFunds(recepient, amount, 'eth');
     Alert.alert('Transaction successful');
     console.log(txHash, 'txhash');
     navigation.navigate('dashboard');
@@ -51,7 +51,7 @@ const Transfer = ({navigation}) => {
             justifyContent: 'center',
           }}>
           <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 29}}>
-            Transfer on BSC
+            Transfer on Ethereum
           </Text>
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
@@ -79,4 +79,4 @@ const Transfer = ({navigation}) => {
   );
 };
 
-export default Transfer;
+export default TransferEth;

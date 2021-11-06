@@ -12,6 +12,7 @@ import {LabelInput} from '@components/Input';
 import Button from '@components/Button';
 import {PrimaryModal} from '@components/Modal';
 import useAuth from '@hooks/useAuth';
+import * as keychain from '@libs/keychain';
 
 const Login = ({navigation}) => {
   const [password, setPassword] = React.useState('');
