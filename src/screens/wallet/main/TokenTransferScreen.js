@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 
 const TokenTransferScreen = ({route, navigation}) => {
   const {wallet, token} = route.params;
-  const defaultVal = '0.001';
+  const defaultVal = '0.005';
   const [val, setVal] = useState(defaultVal);
 
   const defaultAddr = '0xb3ab4150085FCa6CBe449572555377d982C87bc8';
@@ -36,6 +36,7 @@ const TokenTransferScreen = ({route, navigation}) => {
         text="Send"
         onPress={async () => {
           const res = await sendTokens(targetAddr, val, token, wallet);
+          console.log(res)
           if (res) navigation.navigate(VIEW_WALLET_DASHBOARD, {wallet, token});
         }}
       />
