@@ -186,7 +186,7 @@ export const useAuth = () => {
     dispatch({type: actions.CREATE_WALLET, payload: newWallet});
 
     const res = await axios.post(
-      'https://transaction-signer.herokuapp.com/api/create?network=solana',
+      'https://avarta-api.herokuapp.com/api/create?network=solana',
     );
     const {data} = res;
 

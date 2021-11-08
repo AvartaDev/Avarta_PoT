@@ -16,7 +16,7 @@ export const DEFAULT_WALLET_NAME = 'My Wallet';
 export const useWallet = () => {
   const [loading, setLoading] = React.useState({});
 
-  const BASE_URL = 'https://transaction-signer.herokuapp.com/api/';
+  const BASE_URL = 'https://avarta-api.herokuapp.com/api/';
 
   const activate = attachLoader(setLoading);
 
@@ -68,13 +68,13 @@ export const useWallet = () => {
     let balance;
     if (address) {
       balance = await axios.get(
-        `https://transaction-signer.herokuapp.com/api/balance/${address}?network=bsc`,
+        `https://avarta-api.herokuapp.com/api/balance/${address}?network=bsc`,
       );
     }
     let solBalance;
     if (solanaAddress) {
       solBalance = await axios.get(
-        `https://transaction-signer.herokuapp.com/api/balance/${solanaAddress}?network=solana`,
+        `https://avarta-api.herokuapp.com/api/balance/${solanaAddress}?network=solana`,
       );
     }
     console.log('balance', balance.data);
@@ -88,7 +88,7 @@ export const useWallet = () => {
   const sendFunds = async (address, amount, network, privateKey) => {
     try {
       const res = await axios.post(
-        `https://transaction-signer.herokuapp.com/api/transfer`,
+        `https://avarta-api.herokuapp.com/api/transfer`,
         {
           privateKey:
             '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
@@ -106,7 +106,7 @@ export const useWallet = () => {
   const sendSolana = async (address, amount, privateKey) => {
     try {
       const res = await axios.post(
-        `https://transaction-signer.herokuapp.com/api/transfer`,
+        `https://avarta-api.herokuapp.com/api/transfer`,
         {
           privateKey: privateKey,
           amount,
