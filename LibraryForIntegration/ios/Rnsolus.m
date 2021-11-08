@@ -15,6 +15,7 @@
 #import "SOLUSNetworkManager.h"
 #import "SOLUSStorageModel.h"
 
+
 typedef void (^Completion)(NSString* token);
 
 @interface Solus ()<SOLUSIntegrationLibraryDelegate,FaceTecFaceScanProcessorDelegate,SolusDlockDelegate>{
@@ -22,22 +23,22 @@ typedef void (^Completion)(NSString* token);
 
   BOOL isAuth;
   float uploadProgress;
+  NSString *ZoomKey;
   
 }
 
+
 @property (nonatomic, strong, nonnull) SOLUSIntegrationLibrary *library;
-@property (nonatomic, strong, nonnull) RCTPromiseResolveBlock resolver;
-@property (nonatomic, strong, nonnull) RCTPromiseRejectBlock rejecter;
 @property (nonnull, nonatomic, strong) SOLUSInAuthManager *inAuthManager;
 @property ( nonatomic) SolusWorkflowType currentWorkflowType;
 @property (nonatomic, strong, nonnull) SolusDlock *solusDlock;
 @property (nonatomic) SolusActivities currentActivity;
 @property (nonnull, nonatomic, strong) SOLUSBSManager *behaviosecManager;
-
+@property (nonatomic, strong, nonnull) RCTPromiseResolveBlock resolver;
+@property (nonatomic, strong, nonnull) RCTPromiseRejectBlock rejecter;
 
 @property (nonnull, nonatomic, strong) NSString *currentUsername;
 @property (nonnull, nonatomic, strong) NSString *currentPassword;
-@property (nonnull, nonatomic, strong) NSString *status;
 @property(nonnull,strong) NSURLSessionDataTask *latestNetworkRequest;
 @property (nonatomic, nonnull, strong) SOLUSStorageModel *storage;
 
@@ -47,8 +48,26 @@ typedef void (^Completion)(NSString* token);
 @implementation Solus
 
 
-RCT_EXPORT_MODULE()
+//- (instancetype)init
+//{
+//  self = [super init];
+//  if (self) {
+//
+//    self.library = [[SOLUSIntegrationLibrary alloc] initWithOrganizationId:@"A5014D70-7956-478E-9680-C9B6CEA67689" andBaseUrl:[NSURL URLWithString:kBaseUrl] andApplicationCode:@"BANKINGAPP"];
+//
+//    self.inAuthManager = [[SOLUSInAuthManager alloc] initWithBaseURL:kBaseUrl andOrganizationKey:@"A5014D70-7956-478E-9680-C9B6CEA67689"];
+//
+//    self.library.delegate = self;
+//    self.solusDlock = [[SolusDlock alloc] init];
+//    self.solusDlock.delegate = self;
+//
+//    self.behaviosecManager = [[SOLUSBSManager alloc] init];
+//  }
+//  return self;
+//}
 
+
+RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(onCreate:(NSString *)DeviceKeyIdentifier FaceScanEncryptionKey:(NSString *)FaceScanEncryptionKey ServerUrl:(NSString *)ServerUrl orgID:(NSString *)orgID)
 {
@@ -67,18 +86,16 @@ RCT_EXPORT_METHOD(onCreate:(NSString *)DeviceKeyIdentifier FaceScanEncryptionKey
     
     [FaceTec.sdk initializeInDevelopmentMode:DeviceKeyIdentifier faceScanEncryptionKey:FaceScanEncryptionKey completion:^(BOOL result) {
       NSLog(result ? @"Yes" : @"No");
-      
+        self->ZoomKey = DeviceKeyIdentifier;
     }];
     
   }
 }
 
-RCT_EXPORT_METHOD(EnrollProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject
-){
+RCT_EXPORT_METHOD(EnrollProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
   [self EnrollProcessresolver:resolve rejecter:reject];
-    
 }
 
 RCT_EXPORT_METHOD(DeEnrollProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
@@ -102,52 +119,60 @@ RCT_EXPORT_METHOD(StepUpProcess:(NSString *)name pwd:(NSString *)password resolv
 RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
   self.currentUsername = name;
   self.currentPassword = password;
-  [self StepUpElevatedProcessresolver:resolve rejecter:reject];
+  [self StepUpElevatedresolver:resolve rejecter:reject];
+}
+
+-(void)initilation {
+  
 }
 
 
--(void)DeEnrollProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
+-(void)DeEnrollProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType = SolusDeleteWorkflow;
     self.resolver = resolve;
-    self.rejecter = reject;
+      self.rejecter = reject;
   [self.library initialize];
   [self deleteUserWithUsername:self.currentUsername andCompletion:^(NSError * _Nullable error, BOOL deleted) {
     [self showALert:@"De Enroll User successfully"];
-      self.resolver(@"De Enroll User successfully");
-//      NSString *code = [NSString stringWithFormat: @"%ld", (long)error.code];
-//      NSString *errorValue = [NSString stringWithFormat: @"%@", error.localizedDescription];
-//      self.rejecter(code, @"De Enrolling failed", errorValue);
+//      if(error){
+//          self.rejecter(nil, @"DeEnroll Failed", error);
+//      }
+//      else{
+          self.resolver(@"De Enroll User successfully");
+//      }
    }];
 }
 
 
 -(void)EnrollProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  = SolusEnrollWorkflow;
-  self.resolver = resolve;
-  self.rejecter = reject;
+    self.resolver = resolve;
+      self.rejecter = reject;
   [self.library initialize];
 }
 
 -(void)SignInProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
   self.currentWorkflowType  = SolusVerifyWorkflow;
     self.resolver = resolve;
-    self.rejecter = reject;
+      self.rejecter = reject;
   [self.library initialize];
 }
 
 -(void)StepUpProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
-  self.currentWorkflowType  =  SolusStepUpWorkflow;
+  self.currentWorkflowType  = SolusStepUpWorkflow;
     self.resolver = resolve;
-    self.rejecter = reject;
+      self.rejecter = reject;
   [self.library initialize];
 }
 
--(void)StepUpElevatedProcessresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
-  self.currentWorkflowType  =  SolusStepUpElevatedWorkflow;
+-(void)StepUpElevatedresolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject{
+  self.currentWorkflowType  = SolusStepUpElevatedWorkflow;
     self.resolver = resolve;
-    self.rejecter = reject;
+      self.rejecter = reject;
   [self.library initialize];
 }
+
+
 
 
 #pragma mark - FaceTec Methods....
@@ -231,7 +256,8 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
     NSData *postData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
     [request setHTTPBody:postData];
 
-    [request addValue:@"dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R" forHTTPHeaderField:@"X-Device-Key"];
+  //@"dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R"
+    [request addValue:self->ZoomKey forHTTPHeaderField:@"X-Device-Key"];
     [request addValue:[FaceTec.sdk createFaceTecAPIUserAgentString:sessionResult.sessionId]  forHTTPHeaderField:@"User-Agent"];
 
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -260,19 +286,26 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
             if (self->isAuth) {
                 [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Authenticated"];
             } else {
-                [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Enrollment\nConfirmed"];
+                [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Liveness\nConfirmed"];
             }
 
             [faceScanResultCallback onFaceScanResultProceedToNextStep:scanResultBlob];
 
-            NSString *secret = nil;
+            NSString *secret = @"";
             
             if (self->isAuth) {
-                secret = [self.storage perUserSecretForUsername:self.currentUsername];
+//                secret = [self.storage perUserSecretForUsername:self.currentUsername];
+              
+              secret = [[NSUserDefaults standardUserDefaults] objectForKey:@"secret"];
             } else {
                 secret = [self generateUserId];
-                [self.storage storePerUserSecret:secret forUsername:self.currentUsername];
+//                [self.storage storePerUserSecret:secret forUsername:self.currentUsername];
+              
+              [[NSUserDefaults standardUserDefaults]setValue:secret forKey:@"secret"];
+              [[NSUserDefaults standardUserDefaults]synchronize];
             }
+          
+          NSLog(@"=============secret=========%@",secret);
             
             double delayInSeconds = 3.0;
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
@@ -340,13 +373,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
         [self.library processStringData:jsonString forActivity:self.currentActivity];
                 
     }else{
-
-        NSDictionary *zoom = @{@"ZOOM" : @{@"Secret":@"00000000-0000-0000-0000-000000000000", @"Description" : @"Undetermined",@"Liveness":@"0"}};
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:zoom options:NSJSONWritingPrettyPrinted error:&error];
-        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-        [self.library processStringData:jsonString forActivity:self.currentActivity];
+        [self.library processStringData:data forActivity:self.currentActivity];
     }
 }
 
@@ -386,7 +413,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 
 
   [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-  [request addValue:@"dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R" forHTTPHeaderField:@"X-Device-License-Key"];
+  [request addValue:self->ZoomKey  forHTTPHeaderField:@"X-Device-License-Key"];
   NSString *sessionId = @"nil";
 
   [request addValue:[FaceTec.sdk createFaceTecAPIUserAgentString:sessionId]  forHTTPHeaderField:@"User-Agent"];
@@ -427,7 +454,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
                                                        timeoutInterval:60.0];
 
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R" forHTTPHeaderField:@"X-Device-Key"];
+    [request addValue:self->ZoomKey forHTTPHeaderField:@"X-Device-Key"];
     [request addValue:[FaceTec.sdk createFaceTecAPIUserAgentString:@""]  forHTTPHeaderField:@"User-Agent"];
 
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -463,14 +490,16 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
   }else if(self.currentWorkflowType == SolusVerifyWorkflow) {
     [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusVerifyWorkflow workflowKey:nil];
     [self inauthSendLogs:self.currentUsername];
-  } else if (self.currentWorkflowType == SolusStepUpWorkflow) {
-    [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusStepUpWorkflow workflowKey:nil];
-      [self inauthSendLogs:self.currentUsername];
-  }else if (self.currentWorkflowType == SolusStepUpElevatedWorkflow) {
-      [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusStepUpElevatedWorkflow workflowKey:nil];
-        [self inauthSendLogs:self.currentUsername];
-    }
-  else if (self.currentWorkflowType == SolusDeleteWorkflow) {
+  }
+  else if(self.currentWorkflowType == SolusStepUpWorkflow) {
+    [self.library startWorkflowWithUserName:self.currentUsername checkStatus:NO andType:SolusStepUpWorkflow workflowKey:nil];
+    [self inauthSendLogs:self.currentUsername];
+  }
+  else if(self.currentWorkflowType == SolusStepUpElevatedWorkflow) {
+    [self.library startWorkflowWithUserName:self.currentUsername checkStatus:YES andType:SolusStepUpElevatedWorkflow workflowKey:nil];
+    [self inauthSendLogs:self.currentUsername];
+  }
+  else {
     [self.library startWorkflowWithUserName:self.currentUsername checkStatus:NO andType:SolusDeleteWorkflow workflowKey:nil];
     [self inauthSendLogs:self.currentUsername];
   }
@@ -519,19 +548,14 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 }
 
 -(void)updateBehaviosecDataWithSummary :(NSString*)summury {
-    if(self.currentWorkflowType == SolusEnrollWorkflow)
-    {
-        [self.library behaviosecRegisterWithUsername:self.currentUsername workflowType:self.currentWorkflowType summary:summury andCompletion:^(NSError * _Nullable error, SOLUSBehavioSecModel * _Nullable model) {
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
-        });
-        
-       }];
-    }  else {
-    [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
-    }
+  
+  [self.library behaviosecRegisterWithUsername:self.currentUsername workflowType:self.currentWorkflowType summary:summury andCompletion:^(NSError * _Nullable error, SOLUSBehavioSecModel * _Nullable model) {
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self.library processStringData:self.currentPassword forActivity:ActivityPassword];
+    });
+    
+  }];
 }
 
 
@@ -568,10 +592,8 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 {
   NSLog(@"Solus Workflow failed with error :%@",error.localizedDescription);
   [self showALert:[NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription]];
-//    NSString *code = [NSString stringWithFormat: @"%ld", (long)error.code];
     NSString *errorValue = [NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription];
-//    self.rejecter(code, @"Solus Workflow failed with error", errorValue);
-    self.resolver(errorValue);
+    self.rejecter(nil, errorValue, error);
 }
 
 -(void)solusIntegrationLibrary:(SOLUSIntegrationLibrary *)library workflowCompleted:(SolusWorkflowType)workflowType deviceBased:(BOOL)deviceBased withFullName:(NSString *)fullName
@@ -585,9 +607,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 {
   NSLog(@"Workflow cancelled");
   [self showALert:@"Workflow cancelled"];
-    self.resolver(@"Workflow Cancelled");
-  //  self.rejecter(nil, @"WorkFlow Cancelled",nil);
-//    self.status = @"Workflow cancelled";
+    self.resolver(@"Workflow cancelled");
 }
 
 #pragma mark - Dlock Methods...
