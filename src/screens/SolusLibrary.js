@@ -38,9 +38,9 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.EnrollProcess(UserName, Password);
-        console.log(`${promise}`);
+        alert(`${promise}`);
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
   };
@@ -54,9 +54,9 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.AuthenticationProcess(UserName, Password);
-        console.log(`${promise}`);
+        alert(`${promise}`);
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
   };
@@ -71,9 +71,9 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.DeEnrollProcess(UserName, Password);
-        console.log(`${promise}`);
+        alert(`${promise}`);
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
   };
@@ -96,9 +96,10 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.StepUpProcess(UserName, Password);
-        navigation.navigate('landing');
+        alert(`${promise}`);
+        // navigation.navigate('landing');
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
   };
@@ -113,9 +114,9 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.StepUpElevatedProcess(UserName, Password);
-        console.log(`${promise}`);
+        alert(`${promise}`);
       } catch (e) {
-        console.log(e);
+        alert(e);
       }
     }
   };
