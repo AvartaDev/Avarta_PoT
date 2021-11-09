@@ -133,13 +133,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
       self.rejecter = reject;
   [self.library initialize];
   [self deleteUserWithUsername:self.currentUsername andCompletion:^(NSError * _Nullable error, BOOL deleted) {
-    [self showALert:@"De Enroll User successfully"];
-//      if(error){
-//          self.rejecter(nil, @"DeEnroll Failed", error);
-//      }
-//      else{
-          self.resolver(@"De Enroll User successfully");
-//      }
+//    [self showALert:@"De Enroll User successfully"];
    }];
 }
 
@@ -267,6 +261,8 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
         if (data == nil) {
             [faceScanResultCallback onFaceScanResultCancel];
             [self faceTecCancelWithErrorHandle:sessionResult];
+//            [self showALert:@"FaceTec cancelled with error"];
+            self.rejecter(nil, @"Facetec cancelled with error", nil);
             return;
         }
 
@@ -276,17 +272,22 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
         if (jsonResponse == nil) {
             [faceScanResultCallback onFaceScanResultCancel];
             [self faceTecCancelWithErrorHandle:sessionResult];
+//            [self showALert:@"FaceTec cancelled with error"];
+            self.rejecter(nil, @"Facetec cancelled with error", nil);
             return;
         }
 
         NSString *scanResultBlob = [jsonResponse objectForKey:@"scanResultBlob"];
         BOOL wasProcessed = [[jsonResponse objectForKey:@"wasProcessed"] boolValue];
 
-        if (wasProcessed) {
+        BOOL success = [[jsonResponse objectForKey:@"success"] boolValue];
+              
+              
+        if ((wasProcessed && success && self->isAuth ==  YES) || (self->isAuth == NO && wasProcessed)) {
             if (self->isAuth) {
                 [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Authenticated"];
             } else {
-                [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Liveness\nConfirmed"];
+                [FaceTecCustomization setOverrideResultScreenSuccessMessage:@"Enrollment\nConfirmed"];
             }
 
             [faceScanResultCallback onFaceScanResultProceedToNextStep:scanResultBlob];
@@ -321,6 +322,8 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
         } else {
             [faceScanResultCallback onFaceScanResultCancel];
             [self faceTecCancelWithErrorHandle:sessionResult];
+//            [self showALert:@"FaceTec cancelled with error"];
+            self.rejecter(nil, @"Facetec cancelled with error", nil);
             return;
         }
     }];
@@ -591,7 +594,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 -(void)solusIntegrationLibrary:(nonnull SOLUSIntegrationLibrary*)library failedWithError:(nonnull NSError*)error
 {
   NSLog(@"Solus Workflow failed with error :%@",error.localizedDescription);
-  [self showALert:[NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription]];
+//  [self showALert:[NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription]];
     NSString *errorValue = [NSString stringWithFormat:@"Solus Workflow failed with error :%@",error.localizedDescription];
     self.rejecter(nil, errorValue, error);
 }
@@ -599,14 +602,14 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
 -(void)solusIntegrationLibrary:(SOLUSIntegrationLibrary *)library workflowCompleted:(SolusWorkflowType)workflowType deviceBased:(BOOL)deviceBased withFullName:(NSString *)fullName
 {
   NSLog(@"Workflow completed successfully");
-  [self showALert:@"Workflow completed successfully"];
+//  [self showALert:@"Workflow completed successfully"];
     self.resolver(@"Workflow completed successfully");
 }
 
 -(void)solusIntegrationLibrary:(SOLUSIntegrationLibrary *)library workflowCanceled:(SolusWorkflowType)workflowType
 {
   NSLog(@"Workflow cancelled");
-  [self showALert:@"Workflow cancelled"];
+//  [self showALert:@"Workflow cancelled"];
     self.resolver(@"Workflow cancelled");
 }
 
