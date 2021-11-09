@@ -7,18 +7,7 @@ import Button from '@components/Button';
 import useAuth from '@hooks/useAuth';
 
 const Landing = ({navigation}) => {
-  const {colors, gutter} = useTheme();
-  const {wallet, getWalletBalance, walletBalance} = useWallet();
-  const {solWallet} = useAuth();
-
-  const onCreateWallet = async () => {
-    if (password !== confirmPassword && password.length < 5) {
-      Alert.alert('password does not match');
-      return;
-    }
-    await createWallet(password);
-    navigation.navigate('dashboard');
-  };
+  const {gutter} = useTheme();
 
   return (
     <ImageBackground

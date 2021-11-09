@@ -15,7 +15,7 @@ import useWallet from '@hooks/useWallet';
 
 const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds} = useWallet();
+  const {sendFunds, wallet} = useWallet();
 
   const [formData, setFormData] = React.useState({
     amount: '',
@@ -33,7 +33,7 @@ const TransferEth = ({navigation}) => {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendFunds(recepient, amount, 'eth');
+    let txHash = await sendFunds(recepient, amount, 'eth', wallet.privateKey);
     Alert.alert('Transaction successful');
     console.log(txHash, 'txhash');
     navigation.navigate('dashboard');

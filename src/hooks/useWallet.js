@@ -46,6 +46,7 @@ export const useWallet = () => {
         isHDWallet: true,
         root,
         wallet,
+        privateKey: wallet.privateKey.toString('hex'),
       };
       dispatch({type: actions.CREATE_WALLET_FROMKEY, payload: newWallet});
       return newWallet;
@@ -90,8 +91,8 @@ export const useWallet = () => {
       const res = await axios.post(
         `https://avarta-api.herokuapp.com/api/transfer`,
         {
-          privateKey:
-            '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
+          privateKey: privateKey,
+          // '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
           amount,
           receiver: address,
           network: network,
