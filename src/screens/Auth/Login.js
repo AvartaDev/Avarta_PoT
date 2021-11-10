@@ -73,7 +73,7 @@ const Login = ({navigation}) => {
             }}>
             Sign In with face ID
           </Text>
-          <TouchableOpacity style={{padding: gutter.sm}}>
+          <TouchableOpacity style={{padding: gutter.sm}} onPress={() => navigation.navigate("biometrics")}>
             <Image
               source={require('@assets/images/face-id.png')}
               style={{tintColor: colors.white, width: 28, height: 28}}

@@ -25,11 +25,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-        <service
-            android:name="com.reactnativesolus.InauthService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
+      <activity android:name="com.facetecrn.SampleAppActivity" /> 
+
+      <service
+          android:name="com.reactnativesolus.InauthService"
+          android:permission="android.permission.BIND_JOB_SERVICE"/>
+      <uses-library
+          android:name="org.apache.http.legacy"
+          android:required="false" />
     </application>
 </manifest>

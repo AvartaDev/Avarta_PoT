@@ -1,6 +1,0 @@
-framework module SolusIntegrationLibrary {
-  umbrella header "SolusIntegrationLibrary.h"
-
-  export *
-  module * { export * }
-}

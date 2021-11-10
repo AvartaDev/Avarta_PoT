@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from '@screens/Auth/Login';
 import Register from '@screens/Auth/Register';
-import SolusLibrary from '../screens/SolusLibrary';
-import * as FileSystem from 'expo-file-system'
+import SolusLibrary from '../screens/SolusLibrary.js';
 import { Text } from 'react-native-elements';
 const Stack = createStackNavigator();
 
@@ -40,7 +39,7 @@ const AuthNavigator = () => {
         }}>
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="register" component={Register} />
-        <Stack.Screen name="SolusLibrary" component={SolusLibrary} />
+        <Stack.Screen name="biometrics" component={SolusLibrary} />
       </Stack.Navigator>
     );
 };

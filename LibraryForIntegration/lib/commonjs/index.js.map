@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.tsx"],"names":["Solus","NativeModules"],"mappings":";;;;;;;AAAA;;AAMA,MAAM;AAAEA,EAAAA;AAAF,IAAYC,0BAAlB;eAEeD,K","sourcesContent":["import { NativeModules } from 'react-native';\n\ntype RnsolusType = {\n  // multiply(a: number, b: number): Promise<number>;\n};\n\nconst { Solus } = NativeModules;\n\nexport default Solus as RnsolusType;\n"]}

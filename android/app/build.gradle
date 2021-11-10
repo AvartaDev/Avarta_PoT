@@ -81,6 +81,12 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+repositories{
+  flatDir {
+    dirs 'libs' //this way we can find the .aar file in libs folder
+  }
+}
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -153,6 +159,9 @@ android {
             keyPassword 'android'
         }
     }
+    buildFeatures{
+        dataBinding = true
+    }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -184,6 +193,8 @@ android {
 }
 
 dependencies {
+    implementation(name: 'facetec-sdk-9.4.4', ext: 'aar')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
