@@ -10,8 +10,8 @@ import {
 import Solus from 'rnsolus';
 
 const SolusLibrary = ({navigation}) => {
-  const [UserName, setUserName] = useState('behaviosec.test.1');
-  const [Password, setPassword] = useState('Hemangi123');
+  const [UserName, setUserName] = useState('hong.loon');
+  const [Password, setPassword] = useState('Abcd123a');
 
   const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
   const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
@@ -97,7 +97,7 @@ const SolusLibrary = ({navigation}) => {
       try {
         const promise = await Solus.StepUpProcess(UserName, Password);
         alert(`${promise}`);
-        // navigation.navigate('landing');
+        navigation.navigate('landing');
       } catch (e) {
         alert(e);
       }

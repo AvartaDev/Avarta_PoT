@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,9 @@ import {LabelInput} from '@components/Input';
 import Button from '@components/Button';
 import useWallet from '@hooks/useWallet';
 
-const Transfer = ({navigation}) => {
+const TransferBSC = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds, wallet} = useWallet();
+  const {sendFunds, wallet, walletBalance} = useWallet();
 
   const [formData, setFormData] = React.useState({
     amount: '',
@@ -29,14 +29,25 @@ const Transfer = ({navigation}) => {
   };
 
   const onClick = async () => {
-    if (amount === 0 && recepient === '') {
+    if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendFunds(recepient, amount, 'bsc', wallet.privateKey);
-    Alert.alert('Transaction successful');
-    console.log(txHash, 'txhash');
-    navigation.navigate('dashboard');
+
+    const newHash = await sendFunds(
+      recepient,
+      amount,
+      'bsc',
+      wallet.privateKey,
+    );
+    if (newHash) {
+      Alert.alert(
+        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
+      );
+      navigation.navigate('dashboard');
+    } else {
+      Alert.alert('Transaction failed. Please try again.');
+    }
   };
   return (
     <ImageBackground
@@ -48,6 +59,7 @@ const Transfer = ({navigation}) => {
             display: 'flex',
             alignItems: 'center',
             marginTop: gutter.lg,
+            marginHorizontal: gutter.md,
             justifyContent: 'center',
           }}>
           <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 29}}>
@@ -55,6 +67,25 @@ const Transfer = ({navigation}) => {
           </Text>
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            Address: {wallet.address}
+          </Text>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              marginTop: gutter.lg,
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            Balance: {walletBalance.bsc}
+          </Text>
           <LabelInput
             label="Amount"
             value={formData.amount}
@@ -79,4 +110,4 @@ const Transfer = ({navigation}) => {
   );
 };
 
-export default Transfer;
+export default TransferBSC;

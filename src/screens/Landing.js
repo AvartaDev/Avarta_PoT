@@ -4,7 +4,6 @@ import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import useWallet from '../hooks/useWallet';
 import Button from '@components/Button';
-import useAuth from '@hooks/useAuth';
 
 const Landing = ({navigation}) => {
   const {gutter} = useTheme();

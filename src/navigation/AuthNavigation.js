@@ -13,7 +13,7 @@ const AuthNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="SolusLibrary" component={SolusLibrary} />
+      {/* <Stack.Screen name="SolusLibrary" component={SolusLibrary} /> */}
       <Stack.Screen name="landing" component={Landing} />
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="register" component={Register} />
