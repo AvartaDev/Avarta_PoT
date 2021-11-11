@@ -97,8 +97,8 @@ const SolusLibrary = ({navigation}) => {
     } else {
       try {
         const promise = await Solus.StepUpProcess(UserName, Password);
-        Alert.alert('Avarta Wallet', `${promise}`);
-        // navigation.navigate('landing');
+        Alert.alert(`${promise}`);
+        navigation.navigate('landing');
       } catch (e) {
         Alert.alert('Avarta Wallet', e.message);
       }

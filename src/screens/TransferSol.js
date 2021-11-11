@@ -31,13 +31,19 @@ const TransferSol = ({navigation}) => {
   };
 
   const onClick = async () => {
-    if (amount === 0 && recepient === '') {
+    if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
     }
     let txHash = await sendSolana(recepient, amount, solWallet.privateKey);
-    Alert.alert('Transaction successful');
-    console.log(txHash, 'txhash');
+    if (newHash) {
+      Alert.alert(
+        `Transaction successful!\n Transaction Id: ${newHash}\n\n https://ropsten.etherscan.io/tx/${newHash}`,
+      );
+      navigation.navigate('dashboard');
+    } else {
+      Alert.alert('Transaction failed. Please try again.');
+    }
     // navigation.navigate('dashboard');
   };
   return (
@@ -50,13 +56,34 @@ const TransferSol = ({navigation}) => {
             display: 'flex',
             alignItems: 'center',
             marginTop: gutter.lg,
+            marginHorizontal: gutter.md,
             justifyContent: 'center',
           }}>
           <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 29}}>
             Transfer Sol
           </Text>
         </View>
+
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            Address: {solWallet.address}
+          </Text>
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              marginTop: gutter.lg,
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>
+            Balance: {walletBalance.solana}
+          </Text>
           <LabelInput
             label="Amount"
             value={formData.amount}

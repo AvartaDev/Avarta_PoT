@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, ImageBackground, Text, ScrollView} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
@@ -10,10 +10,11 @@ const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {wallet, getWalletBalance, walletBalance} = useWallet();
   const {solWallet} = useAuth();
+  let balance;
 
-  async function onPress() {
+  useEffect(async () => {
     await getWalletBalance(wallet.address, solWallet.address);
-  }
+  }, [wallet, solWallet]);
 
   return (
     <ImageBackground
@@ -30,9 +31,9 @@ const Home = ({navigation}) => {
                 fontWeight: 'bold',
                 fontSize: 26,
               }}>
-              Wallet Address
+              Crypto Wallets
             </Text>
-            <Text
+            {/* <Text
               style={{
                 color: colors.white,
                 textAlign: 'center',
@@ -51,56 +52,32 @@ const Home = ({navigation}) => {
                 fontSize: 16,
               }}>
               SOL: {solWallet.address}
-            </Text>
-            {/* <Text
-              style={{
-                color: colors.white,
-                textAlign: 'center',
-                marginTop: gutter.lg,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}>
-              BNB balance: {walletBalance.bsc}
-            </Text>
-            <Text
-              style={{
-                color: colors.white,
-                textAlign: 'center',
-                marginTop: gutter.lg,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}>
-              Sol balance: {walletBalance.solana} sol
             </Text> */}
             <View style={{marginTop: '10%'}}>
-              <Button text="Retrieve balance" onPress={onPress} />
-            </View>
-            <View style={{marginTop: '10%'}}>
               <Button
-                text="Import Wallet"
-                onPress={() => navigation.navigate('import')}
+                text="Refresh Balance"
+                onPress={async () => {
+                  await getWalletBalance(wallet.address, solWallet.address);
+                }}
               />
             </View>
             <View style={{marginTop: '10%'}}>
               <Button
-                text="Transfer on Ethereum"
+                text={`Ethereum ${walletBalance.eth} ETH`}
                 onPress={() => navigation.navigate('transferEth')}
               />
             </View>
             <View style={{marginTop: '10%'}}>
               <Button
-                text="Transfer on BSC"
-                onPress={() => navigation.navigate('transfer')}
+                text={`Binance ${walletBalance.bsc} BNB`}
+                onPress={() => navigation.navigate('transferBSC')}
               />
             </View>
             <View style={{marginTop: '10%'}}>
               <Button
-                text="Transfer on Solana"
+                text={`Solana ${walletBalance.solana} SOL`}
                 onPress={() => navigation.navigate('transferSol')}
               />
-            </View>
-            <View style={{marginTop: '10%'}}>
-              <Button text="NFT" onPress={() => navigation.navigate('nft')} />
             </View>
           </View>
         </ScrollView>

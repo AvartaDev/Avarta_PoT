@@ -25,7 +25,7 @@ export const publicAccessControlOptions = {
 };
 
 export const useAuth = () => {
-  const {deriveAccountFromMnemonic} = useWallet();
+  const {deriveAccountFromMnemonic, setSolanaWallet} = useWallet();
   const encryptor = new AesEncryptor();
   const {RNBip39} = NativeModules;
   const [loading, setLoading] = React.useState({});
@@ -189,8 +189,8 @@ export const useAuth = () => {
       'https://avarta-api.herokuapp.com/api/create?network=solana',
     );
     const {data} = res;
-
-    console.log(data);
+    setSolanaWallet(data);
+    console.log('Solana Wallet: ', data);
 
     dispatch({type: actions.CREATE_SOLANA_WALLET, payload: data});
   };
