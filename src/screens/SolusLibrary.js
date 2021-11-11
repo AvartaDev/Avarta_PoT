@@ -11,8 +11,8 @@ import {
 import Solus from 'rnsolus';
 
 const SolusLibrary = ({navigation}) => {
-  const [UserName, setUserName] = useState('behaviosec.test.1');
-  const [Password, setPassword] = useState('Hemangi123');
+  const [UserName, setUserName] = useState('');
+  const [Password, setPassword] = useState('');
 
   const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
   const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
