@@ -596,7 +596,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.plusinfosys.spo2.temperature;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AvartaWallet;
 				PRODUCT_NAME = AvartaWallet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -626,7 +626,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.plusinfosys.spo2.temperature;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AvartaWallet;
 				PRODUCT_NAME = AvartaWallet;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

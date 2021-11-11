@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   Platform,
   SafeAreaView,
   Text,
@@ -30,50 +31,50 @@ const SolusLibrary = ({navigation}) => {
 
   const EnrollProcess = async () => {
     if (UserName == '') {
-      alert('UserName Required Some Value');
+      Alert.alert('Avarta Wallet', 'UserName Required Some Value');
       return false;
     } else if (Password == '') {
-      alert('Password Required Some Value');
+      Alert.alert('Avarta Wallet', 'Password Required Some Value');
       return false;
     } else {
       try {
         const promise = await Solus.EnrollProcess(UserName, Password);
-        alert(`${promise}`);
+        Alert.alert('Avarta Wallet', `${promise}`);
       } catch (e) {
-        alert(e);
+        Alert.alert('Avarta Wallet', e.message);
       }
     }
   };
   const AuthenticationProcess = async () => {
     if (UserName == '') {
-      alert('UserName Required Some Value');
+      Alert.alert('Avarta Wallet', 'UserName Required Some Value');
       return false;
     } else if (Password == '') {
-      alert('Password Required Some Value');
+      Alert.alert('Avarta Wallet', 'Password Required Some Value');
       return false;
     } else {
       try {
         const promise = await Solus.AuthenticationProcess(UserName, Password);
-        alert(`${promise}`);
+        Alert.alert('Avarta Wallet', `${promise}`);
       } catch (e) {
-        alert(e);
+        Alert.alert('Avarta Wallet', e.message);
       }
     }
   };
 
   const DeEnrollProcess = async () => {
     if (UserName == '') {
-      alert('UserName Required Some Value');
+      Alert.alert('Avarta Wallet', 'UserName Required Some Value');
       return false;
     } else if (Password == '') {
-      alert('Password Required Some Value');
+      Alert.alert('Avarta Wallet', 'Password Required Some Value');
       return false;
     } else {
       try {
         const promise = await Solus.DeEnrollProcess(UserName, Password);
-        alert(`${promise}`);
+        Alert.alert('Avarta Wallet', `${promise}`);
       } catch (e) {
-        alert(e);
+        Alert.alert('Avarta Wallet', e.message);
       }
     }
   };
@@ -88,35 +89,35 @@ const SolusLibrary = ({navigation}) => {
   };
   const StepUpProcess = async () => {
     if (UserName == '') {
-      alert('UserName Required Some Value');
+      Alert.alert('Avarta Wallet', 'UserName Required Some Value');
       return false;
     } else if (Password == '') {
-      alert('Password Required Some Value');
+      Alert.alert('Avarta Wallet', 'Password Required Some Value');
       return false;
     } else {
       try {
         const promise = await Solus.StepUpProcess(UserName, Password);
-        alert(`${promise}`);
+        Alert.alert(`${promise}`);
         navigation.navigate('landing');
       } catch (e) {
-        alert(e);
+        Alert.alert('Avarta Wallet', e.message);
       }
     }
   };
 
   const StepUpElevatedProcess = async () => {
     if (UserName == '') {
-      alert('UserName Required Some Value');
+      Alert.alert('Avarta Wallet', 'UserName Required Some Value');
       return false;
     } else if (Password == '') {
-      alert('Password Required Some Value');
+      Alert.alert('Avarta Wallet', 'Password Required Some Value');
       return false;
     } else {
       try {
         const promise = await Solus.StepUpElevatedProcess(UserName, Password);
-        alert(`${promise}`);
+        Alert.alert('Avarta Wallet', `${promise}`);
       } catch (e) {
-        alert(e);
+        Alert.alert('Avarta Wallet', e.message);
       }
     }
   };

@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ServerError;
 import com.facebook.react.bridge.Callback;
@@ -27,6 +29,7 @@ import com.onesignal.OSSubscriptionObserver;
 import com.onesignal.OSSubscriptionStateChanges;
 import com.onesignal.OneSignal;
 import com.reactnativesolus.db.DbUserController;
+import com.reactnativesolus.db.User;
 import com.solus.dlock.manager.DlockManager;
 import com.solus.dlock.manager.DlockOperation;
 import com.solus.dlock.manager.DlockProcessListener;
@@ -86,6 +89,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     FirebaseApp.initializeApp(getReactApplicationContext());
     Logger.setEnabled(true);
     prefManager = SolusPrefManager.getInstance(getReactApplicationContext());
+    ActiveAndroid.initialize(new Configuration.Builder(this.getCurrentActivity()).addModelClasses(User.class).create());
     Log.e("+++++", "[[[[]]]]" );
     OneSignal.initWithContext(this.getCurrentActivity().getApplicationContext());
     OneSignal.setAppId("dc71ce17-2a34-4ca7-8ac3-131426f59fd0");
@@ -144,7 +148,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch(Exception e) {
-              Log.d("", "EnrollProcess: ",e);
+              Log.d("asd", "EnrollProcess: ",e);
             }
   }
 
@@ -180,7 +184,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
         });
         InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch (Exception e){
-      Log.d("", "AuthenticationProcess: ",e);
+      Log.d("asd", "AuthenticationProcess: ",e);
     }
   }
 
@@ -196,7 +200,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
         mIntegrationApiManager.setProcessListener(workflowProccessListener);
         mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.REMOVE.toString(), userData.getUsername(), false);
     }catch(Exception e){
-      Log.d("", "DeEnrollProcess: ",e);
+      Log.d("asd", "DeEnrollProcess: ",e);
     }
   }
 
@@ -234,7 +238,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e){
-      Log.d("", "StepUpProcess: ",e);
+      Log.d("asd", "StepUpProcess: ",e);
     }
   }
 
@@ -271,7 +275,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     //  startService(inauthService);
     InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e) {
-      Log.d("", "StepUpElevatedProcess: ",e);
+      Log.d("asd", "StepUpElevatedProcess: ",e);
     }
   }
 
@@ -315,7 +319,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     if (!isAfterError) {
       DbUserController.saveUser(userData.getUsername());
       Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Verification done successfully",Toast.LENGTH_LONG).show();
-      promised.reject(null,"Solus workflow failed");
+      promised.resolve("Verification completed");
     } else {
       Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Sorry. Not verified.",Toast.LENGTH_LONG).show();
       promised.reject(null,"Solus workflow failed : User not verified");
@@ -374,6 +378,12 @@ public class SolusModule extends ReactContextBaseJavaModule {
               return;
             }
             break;
+          case STEPUP:
+            promised.reject(null,"Solus workflow failed");
+            return;
+          case STEPUP_ELEVATED:
+            promised.reject(null,"Solus workflow failed");
+            return;
         }
       }
 
@@ -516,6 +526,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
   private void deleteZoomUser() {
     SolusPrefManager.getInstance(getCurrentActivity().getApplicationContext()).saveUserIdForZoom("");
+    SolusPrefManager.getInstance(getCurrentActivity().getApplicationContext()).saveUserUUIDForZoom("");
     deleteDlockUser();
     deleteLocalSavedUser();
 /*

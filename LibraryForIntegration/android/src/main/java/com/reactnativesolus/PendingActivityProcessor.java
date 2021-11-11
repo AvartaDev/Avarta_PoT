@@ -92,9 +92,17 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
         deleteZoomUser();
         break;
       case PendingActivity.CODE_DYNAMICPIN:
-        DlockManager.getInstance(mContext).setDlockListener(createDlockCallback());
-        DlockManager.getInstance(mContext)
-          .registerUser(mContext, mUserData.getUsername(), createDlockConfig(mContext, true));
+        if(mWorkflowType == WorkflowType.ENROL){
+          DlockManager.getInstance(mContext).setDlockListener(createDlockCallback());
+          DlockManager.getInstance(mContext)
+                  .registerUser(mContext, mUserData.getUsername(), createDlockConfig(mContext, true));
+        }else{
+          DlockManager.getInstance(mContext)
+                  .setDlockListener(createDlockCallback());
+          DlockManager.getInstance(mContext)
+                  .verifyUser(mContext, mUserData.getUsername(), createDlockConfig(mContext, false));
+        }
+
         break;
       case PendingActivity.CODE_PASSWORD:
         callback.onAuthSuccess(new TextResult(mWorkflowType, mActivityKey,mUserData.getPassword()));
@@ -172,6 +180,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
   public void deleteZoomUser() {
     SolusPrefManager.getInstance(mContext.getApplicationContext()).saveUserIdForZoom("");
+    SolusPrefManager.getInstance(mContext.getApplicationContext()).saveUserUUIDForZoom("");
     deleteDlockUser();
     deleteLocalSavedUser();
         /*ZoomManagedSession.deleteExistingUser(mContext, SolusConstants.get(SolusConstants.ZOOM_DEV_KEY),
@@ -360,6 +369,64 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             }
           }))
         .build();
+      NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
+        @Override
+        public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
+
+          //
+          // Part 6:  In our Sample, we evaluate a boolean response and treat true as was successfully processed and should proceed to next step,
+          // and handle all other responses by cancelling out.
+          // You may have different paradigms in your own API and are free to customize based on these.
+          //
+
+          String responseString = response.body().string();
+          response.body().close();
+          try {
+            JSONObject responseJSON = new JSONObject(responseString);
+            Log.e("Response from zoom : ", responseJSON.toString());
+            boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
+            String scanResultBlob = responseJSON.getString("scanResultBlob");
+
+            // In v9.2.0+, we key off a new property called wasProcessed to determine if we successfully processed the Session result on the Server.
+            // Device SDK UI flow is now driven by the proceedToNextStep function, which should receive the scanResultBlob from the Server SDK response.
+            if (wasProcessed) {
+
+              // Demonstrates dynamically setting the Success Screen Message.
+              FaceTecCustomization.overrideResultScreenSuccessMessage = "Enrollment\nConfirmed";
+
+              // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
+              // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
+              boolean success = faceTecFaceScanResultCallback.proceedToNextStep(scanResultBlob);
+              String uid = UUID.randomUUID().toString();
+              SolusPrefManager.getInstance(mContext).saveUserUUIDForZoom(uid);
+              callback.onAuthSuccess(new ZoomAuthResult(
+                      mWorkflowType,
+                      mActivityKey,
+                      uid,
+                      "Partial Liveness Success",
+                      1.1f));
+            } else {
+              // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.
+
+              faceTecFaceScanResultCallback.cancel();
+              callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+
+            }
+          } catch (JSONException e) {
+            // CASE:  Parsing the response into JSON failed --> You define your own API contracts with yourself and may choose to do something different here based on the error.  Solid server-side code should ensure you don't get to this case.
+            e.printStackTrace();
+            Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
+            faceTecFaceScanResultCallback.cancel();
+          }
+        }
+
+        @Override
+        public void onFailure(@NonNull Call call, @Nullable IOException e) {
+          // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
+          Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
+          faceTecFaceScanResultCallback.cancel();
+        }
+      });
     } else {
       if (faceTecSessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
         NetworkingHelpers.cancelPendingRequests();
@@ -401,66 +468,65 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             }
           }))
         .build();
-    }
-    //
-    // Part 8:  Actually send the request.
-    //
-    NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
-      @Override
-      public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
+      NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
+        @Override
+        public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
 
-        //
-        // Part 6:  In our Sample, we evaluate a boolean response and treat true as was successfully processed and should proceed to next step,
-        // and handle all other responses by cancelling out.
-        // You may have different paradigms in your own API and are free to customize based on these.
-        //
+          //
+          // Part 6:  In our Sample, we evaluate a boolean response and treat true as was successfully processed and should proceed to next step,
+          // and handle all other responses by cancelling out.
+          // You may have different paradigms in your own API and are free to customize based on these.
+          //
 
-        String responseString = response.body().string();
-        response.body().close();
-        try {
-          JSONObject responseJSON = new JSONObject(responseString);
-          Log.e("Response from zoom : ", responseJSON.toString());
-          boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
-          String scanResultBlob = responseJSON.getString("scanResultBlob");
+          String responseString = response.body().string();
+          response.body().close();
+          try {
+            JSONObject responseJSON = new JSONObject(responseString);
+            Log.e("Response from zoom : ", responseJSON.toString());
+            boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
+            String scanResultBlob = responseJSON.getString("scanResultBlob");
 
-          // In v9.2.0+, we key off a new property called wasProcessed to determine if we successfully processed the Session result on the Server.
-          // Device SDK UI flow is now driven by the proceedToNextStep function, which should receive the scanResultBlob from the Server SDK response.
-          if (wasProcessed) {
+            // In v9.2.0+, we key off a new property called wasProcessed to determine if we successfully processed the Session result on the Server.
+            // Device SDK UI flow is now driven by the proceedToNextStep function, which should receive the scanResultBlob from the Server SDK response.
+            if (wasProcessed) {
 
-            // Demonstrates dynamically setting the Success Screen Message.
-            FaceTecCustomization.overrideResultScreenSuccessMessage = "Liveness\nConfirmed";
+              // Demonstrates dynamically setting the Success Screen Message.
+              FaceTecCustomization.overrideResultScreenSuccessMessage = "Enrollment\nConfirmed";
 
-            // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
-            // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
-            boolean success = faceTecFaceScanResultCallback.proceedToNextStep(scanResultBlob);
-            callback.onAuthSuccess(new ZoomAuthResult(
-              mWorkflowType,
-              mActivityKey,
-              UUID.randomUUID().toString(),
-              "Partial Liveness Success",
-              1.1f));
-          } else {
-            // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.
+              // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
+              // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
+              boolean success = faceTecFaceScanResultCallback.proceedToNextStep(scanResultBlob);
+              String uid =   SolusPrefManager.getInstance(mContext).getUserUUIDForZoom();
+              callback.onAuthSuccess(new ZoomAuthResult(
+                      mWorkflowType,
+                      mActivityKey,
+                      uid,
+                      "Partial Liveness Success",
+                      1.1f));
+            } else {
+              // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.
 
+              faceTecFaceScanResultCallback.cancel();
+              callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+
+            }
+          } catch (JSONException e) {
+            // CASE:  Parsing the response into JSON failed --> You define your own API contracts with yourself and may choose to do something different here based on the error.  Solid server-side code should ensure you don't get to this case.
+            e.printStackTrace();
+            Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
             faceTecFaceScanResultCallback.cancel();
-            callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
-
           }
-        } catch (JSONException e) {
-          // CASE:  Parsing the response into JSON failed --> You define your own API contracts with yourself and may choose to do something different here based on the error.  Solid server-side code should ensure you don't get to this case.
-          e.printStackTrace();
-          Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
+        }
+
+        @Override
+        public void onFailure(@NonNull Call call, @Nullable IOException e) {
+          // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
+          Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
           faceTecFaceScanResultCallback.cancel();
         }
-      }
+      });
+    }
 
-      @Override
-      public void onFailure(@NonNull Call call, @Nullable IOException e) {
-        // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
-        Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
-        faceTecFaceScanResultCallback.cancel();
-      }
-    });
 
         /*callback.onAuthSuccess(new ZoomAuthResult(
                 mWorkflowType,

@@ -63,5 +63,13 @@ public class SolusPrefManager {
   public String getUserIdForZoom() {
     return sh.getString("ZOOM_USER", "");
   }
+  public void saveUserUUIDForZoom(String pid) {
+    edit.putString("ZOOM_USER_UUID", pid).commit();
+  }
+
+  public String getUserUUIDForZoom() {
+    return sh.getString("ZOOM_USER_UUID", "");
+  }
+
 }
 
