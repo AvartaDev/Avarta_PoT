@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.facetecrn.IReactNativeBridgeEmitter;
 import com.facetecrn.SampleAppActivity;
 import com.facetec.sdk.FaceTecCustomization;
 import com.facetec.sdk.FaceTecFaceScanProcessor;
@@ -36,10 +37,11 @@ import okhttp3.RequestBody;
 public class EnrollmentProcessor extends Processor implements FaceTecFaceScanProcessor {
     private boolean success = false;
     final private SampleAppActivity sampleAppActivity;
+    private IReactNativeBridgeEmitter emitter;
 
-    public EnrollmentProcessor(String sessionToken, Context context) {
+    public EnrollmentProcessor(String sessionToken, Context context, IReactNativeBridgeEmitter emitter) {
         this.sampleAppActivity = (SampleAppActivity) context;
-
+        this.emitter = emitter;
         //
         // Part 1:  Starting the FaceTec Session
         //
@@ -137,6 +139,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
                         // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
                         // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
                         success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
+                        emitter.emit();
                     }
                     else {
                         // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.

@@ -47,15 +47,6 @@ const Login = ({navigation}) => {
         </Text>
       </View>
       <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-        <LabelInput
-          label="Password"
-          value={password}
-          required
-          onChangeText={handleChange('password')}
-          placeholder="*********"
-          secureTextEntry={true}
-          placeholderTextColor={colors.primary_grey}
-        />
 
         <View
           style={{

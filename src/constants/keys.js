@@ -1,4 +1,6 @@
-export const ALL_WALLET_KEY = "ALL_WALLETS"
+export const ALL_WALLET_KEY = 'ALL_WALLETS';
 
-export const ETH_WALLET_KEY = "ETHEREUM"
-export const BSC_WALLET_KEY = "BSC"
+export const ETH_WALLET_KEY = 'ETHEREUM';
+export const BSC_WALLET_KEY = 'BSC';
+
+export const LATEST_EXTERNAL_DATABASE_REF_ID = 'LATEST_EXTERNAL_DATABASE_REF_ID';
