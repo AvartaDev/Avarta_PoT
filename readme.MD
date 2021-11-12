@@ -25,3 +25,28 @@ yarn start:ios
 ```bash
 yarn start # run app metro
 ```
+#### Android Installation
+
+###### follow the steps :-
+
+Install npm for the library
+
+    cd LibraryForIntegration
+    npm install
+
+ Install npm for the project
+
+	npm install
+
+run the project
+
+	npx react-native run-android 
+
+or
+
+	react-native run-android
+
+
+>` If error appears that 'Unable to resolve module rnsolus or rnsolus not found '` then , copy the contents of LibraryForIntegration, go to your project's node_modules and delete the folder named `rnsolus` and create a new folder with the same name i.e. `rnsolus` and paste the content you copied from LibraryForIntegration.
+
+> Your Project will successfully

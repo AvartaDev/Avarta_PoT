@@ -98,11 +98,11 @@ dependencies {
 //  noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"  // From node_modules
   implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-  implementation files('libs/integrationLibrary-release')
-  implementation files('libs/facetec-sdk-9.3.0')
-  implementation files('libs/dlock_sdk-version_update')
+    compileOnly  files('libs/integrationLibrary-release')
+    compileOnly  files('libs/facetec-sdk-9.3.0')
+    compileOnly  files('libs/dlock_sdk-version_update')
 //  implementation files('libs/activeandroid-3.1.0-SNAPSHOT.jar')
-  implementation files('libs/inmobile-android-v.10.0.1')
+    compileOnly files('libs/inmobile-android-v.10.0.1')
   implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
   implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
   implementation 'com.squareup.okhttp3:okhttp:4.9.0'
