@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthNavigator from '@navigation/AuthNavigator';
 import DashboardNavigation from '@navigation/DashboardNavigation';
+import { AUTH_NAVIGATOR, DASHBOARD_NAVIGATOR } from '@constants/navigation';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
@@ -14,8 +15,8 @@ const AppNavigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="auth" component={AuthNavigator} />
-        <Stack.Screen name="dashboard" component={DashboardNavigation} />
+        <Stack.Screen name={AUTH_NAVIGATOR} component={AuthNavigator} />
+        <Stack.Screen name={DASHBOARD_NAVIGATOR} component={DashboardNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -36,33 +36,32 @@ import okhttp3.RequestBody;
 // Android Note 2:  Android does not have a onFaceTecSDKCompletelyDone function that you must implement like "Part 10" of iOS and Android Samples.  Instead, onActivityResult is used as the place in code you get control back from the FaceTec SDK.
 public class EnrollmentProcessor extends Processor implements FaceTecFaceScanProcessor {
     private boolean success = false;
-    final private SampleAppActivity sampleAppActivity;
-    private IReactNativeBridgeEmitter emitter;
+    private final Context context;
+    private final String sessionToken;
+    private final String latestExternalDatabaseRefID;
 
-    public EnrollmentProcessor(String sessionToken, Context context, IReactNativeBridgeEmitter emitter) {
-        this.sampleAppActivity = (SampleAppActivity) context;
-        this.emitter = emitter;
-        //
-        // Part 1:  Starting the FaceTec Session
-        //
-        // Required parameters:
-        // - Context:  Unique for Android, a Context is passed in, which is required for the final onActivityResult function after the FaceTec SDK is done.
-        // - FaceTecFaceScanProcessor:  A class that implements FaceTecFaceScanProcessor, which handles the FaceScan when the User completes a Session.  In this example, "self" implements the class.
-        // - sessionToken:  A valid Session Token you just created by calling your API to get a Session Token from the Server SDK.
-        //
-        FaceTecSessionActivity.createAndLaunchSession(context, EnrollmentProcessor.this, sessionToken);
+    public EnrollmentProcessor(String sessionToken, Context context, String latestExternalDatabaseRefID) {
+        this.context = context;
+        this.sessionToken = sessionToken;
+        this.latestExternalDatabaseRefID = latestExternalDatabaseRefID;
+
+    }
+
+    public void createAndLaunchSession(){
+      // Part 1:  Starting the FaceTec Session
+      //
+      // Required parameters:
+      // - Context:  Unique for Android, a Context is passed in, which is required for the final onActivityResult function after the FaceTec SDK is done.
+      // - FaceTecFaceScanProcessor:  A class that implements FaceTecFaceScanProcessor, which handles the FaceScan when the User completes a Session.  In this example, "self" implements the class.
+      // - sessionToken:  A valid Session Token you just created by calling your API to get a Session Token from the Server SDK.
+      //
+      FaceTecSessionActivity.createAndLaunchSession(context, EnrollmentProcessor.this, sessionToken);
     }
 
     //
     // Part 2:  Handling the Result of a FaceScan
     //
     public void processSessionWhileFaceTecSDKWaits(final FaceTecSessionResult sessionResult, final FaceTecFaceScanResultCallback faceScanResultCallback) {
-        //
-        // DEVELOPER NOTE:  These properties are for demonstration purposes only so the Sample App can get information about what is happening in the processor.
-        // In the code in your own App, you can pass around signals, flags, intermediates, and results however you would like.
-        //
-        sampleAppActivity.setLatestSessionResult(sessionResult);
-
         //
         // Part 3:  Handles early exit scenarios where there is no FaceScan to handle -- i.e. User Cancellation, Timeouts, etc.
         //
@@ -80,7 +79,7 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
             parameters.put("faceScan", sessionResult.getFaceScanBase64());
             parameters.put("auditTrailImage", sessionResult.getAuditTrailCompressedBase64()[0]);
             parameters.put("lowQualityAuditTrailImage", sessionResult.getLowQualityAuditTrailCompressedBase64()[0]);
-            parameters.put("externalDatabaseRefID", sampleAppActivity.getLatestExternalDatabaseRefID());
+            parameters.put("externalDatabaseRefID", latestExternalDatabaseRefID);
         }
         catch(JSONException e) {
             e.printStackTrace();
@@ -139,7 +138,6 @@ public class EnrollmentProcessor extends Processor implements FaceTecFaceScanPro
                         // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
                         // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
                         success = faceScanResultCallback.proceedToNextStep(scanResultBlob);
-                        emitter.emit();
                     }
                     else {
                         // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.

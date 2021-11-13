@@ -15,4 +15,7 @@ export function multiply(a, b) {
 export function enroll() {
   return FacetecRn.enroll();
 }
+export function authenticate(id) {
+  return FacetecRn.authenticate(id);
+}
 //# sourceMappingURL=index.js.map

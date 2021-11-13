@@ -5,8 +5,14 @@ import useTheme from '@hooks/useTheme';
 import Button from '@components/Button';
 import {getAllWallets} from '@libs/localPersistenceUtils';
 import {BSC_WALLET_KEY, ETH_WALLET_KEY} from '@constants/keys';
-import {CREATE_WALLET_FLOW, VIEW_WALLET_DASHBOARD, WALLET_NAVIGATOR} from '@constants/navigation';
+import {
+  CREATE_WALLET_FLOW,
+  VIEW_WALLET_DASHBOARD,
+  WALLET_NAVIGATOR,
+} from '@constants/navigation';
 import WalletCard from '@components/WalletCard';
+import SmallText from '@components/text/SmallText';
+import useDebugRefID from '@hooks/useDebugRefID';
 
 const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
@@ -23,6 +29,8 @@ const Home = ({navigation}) => {
     setLoaded(true);
   };
 
+  const {refID} = useDebugRefID();
+
   useEffect(() => {
     initWallets();
   }, []);
@@ -32,13 +40,13 @@ const Home = ({navigation}) => {
       wallet={allWallets[token]}
       token={token}
       onPress={() =>
-        navigation.navigate(WALLET_NAVIGATOR,{
+        navigation.navigate(WALLET_NAVIGATOR, {
           screen: VIEW_WALLET_DASHBOARD,
-          params:{
+          params: {
             wallet: allWallets[token],
             token,
-          } 
-        } )
+          },
+        })
       }
     />
   );
@@ -62,7 +70,7 @@ const Home = ({navigation}) => {
       }}>
       <BgView>
         <ScrollView style={{marginHorizontal: gutter.md}}>
-          <View >
+          <View>
             <Text
               style={{
                 color: colors.white,
@@ -73,6 +81,7 @@ const Home = ({navigation}) => {
               }}>
               HOME
             </Text>
+            <SmallText text={`debug refID: ${refID}`}/>
             {loaded ? getMappedWallets() : null}
 
             <View style={{marginTop: '10%'}}>

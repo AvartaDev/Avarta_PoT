@@ -24,3 +24,7 @@ export function multiply(a: number, b: number): Promise<number> {
 export function enroll() {
   return FacetecRn.enroll();
 }
+
+export function authenticate(id: string) {
+  return FacetecRn.authenticate(id);
+}

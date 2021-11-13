@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.authenticate = authenticate;
 exports.enroll = enroll;
 exports.multiply = multiply;
 
@@ -25,5 +26,9 @@ function multiply(a, b) {
 
 function enroll() {
   return FacetecRn.enroll();
+}
+
+function authenticate(id) {
+  return FacetecRn.authenticate(id);
 }
 //# sourceMappingURL=index.js.map

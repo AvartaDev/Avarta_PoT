@@ -1,5 +1,9 @@
 export const HOME = 'HOME'
 
+//for AppNavigator
+export const AUTH_NAVIGATOR = "AUTH_NAVIGATOR"
+export const DASHBOARD_NAVIGATOR = "DASHBOARD_NAVIGATOR"
+
 //wallet creation flow
 export const CREATE_WALLET_FLOW = 'CREATE_WALLET_FLOW'
 export const CREATE_WALLET_MAIN = 'CREATE_WALLET_MAIN'

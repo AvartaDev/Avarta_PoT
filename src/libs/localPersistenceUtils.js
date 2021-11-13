@@ -19,12 +19,23 @@ export const getAllWallets = async () => {
 };
 
 export const getLatestExternalDatabaseRefID = async () => {
-  return await AsyncStorage.get(LATEST_EXTERNAL_DATABASE_REF_ID);
+  const obj = await getItem(LATEST_EXTERNAL_DATABASE_REF_ID);
+  const {value} = obj;
+  console.log(`got refID is ${value}`);
+
+  return value;
 };
+
 export const setLatestExternalDatabaseRefID = async value => {
-  await AsyncStorage.setItem(LATEST_EXTERNAL_DATABASE_REF_ID, value);
+  await setItem(LATEST_EXTERNAL_DATABASE_REF_ID, {value});
+  console.log(`saved ${{value}}`)
   return await getLatestExternalDatabaseRefID();
 };
+
+export const deleteLatestExternalDatabaseRefID = async () => {
+ await deleteItem(LATEST_EXTERNAL_DATABASE_REF_ID);
+}
+
 
 export const storeWallet = async (key, wallet) => {
   try {
@@ -43,4 +54,8 @@ const setItem = async (key, object) => {
 const getItem = async key => {
   const res = await AsyncStorage.getItem(key);
   return JSON.parse(res);
+};
+
+const deleteItem = async key => {
+  await AsyncStorage.removeItem(key);
 };
