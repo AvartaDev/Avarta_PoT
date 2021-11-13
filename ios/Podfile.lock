@@ -259,7 +259,7 @@ PODS:
   - react-native-safe-area-context (3.3.2):
     - React-Core
   - react-native-splash-screen (3.2.0):
-    - React
+    - React-Core
   - React-perflogger (0.64.2)
   - React-RCTActionSheet (0.64.2):
     - React-Core/RCTActionSheetHeaders (= 0.64.2)
@@ -329,7 +329,7 @@ PODS:
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNKeychain (6.2.0):
-    - React
+    - React-Core
   - RNOS (1.2.6):
     - React
   - RNReanimated (2.2.2):
@@ -566,7 +566,7 @@ SPEC CHECKSUMS:
   react-native-aes: ff31f0dd4c791eb423a631ee04570fcf3c618924
   react-native-randombytes: 5fc412efe7b5c55b9002c0004d75fe5fabcaa507
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
-  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
+  react-native-splash-screen: 682081d0a8a59b78c991e0844fa4a43c9f668a6b
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -581,7 +581,7 @@ SPEC CHECKSUMS:
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   RNCAsyncStorage: 0f655864a81214d1c5a9bf0faf79d86dc25c383e
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
+  RNKeychain: 612de9918c1170d51094404616fd49b2818176f9
   RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
   RNReanimated: 241c586663f44f19a53883c63375fdd041253960
   RNSentry: 68644ef607b780551cc555f084869764f2566652

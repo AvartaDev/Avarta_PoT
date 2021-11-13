@@ -1,71 +1,82 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '../../components/Input';
 import {SpinnerButton} from '@components/Button';
 import useAuth from '@hooks/useAuth';
-import {useDispatch, actions} from '@store/AuthStore';
+import {useStore, useDispatch, actions} from '@store/AuthStore';
 import Solus from 'rnsolus';
 
-const SolusEnrollSuccessMsg = 'Workflow completed successfully';
+const SolusSuccessMsg = 'Workflow completed successfully';
 
 const Register = ({navigation}) => {
   const {colors, gutter} = useTheme();
+  const store = useStore();
 
-  const [formData, setFormData] = React.useState({
-    username: 'hong.loon',
-    password: 'Abcd123a',
-  });
-  const [loading, setLoading] = React.useState(false);
+  const [registerLoading, setRegisterLoading] = React.useState(false);
+  const [loginLoading, setLoginLoading] = React.useState(false);
 
-  const {username, password} = formData;
+  const {username, password, solWallet} = store;
   const {createWallet} = useAuth();
   const dispatch = useDispatch();
 
-  const handleChange = field => value => {
-    setFormData({...formData, [field]: value});
-  };
+  const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
+  const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
 
-  const onClickRegister = async () => {
-    setLoading(true);
-    if (username === '') {
-      Alert.alert('Avarta Wallet', 'Username is required');
-      return;
-    }
-    if (password === '') {
-      Alert.alert('Avarta Wallet', 'Password is required');
-      return;
-    }
+  const DeviceKeyIdentifier = 'dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R';
+  const FaceScanEncryptionKey =
+    '-----BEGIN PUBLIC KEY-----\n' +
+    'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5PxZ3DLj+zP6T6HFgzzk\n' +
+    'M77LdzP3fojBoLasw7EfzvLMnJNUlyRb5m8e5QyyJxI+wRjsALHvFgLzGwxM8ehz\n' +
+    'DqqBZed+f4w33GgQXFZOS4AOvyPbALgCYoLehigLAbbCNTkeY5RDcmmSI/sbp+s6\n' +
+    'mAiAKKvCdIqe17bltZ/rfEoL3gPKEfLXeN549LTj3XBp0hvG4loQ6eC1E1tRzSkf\n' +
+    'GJD4GIVvR+j12gXAaftj3ahfYxioBH7F7HQxzmWkwDyn3bqU54eaiB7f0ftsPpWM\n' +
+    'ceUaqkL2DZUvgN0efEJjnWy5y1/Gkq5GGWCROI9XG/SwXJ30BbVUehTbVcD70+ZF\n' +
+    '8QIDAQAB\n' +
+    '-----END PUBLIC KEY-----';
+
+  useEffect(async () => {
+    Solus.onCreate(
+      DeviceKeyIdentifier,
+      FaceScanEncryptionKey,
+      SERVER_BASE_URL,
+      ORGANISATION_KEY,
+    );
+  }, []);
+
+  const onClickLogin = async () => {
+    setLoginLoading(true);
     try {
-      await dispatch({
-        type: actions.SET_USER_CREDENTIALS,
-        payload: {username, password},
-      });
+      const msg = await Solus.StepUpProcess(username, password);
+      if (msg !== SolusSuccessMsg) {
+        Alert.alert('Avarta Wallet', msg);
+        setLoginLoading(false);
+        return 0;
+      }
+      setLoginLoading(false);
+      if (solWallet === null) {
+        Alert.alert(
+          'Avarta Wallet',
+          'Wallet is not created on this device. Please create wallet first by clicking "New User"',
+        );
+        return 0;
+      }
+      navigation.navigate('dashboard');
+    } catch (e) {
+      Alert.alert('Avarta Wallet', e.message);
+    }
+    setLoginLoading(false);
+  };
+  const onClickRegister = async () => {
+    setRegisterLoading(true);
 
-      const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
-      const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
-
-      const DeviceKeyIdentifier = 'dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R';
-      const FaceScanEncryptionKey =
-        '-----BEGIN PUBLIC KEY-----\n' +
-        'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5PxZ3DLj+zP6T6HFgzzk\n' +
-        'M77LdzP3fojBoLasw7EfzvLMnJNUlyRb5m8e5QyyJxI+wRjsALHvFgLzGwxM8ehz\n' +
-        'DqqBZed+f4w33GgQXFZOS4AOvyPbALgCYoLehigLAbbCNTkeY5RDcmmSI/sbp+s6\n' +
-        'mAiAKKvCdIqe17bltZ/rfEoL3gPKEfLXeN549LTj3XBp0hvG4loQ6eC1E1tRzSkf\n' +
-        'GJD4GIVvR+j12gXAaftj3ahfYxioBH7F7HQxzmWkwDyn3bqU54eaiB7f0ftsPpWM\n' +
-        'ceUaqkL2DZUvgN0efEJjnWy5y1/Gkq5GGWCROI9XG/SwXJ30BbVUehTbVcD70+ZF\n' +
-        '8QIDAQAB\n' +
-        '-----END PUBLIC KEY-----';
-      Solus.onCreate(
-        DeviceKeyIdentifier,
-        FaceScanEncryptionKey,
-        SERVER_BASE_URL,
-        ORGANISATION_KEY,
-      );
+    try {
       let msg = await Solus.EnrollProcess(username, password);
-      if (msg === SolusEnrollSuccessMsg) {
+      console.log(msg);
+      if (msg === SolusSuccessMsg) {
         await createWallet(password);
+        setRegisterLoading(false);
         navigation.navigate('dashboard');
       } else {
         Alert.alert('Avarta Wallet', msg);
@@ -74,15 +85,16 @@ const Register = ({navigation}) => {
       if (e.message.includes('de-enroll')) {
         await Solus.DeEnrollProcess(username, password);
         msg = await Solus.EnrollProcess(username, password);
-        if (msg === SolusEnrollSuccessMsg) {
+        if (msg === SolusSuccessMsg) {
           await createWallet(password);
+          setRegisterLoading(false);
           navigation.navigate('dashboard');
         }
       } else {
         Alert.alert('Avarta Wallet', e.message);
       }
     }
-    setLoading(false);
+    setRegisterLoading(false);
   };
   return (
     <ImageBackground
@@ -102,50 +114,24 @@ const Register = ({navigation}) => {
           />
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <LabelInput
-            label="Username"
-            value={formData.username}
-            required
-            onChangeText={handleChange('username')}
-            placeholder="John"
-            placeholderTextColor={colors.primary_grey}
-          />
-          <LabelInput
-            label="Password"
-            value={formData.password}
-            required
-            onChangeText={handleChange('password')}
-            placeholder="*********"
-            secureTextEntry={true}
-            placeholderTextColor={colors.primary_grey}
-          />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
             <SpinnerButton
-              loading={loading}
-              text="Create Wallet"
+              loading={registerLoading}
+              text="New User"
               onPress={onClickRegister}
               style={{justifyContent: 'center'}}
             />
           </View>
-          <Text
-            style={{
-              color: colors.white,
-              fontWeight: '500',
-              textAlign: 'center',
-              marginTop: 20,
-            }}>
-            Already have an account?
-            <Text
-              onPress={() => navigation.navigate('login')}
-              style={{
-                color: colors.basic,
-                fontWeight: 'bold',
-              }}>
-              {' '}
-              Login
-            </Text>
-          </Text>
+          <View
+            style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
+            <SpinnerButton
+              loading={loginLoading}
+              text="Login"
+              onPress={onClickLogin}
+              style={{justifyContent: 'center'}}
+            />
+          </View>
         </View>
       </BgView>
     </ImageBackground>

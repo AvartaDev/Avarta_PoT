@@ -25,11 +25,13 @@ const TransferSol = ({navigation}) => {
   };
 
   const onTranfer = async () => {
+    setLoading(true);
     if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
     }
     const newHash = await sendSolana(recepient, amount, solWallet.privateKey);
+    setLoading(false);
     if (newHash) {
       Alert.alert(
         'Avarta Wallet',

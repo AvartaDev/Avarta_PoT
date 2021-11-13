@@ -12,8 +12,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		70F9B6EE3A2B1BE6C0C0C343 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */; };
-		7F49CB4828C2C9E6FF21F15A /* libPods-AvartaWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */; };
+		36120FDEC2486D757A4EC0FE /* libPods-AvartaWallet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EBB847CDCC78E981950A76B /* libPods-AvartaWallet.a */; };
+		593104379F6784195E0E87D4 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F066B0C7006E011E998BA7 /* libPods-AvartaWallet-AvartaWalletTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +35,7 @@
 		044B2D1127267D100032620A /* BehavioSecIOSSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = BehavioSecIOSSDK.a; path = ../LibraryForIntegration/ios/BehavioSecIOSSDK.a; sourceTree = "<group>"; };
 		06C65D50CA4147B9B68A83B7 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		0D2F97FC359949C9991A2FAE /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		10C674E67178DFB59A3F34EC /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		12F8432E2B5249EE9047A1AD /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AvartaWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AvartaWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AvartaWallet/AppDelegate.h; sourceTree = "<group>"; };
@@ -44,24 +45,23 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AvartaWallet/main.m; sourceTree = "<group>"; };
 		248A220D008D4B89B41ABCC6 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		2591ED5B15914C1084249443 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.debug.xcconfig"; sourceTree = "<group>"; };
-		43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C6B92AEDF943D289784DE0 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		56F066B0C7006E011E998BA7 /* libPods-AvartaWallet-AvartaWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet-AvartaWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B9DCCAF0B50828807A686B5 /* Pods-AvartaWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.release.xcconfig"; sourceTree = "<group>"; };
+		670890D65261E7E99830DA8F /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
+		6EBB847CDCC78E981950A76B /* libPods-AvartaWallet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F87E2B8FF824A818FE28819 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AvartaWallet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83C271E89DCE453C923D1B05 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		895386D7A5C8474484FAEB28 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		8B68BABBD4CF49D5AFCB9997 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A99F557E249415784268B71 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AvartaWallet-AvartaWalletTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2D496DCC44D454599A760E0 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		A525B5CEF056464C91BAA70F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ABF76BECAB534DDE8CC793A7 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		C1C324C548FE485590CCE41D /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
-		DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.release.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F71E4CF7B7C28C8920B94166 /* Pods-AvartaWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AvartaWallet.debug.xcconfig"; path = "Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		FC8400318C4C4C0687A8CEAC /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F9B6EE3A2B1BE6C0C0C343 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */,
+				593104379F6784195E0E87D4 /* libPods-AvartaWallet-AvartaWalletTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				044B2D192726810F0032620A /* BehavioSecIOSSDK.a in Frameworks */,
-				7F49CB4828C2C9E6FF21F15A /* libPods-AvartaWallet.a in Frameworks */,
+				36120FDEC2486D757A4EC0FE /* libPods-AvartaWallet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,10 +119,10 @@
 		243D89AF9EC24C0F0785FD59 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */,
-				DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */,
-				97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */,
-				DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */,
+				F71E4CF7B7C28C8920B94166 /* Pods-AvartaWallet.debug.xcconfig */,
+				5B9DCCAF0B50828807A686B5 /* Pods-AvartaWallet.release.xcconfig */,
+				10C674E67178DFB59A3F34EC /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */,
+				670890D65261E7E99830DA8F /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -133,8 +133,8 @@
 				044B2D1127267D100032620A /* BehavioSecIOSSDK.a */,
 				044B2C5C272675520032620A /* libCocoaAsyncSocket.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				43C29A6488C9D24AE08E2A7C /* libPods-AvartaWallet.a */,
-				9B68F883B44BBA644E21425E /* libPods-AvartaWallet-AvartaWalletTests.a */,
+				6EBB847CDCC78E981950A76B /* libPods-AvartaWallet.a */,
+				56F066B0C7006E011E998BA7 /* libPods-AvartaWallet-AvartaWalletTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,12 +201,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AvartaWalletTests" */;
 			buildPhases = (
-				B0C26404830EC7F1417D1A62 /* [CP] Check Pods Manifest.lock */,
+				C95FE0EB740C5D26DF86B406 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				1889702FEE463553CE9A4D40 /* [CP] Copy Pods Resources */,
-				AD4244B6FE9A37003393CACE /* [CP] Embed Pods Frameworks */,
+				2E3E4A3B4F8C5F9F706367F1 /* [CP] Embed Pods Frameworks */,
+				C6E9FBFA0A715A7BC82DE9EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -222,14 +222,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AvartaWallet" */;
 			buildPhases = (
-				04495521A1BC12BA8211AEB9 /* [CP] Check Pods Manifest.lock */,
+				42272804775748F3E577DC83 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				189A164214871067041D8124 /* [CP] Copy Pods Resources */,
-				13FB0A38A8E44EFBE705B895 /* [CP] Embed Pods Frameworks */,
+				541D76929CA73C249E244C50 /* [CP] Embed Pods Frameworks */,
+				DBEE82FE719BE6083ADB15C1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -310,7 +310,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		04495521A1BC12BA8211AEB9 /* [CP] Check Pods Manifest.lock */ = {
+		2E3E4A3B4F8C5F9F706367F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		42272804775748F3E577DC83 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -332,7 +349,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		13FB0A38A8E44EFBE705B895 /* [CP] Embed Pods Frameworks */ = {
+		541D76929CA73C249E244C50 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,7 +366,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1889702FEE463553CE9A4D40 /* [CP] Copy Pods Resources */ = {
+		C6E9FBFA0A715A7BC82DE9EB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -366,41 +383,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		189A164214871067041D8124 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD4244B6FE9A37003393CACE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet-AvartaWalletTests/Pods-AvartaWallet-AvartaWalletTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B0C26404830EC7F1417D1A62 /* [CP] Check Pods Manifest.lock */ = {
+		C95FE0EB740C5D26DF86B406 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -420,6 +403,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBEE82FE719BE6083ADB15C1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AvartaWallet/Pods-AvartaWallet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -474,7 +474,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 97BC733ABB5489DC0B8A6A00 /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */;
+			baseConfigurationReference = 10C674E67178DFB59A3F34EC /* Pods-AvartaWallet-AvartaWalletTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 2SYJ753ETA;
@@ -502,7 +502,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB832619ACBC96551EE07557 /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */;
+			baseConfigurationReference = 670890D65261E7E99830DA8F /* Pods-AvartaWallet-AvartaWalletTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -527,7 +527,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3FB907B34DF0B5FB739DC5F4 /* Pods-AvartaWallet.debug.xcconfig */;
+			baseConfigurationReference = F71E4CF7B7C28C8920B94166 /* Pods-AvartaWallet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -608,7 +608,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD95AD3FA4574E8050130B98 /* Pods-AvartaWallet.release.xcconfig */;
+			baseConfigurationReference = 5B9DCCAF0B50828807A686B5 /* Pods-AvartaWallet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

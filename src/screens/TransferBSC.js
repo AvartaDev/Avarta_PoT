@@ -29,6 +29,7 @@ const TransferBSC = ({navigation}) => {
   };
 
   const onTranfer = async () => {
+    setLoading(true);
     if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
@@ -40,6 +41,7 @@ const TransferBSC = ({navigation}) => {
       'bsc',
       wallet.privateKey,
     );
+    setLoading(false);
     if (newHash) {
       Alert.alert(
         'Avarta Wallet',

@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, ImageBackground, Text, ScrollView} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import useWallet from '../hooks/useWallet';
-import Button from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useAuth from '@hooks/useAuth';
 
 const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {wallet, getWalletBalance, walletBalance} = useWallet();
   const {solWallet} = useAuth();
-  let balance;
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     await getWalletBalance(wallet.address, solWallet.address);
@@ -54,10 +54,13 @@ const Home = ({navigation}) => {
               SOL: {solWallet.address}
             </Text> */}
             <View style={{marginTop: '10%'}}>
-              <Button
+              <SpinnerButton
+                loading={loading}
                 text="Refresh Balance"
                 onPress={async () => {
+                  setLoading(true);
                   await getWalletBalance(wallet.address, solWallet.address);
+                  setLoading(false);
                 }}
               />
             </View>
