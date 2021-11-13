@@ -1,24 +1,18 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, ImageBackground, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import Button from '@components/Button';
+import {SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
 import useAuth from '../hooks/useAuth';
 
 const TransferSol = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendSolana} = useWallet();
+  const {sendSolana, walletBalance} = useWallet();
   const {solWallet} = useAuth();
 
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = React.useState({
     amount: '',
     recepient: '',
@@ -30,21 +24,29 @@ const TransferSol = ({navigation}) => {
     setFormData({...formData, [field]: value});
   };
 
-  const onClick = async () => {
+  const onTranfer = async () => {
     if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
     }
-    let txHash = await sendSolana(recepient, amount, solWallet.privateKey);
+    const newHash = await sendSolana(recepient, amount, solWallet.privateKey);
     if (newHash) {
       Alert.alert(
-        `Transaction successful!\n Transaction Id: ${newHash}\n\n https://ropsten.etherscan.io/tx/${newHash}`,
+        'Avarta Wallet',
+        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://explorer.solana.com/tx/${newHash}?cluster=devnet`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('Navigation: ', navigation);
+              navigation.navigate('dashboard');
+            },
+          },
+        ],
       );
-      navigation.navigate('dashboard');
     } else {
-      Alert.alert('Transaction failed. Please try again.');
+      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
     }
-    // navigation.navigate('dashboard');
   };
   return (
     <ImageBackground
@@ -100,7 +102,11 @@ const TransferSol = ({navigation}) => {
           />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button text="Send Funds" onPress={() => onClick()} />
+            <SpinnerButton
+              loading={loading}
+              text="Send Funds"
+              onPress={onTranfer}
+            />
           </View>
         </View>
       </BgView>

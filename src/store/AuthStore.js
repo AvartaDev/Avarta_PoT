@@ -5,6 +5,8 @@ const initialState = {
   solWallet: null,
   loginError: null,
   loginSuccess: false,
+  username: '',
+  password: '',
 };
 
 export const reducer = (state, action) => {
@@ -39,6 +41,12 @@ export const reducer = (state, action) => {
         loginSuccess: false,
         loginError: action.payload,
       };
+    case 'SET_USER_CREDENTIALS':
+      return {
+        ...state,
+        username: action.payload.username,
+        password: action.payload.password,
+      };
 
     default:
       return state;
@@ -59,4 +67,5 @@ export const actions = {
   LOGIN_FAILED: 'LOGIN_FAILED',
   CREATE_SOLANA_WALLET: 'CREATE_SOLANA_WALLET',
   CLEAR_ERRORS: 'CLEAR_ERRORS',
+  SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS',
 };

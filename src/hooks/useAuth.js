@@ -189,9 +189,7 @@ export const useAuth = () => {
       'https://avarta-api.herokuapp.com/api/create?network=solana',
     );
     const {data} = res;
-    setSolanaWallet(data);
-    console.log('Solana Wallet: ', data);
-
+    await setSolanaWallet(data);
     dispatch({type: actions.CREATE_SOLANA_WALLET, payload: data});
   };
 

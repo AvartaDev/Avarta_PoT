@@ -1,23 +1,17 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, Text, ImageBackground, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import Button from '@components/Button';
+import {SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
 
 const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {sendFunds, wallet, walletBalance} = useWallet();
 
-  const [formData, setFormData] = React.useState({
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
     amount: '',
     recepient: '',
   });
@@ -28,7 +22,8 @@ const TransferEth = ({navigation}) => {
     setFormData({...formData, [field]: value});
   };
 
-  const onClick = async () => {
+  const onTransfer = async () => {
+    setLoading(true);
     if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
@@ -40,13 +35,22 @@ const TransferEth = ({navigation}) => {
       'eth',
       wallet.privateKey,
     );
+    setLoading(false);
     if (newHash) {
       Alert.alert(
+        'Avarta Wallet',
         `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              navigation.navigate('dashboard');
+            },
+          },
+        ],
       );
-      navigation.navigate('dashboard');
     } else {
-      Alert.alert('Transaction failed. Please try again.');
+      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
     }
   };
   return (
@@ -103,7 +107,11 @@ const TransferEth = ({navigation}) => {
           />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button text="Send Funds" onPress={onClick} />
+            <SpinnerButton
+              loading={loading}
+              text="Send Funds"
+              onPress={onTransfer}
+            />
           </View>
         </View>
       </BgView>

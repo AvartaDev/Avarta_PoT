@@ -10,13 +10,13 @@ import {
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import Button from '@components/Button';
+import {SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
 
 const TransferBSC = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const {sendFunds, wallet, walletBalance} = useWallet();
-
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = React.useState({
     amount: '',
     recepient: '',
@@ -28,7 +28,7 @@ const TransferBSC = ({navigation}) => {
     setFormData({...formData, [field]: value});
   };
 
-  const onClick = async () => {
+  const onTranfer = async () => {
     if (amount === 0 || recepient === '') {
       Alert.alert('Enter an amount or recepient');
       return;
@@ -42,11 +42,19 @@ const TransferBSC = ({navigation}) => {
     );
     if (newHash) {
       Alert.alert(
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
+        'Avarta Wallet',
+        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://testnet.bscscan.com/tx/${newHash}`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              navigation.navigate('dashboard');
+            },
+          },
+        ],
       );
-      navigation.navigate('dashboard');
     } else {
-      Alert.alert('Transaction failed. Please try again.');
+      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
     }
   };
   return (
@@ -102,7 +110,11 @@ const TransferBSC = ({navigation}) => {
           />
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button text="Send Funds" onPress={() => onClick()} />
+            <SpinnerButton
+              loading={loading}
+              text="Send Funds"
+              onPress={onTranfer}
+            />
           </View>
         </View>
       </BgView>

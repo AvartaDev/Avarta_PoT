@@ -1,35 +1,80 @@
 import React, {Component, useEffect} from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import Button from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import {PrimaryModal} from '@components/Modal';
-import useAuth from '@hooks/useAuth';
-import * as keychain from '@libs/keychain';
+import Solus from 'rnsolus';
+import {useDispatch, actions} from '@store/AuthStore';
+
+const SolusStepUpSuccessMsg = 'Workflow completed successfully';
 
 const Login = ({navigation}) => {
-  const [password, setPassword] = React.useState('');
-  const {loginUser} = useAuth();
+  const [formData, setFormData] = React.useState({
+    username: 'hong.loon',
+    password: 'Abcd123a',
+  });
 
-  // const handleChange = field => value => {
-  //   setPassword({...password, [field]: value});
-  // };
+  const {username, password} = formData;
+  const dispatch = useDispatch();
+
+  const handleChange = field => value => {
+    setFormData({...formData, [field]: value});
+  };
 
   const {colors, gutter} = useTheme();
   const [modalVisible, setModalVisible] = React.useState(false);
 
-  const onClick = async () => {
-    await loginUser(password);
-    navigation.navigate('dashboard');
+  const onClickLogin = async () => {
+    if (username === '') {
+      Alert.alert('Avarta Wallet', 'Username is required');
+      return;
+    }
+    if (password === '') {
+      Alert.alert('Avarta Wallet', 'Password is required');
+      return;
+    }
+    try {
+      await dispatch({
+        type: actions.SET_USER_CREDENTIALS,
+        payload: {username, password},
+      });
+
+      const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
+      const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
+
+      const DeviceKeyIdentifier = 'dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R';
+      const FaceScanEncryptionKey =
+        '-----BEGIN PUBLIC KEY-----\n' +
+        'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5PxZ3DLj+zP6T6HFgzzk\n' +
+        'M77LdzP3fojBoLasw7EfzvLMnJNUlyRb5m8e5QyyJxI+wRjsALHvFgLzGwxM8ehz\n' +
+        'DqqBZed+f4w33GgQXFZOS4AOvyPbALgCYoLehigLAbbCNTkeY5RDcmmSI/sbp+s6\n' +
+        'mAiAKKvCdIqe17bltZ/rfEoL3gPKEfLXeN549LTj3XBp0hvG4loQ6eC1E1tRzSkf\n' +
+        'GJD4GIVvR+j12gXAaftj3ahfYxioBH7F7HQxzmWkwDyn3bqU54eaiB7f0ftsPpWM\n' +
+        'ceUaqkL2DZUvgN0efEJjnWy5y1/Gkq5GGWCROI9XG/SwXJ30BbVUehTbVcD70+ZF\n' +
+        '8QIDAQAB\n' +
+        '-----END PUBLIC KEY-----';
+      Solus.onCreate(
+        DeviceKeyIdentifier,
+        FaceScanEncryptionKey,
+        SERVER_BASE_URL,
+        ORGANISATION_KEY,
+      );
+      const msg = await Solus.StepUpProcess(username, password);
+      if (msg !== SolusStepUpSuccessMsg) {
+        Alert.alert('Avarta Wallet', msg);
+        return;
+      }
+      navigation.navigate('dashboard');
+    } catch (e) {
+      Alert.alert('Avarta Wallet', e.message);
+    }
   };
 
+  const onClickRegister = () => {
+    navigation.navigate('register');
+  };
   return (
     <ImageBackground
       source={require('@assets/images/BG.png')}
@@ -44,72 +89,38 @@ const Login = ({navigation}) => {
           }}>
           <Image
             source={require('@assets/images/Logo.png')}
-            style={{width: 120, height: 120}}
+            style={{height: 80, aspectRatio: 1460 / 421}}
           />
-          <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 29}}>
-            Avarta Wallet
-          </Text>
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
+          <LabelInput
+            label="Username"
+            value={formData.username}
+            required
+            onChangeText={handleChange('username')}
+            placeholder="John"
+            placeholderTextColor={colors.primary_grey}
+          />
           <LabelInput
             label="Password"
             value={password}
             required
-            onChangeText={setPassword}
+            onChangeText={handleChange('password')}
             placeholder="*********"
             secureTextEntry={true}
             placeholderTextColor={colors.primary_grey}
           />
-
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: gutter.md,
-            }}>
-            <Text
-              style={{
-                color: colors.white,
-                fontWeight: 'bold',
-                fontSize: 16,
-                textAlign: 'left',
-              }}>
-              Sign In with face ID
-            </Text>
-            <TouchableOpacity style={{padding: gutter.sm}}>
-              <Image
-                source={require('@assets/images/face-id.png')}
-                style={{tintColor: colors.white, width: 28, height: 28}}
-              />
-            </TouchableOpacity>
-
-            <Text
-              style={{
-                color: colors.basic,
-                fontWeight: 'bold',
-                marginLeft: gutter.lg,
-                textAlign: 'right',
-              }}>
-              Restore Wallet
-            </Text>
-          </View>
           <View
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
-            <Button text="LOG IN" onPress={onClick} />
+            <SpinnerButton
+              loading={false}
+              text="LOG IN"
+              onPress={onClickLogin}
+              style={{justifyContent: 'center'}}
+            />
           </View>
           <Text
-            style={{
-              color: colors.white,
-              fontWeight: '500',
-              textAlign: 'center',
-              marginHorizontal: gutter.md,
-              marginTop: gutter.lg,
-            }}>
-            Can't login? You can ERASE your current wallet and setup a new one
-          </Text>
-          <Text
-            onPress={() => setModalVisible(true)}
+            onPress={onClickRegister}
             style={{
               color: colors.basic,
               textAlign: 'center',
@@ -117,7 +128,7 @@ const Login = ({navigation}) => {
               fontWeight: 'bold',
             }}>
             {' '}
-            Reset Wallet
+            Sign Up
           </Text>
         </View>
         <PrimaryModal visible={modalVisible}>
@@ -199,21 +210,6 @@ const Login = ({navigation}) => {
             />
           </View>
         </PrimaryModal>
-        <Text
-          onPress={() => {
-            navigation.navigate('SolusLibrary');
-          }}
-          style={{
-            position: 'absolute',
-            top: 40,
-            left: -5,
-            color: colors.basic,
-            fontWeight: 'bold',
-            marginLeft: gutter.lg,
-            textAlign: 'right',
-          }}>
-          Go to Library
-        </Text>
       </BgView>
     </ImageBackground>
   );
