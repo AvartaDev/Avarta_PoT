@@ -1,18 +1,29 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  ALL_WALLET_KEY,
-  ETH_WALLET_KEY,
+  MASTER_WALLET_KEY,
   LATEST_EXTERNAL_DATABASE_REF_ID,
 } from '@constants/keys';
 
-export const getAllWallets = async () => {
+export const getMasterWallet = async () => {
   try {
-    const wallets = await getItem(ALL_WALLET_KEY);
+    const wallets = await getItem(MASTER_WALLET_KEY);
     if (!wallets) {
-      AsyncStorage.setItem(ALL_WALLET_KEY, {});
+      AsyncStorage.setItem(MASTER_WALLET_KEY, {});
       return {};
     }
     return wallets;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const storeTokenWallet = async (key, wallet) => {
+  try {
+    const masterWallet = await getMasterWallet();
+    const tokenWallets = masterWallet[key] ? masterWallet[key] : []
+    tokenWallets.push(wallet)
+    masterWallet[key] = tokenWallets;
+    await setItem(MASTER_WALLET_KEY, masterWallet);
   } catch (e) {
     console.log(e);
   }
@@ -37,15 +48,7 @@ export const deleteLatestExternalDatabaseRefID = async () => {
 }
 
 
-export const storeWallet = async (key, wallet) => {
-  try {
-    const existingWallets = await getAllWallets();
-    existingWallets[key] = wallet;
-    await setItem(ALL_WALLET_KEY, existingWallets);
-  } catch (e) {
-    console.log(e);
-  }
-};
+
 
 const setItem = async (key, object) => {
   await AsyncStorage.setItem(key, JSON.stringify(object));

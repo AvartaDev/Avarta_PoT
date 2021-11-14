@@ -3,7 +3,7 @@ import {View, ImageBackground, Text, ScrollView} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import Button from '@components/Button';
-import {getAllWallets} from '@libs/localPersistenceUtils';
+import {getMasterWallet} from '@libs/localPersistenceUtils';
 import {BSC_WALLET_KEY, ETH_WALLET_KEY} from '@constants/keys';
 import {
   CREATE_WALLET_FLOW,
@@ -21,7 +21,7 @@ const Home = ({navigation}) => {
 
   const initWallets = async () => {
     setLoaded(false);
-    const res = await getAllWallets();
+    const res = await getMasterWallet();
     const parsedRes = JSON.parse(res);
     parsedRes[BSC_WALLET_KEY] = parsedRes[ETH_WALLET_KEY];
     console.log(parsedRes);

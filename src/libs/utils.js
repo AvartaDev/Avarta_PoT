@@ -6,6 +6,7 @@ import {BigNumber} from '@ethersproject/bignumber';
 import {isHexString as isEthersHexString} from '@ethersproject/bytes';
 import {isValidMnemonic as ethersIsValidMnemonic} from '@ethersproject/hdnode';
 import {get, replace, startsWith} from 'lodash';
+import {EVENT_DATA_RESULT_KEY, EVENT_SUCCESS} from '@constants/events';
 /**
  * Returns full checksummed address
  *

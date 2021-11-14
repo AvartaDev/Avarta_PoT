@@ -6,7 +6,7 @@ import * as bip39 from "react-native-bip39"
 import BigText from '@components/text/BigText';
 import { deriveAccountFromMnemonic } from '@libs/WalletUtils';
 import SmallText from '@components/text/SmallText';
-import { storeWallet } from '@libs/localPersistenceUtils';
+import { storeTokenWallet } from '@libs/localPersistenceUtils';
 import { HOME } from '@constants/navigation';
 
 
@@ -39,7 +39,7 @@ const CreateWalletDetailsScreen = ({ route, navigation }) => {
       <SmallText text={"prv extended key base64"} />
       <SmallText text={wallet.privateExtendedKey} />
       <Button text={"Save and go back to home page"} onPress={async () => {
-        await storeWallet(token, wallet)
+        await storeTokenWallet(token, wallet)
         navigation.navigate(HOME)
       }} />
     </BgView>
@@ -52,7 +52,9 @@ const CreateWalletDetailsScreen = ({ route, navigation }) => {
       <BgView>
         <BigText text={token} />
         <Button text="Create Wallet now" onPress={async () => {
+          console.log("PRESSED")
           const res = await bip39.generateMnemonic(256)
+          console.log("Done")
           setMnemonic(res)
         }} />
 

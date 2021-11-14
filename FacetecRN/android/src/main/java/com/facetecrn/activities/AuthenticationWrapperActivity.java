@@ -125,21 +125,20 @@ public class AuthenticationWrapperActivity extends ReactActivity {
         .emit("AUTHENTICATION", map);
 
     } catch (Exception e) {
-      Log.e("ReactNative", e.getMessage());
+      Log.e(this.getClass().toString(), e.getMessage());
     }
   }
 
   public void emitSuccess(String _latestExternalDatabaseRefID) {
     WritableMap map = Arguments.createMap();
-    map.putString("latestExternalDatabaseRefID", _latestExternalDatabaseRefID);
     map.putString("result", "SUCCESS");
     try {
       getReactInstanceManager().getCurrentReactContext()
         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-        .emit("ENROLL", map);
+        .emit("AUTHENTICATION", map);
 
     } catch (Exception e) {
-      Log.e("ReactNative", e.getMessage());
+      Log.e(this.getClass().toString(), e.getMessage());
     }
   }
 }
