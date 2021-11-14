@@ -40,6 +40,7 @@ const StyledPrimaryButton = styled(_Button)`
   background-color: ${colors('basic')};
   border-color: rgb(63, 172, 157);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.23);
+  margin:  16px 0px 16px 0px;
   ${disabled}
   ${noShadow}
 `;

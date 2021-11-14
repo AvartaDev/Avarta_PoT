@@ -16,16 +16,12 @@ export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
 
 export const deriveAccountFromMnemonic = async (mnemonic, index = 0) => {
-  //console.log(mnemonic)
   let seed;
   if (Platform.OS == 'ios') {
     seed = await mnemonicToSeed(mnemonic);
   } else {
-    //console.log("ASD")
     const res = await Bip39.mnemonicToSeed(mnemonic, null);
-    //console.log(res)
     seed = res.toString('base64');
-    //console.log(seed)
   }
 
   const hdWallet = hdkey.fromMasterSeed(seed);

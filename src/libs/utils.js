@@ -7,6 +7,8 @@ import {isHexString as isEthersHexString} from '@ethersproject/bytes';
 import {isValidMnemonic as ethersIsValidMnemonic} from '@ethersproject/hdnode';
 import {get, replace, startsWith} from 'lodash';
 import {EVENT_DATA_RESULT_KEY, EVENT_SUCCESS} from '@constants/events';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {ToastAndroid} from 'react-native';
 /**
  * Returns full checksummed address
  *
@@ -165,3 +167,12 @@ export const Parser = {
 
 export const formatAmount = value =>
   value ? `${value}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : '0.00';
+
+export const copyStringToClipboard = str => {
+  Clipboard.setString(str);
+  ToastAndroid.showWithGravity(
+    'Copied!',
+    ToastAndroid.SHORT,
+    ToastAndroid.BOTTOM,
+  );
+};

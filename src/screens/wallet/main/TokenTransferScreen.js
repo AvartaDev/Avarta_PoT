@@ -4,7 +4,7 @@ import ImageBackGroundView from '@components/views/ImageBackGroundView';
 import BigText from '@components/text/BigText';
 import {Input} from 'react-native-elements';
 import {sendTokens} from '@libs/WalletUtils';
-import {VIEW_WALLET_DASHBOARD} from '@constants/navigation';
+import {TOKEN_WALLET_SCREEN} from '@constants/navigation';
 import Toast from 'react-native-toast-message';
 
 const TokenTransferScreen = ({route, navigation}) => {
@@ -37,7 +37,7 @@ const TokenTransferScreen = ({route, navigation}) => {
         onPress={async () => {
           const res = await sendTokens(targetAddr, val, token, wallet);
           console.log(res)
-          if (res) navigation.navigate(VIEW_WALLET_DASHBOARD, {wallet, token});
+          if (res) navigation.navigate(TOKEN_WALLET_SCREEN, {wallet, token});
         }}
       />
     </ImageBackGroundView>

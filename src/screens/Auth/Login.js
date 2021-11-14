@@ -53,12 +53,6 @@ const Login = ({navigation}) => {
     />
   );
   const SignupButton = () => <Button text="SIGN UP" onPress={() => enroll()} />;
-  const Override = () => (
-    <Button
-      text="(DEBUG) reset refID"
-      onPress={() => deleteLatestExternalDatabaseRefID()}
-    />
-  );
   return (
     <ImageBackGroundView>
       <View
@@ -75,7 +69,15 @@ const Login = ({navigation}) => {
         <BigText text={'Avarta Wallet'} />
         <SmallText text={`debug refID: ${refID}`} />
         {refID === '' ? <SignupButton /> : <LoginButton />}
-        <Override />
+        <Button
+          text="(DEBUG) bypass login"
+          onPress={() => navigation.navigate(DASHBOARD_NAVIGATOR)}
+        />
+
+        <Button
+          text="(DEBUG) reset refID"
+          onPress={() => deleteLatestExternalDatabaseRefID()}
+        />
       </View>
     </ImageBackGroundView>
   );

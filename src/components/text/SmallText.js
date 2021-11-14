@@ -9,12 +9,10 @@ const SmallText = (params) => {
 
   const smallTextStyle = {
     color: colors.white,
-    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 14,
-    ...params.style
   }
-  return <Text style={smallTextStyle}>{params.text}</Text>
+  return <Text style={[smallTextStyle, params.style]}>{params.text}</Text>
 }
 
 export default SmallText

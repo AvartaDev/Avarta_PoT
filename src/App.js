@@ -9,6 +9,7 @@ import Theme from '@libs/Theme';
 import AppNavigator from '@navigation/AppNavigator';
 import Toast from 'react-native-toast-message';
 import '../shim.js';
+import crypto from 'crypto'
 
 const App = () => {
   return (
