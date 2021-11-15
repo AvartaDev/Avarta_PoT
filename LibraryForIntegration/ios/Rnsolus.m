@@ -250,7 +250,7 @@ RCT_EXPORT_METHOD(StepUpElevatedProcess:(NSString *)name pwd:(NSString *)passwor
     NSData *postData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&error];
     [request setHTTPBody:postData];
 
-  //@"dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R"
+  //@"dr33yhXwWE7gnyZaBxraLtZppdaArzFG"
     [request addValue:self->ZoomKey forHTTPHeaderField:@"X-Device-Key"];
     [request addValue:[FaceTec.sdk createFaceTecAPIUserAgentString:sessionResult.sessionId]  forHTTPHeaderField:@"User-Agent"];
 

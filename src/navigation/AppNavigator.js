@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthNavigation from '@navigation/AuthNavigation';
 import DashboardNavigation from '@navigation/DashboardNavigation';
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {

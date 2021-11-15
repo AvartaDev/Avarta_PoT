@@ -146,7 +146,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
       }
     });
     //  startService(inauthService);
-    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch(Exception e) {
               Log.d("asd", "EnrollProcess: ",e);
             }
@@ -182,7 +183,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
             }
           }
         });
-        InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+        //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+        //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch (Exception e){
       Log.d("asd", "AuthenticationProcess: ",e);
     }
@@ -236,7 +238,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
       }
     });
     //  startService(inauthService);
-    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e){
       Log.d("asd", "StepUpProcess: ",e);
     }
@@ -273,7 +275,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
       }
     });
     //  startService(inauthService);
-    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e) {
       Log.d("asd", "StepUpElevatedProcess: ",e);
     }
