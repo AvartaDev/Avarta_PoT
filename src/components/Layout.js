@@ -27,7 +27,7 @@ export const BgView = ({children, style}) => {
   const {colors} = useTheme();
   return (
     <SafeAreaView
-      style={{flex: 1, backgroundColor: colors.primary_background, ...style}}>
+      style={{flex: 1, paddingLeft:8, paddingRight:16, backgroundColor: colors.primary_background, ...style}}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       {children}
     </SafeAreaView>

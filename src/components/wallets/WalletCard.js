@@ -7,7 +7,12 @@ import {getWalletBalance} from '@libs/WalletUtils';
 import {copyStringToClipboard} from '@libs/utils';
 import Button from '@components/Button';
 
-const WalletCard = ({token, wallet, sendTokenCallback = () => {}}) => {
+const WalletCard = ({
+  token,
+  wallet,
+  sendTokenCallback = () => {},
+  minimal = false,
+}) => {
   const [balance, setBalance] = useState(0.0);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -67,7 +72,9 @@ const WalletCard = ({token, wallet, sendTokenCallback = () => {}}) => {
             setShowDetails(!showDetails);
           }}>
           <Text>{token}</Text>
-          <Icon name={showDetails ? 'expand-less' : 'expand-more'} />
+          {!minimal && (
+            <Icon name={showDetails ? 'expand-less' : 'expand-more'} />
+          )}
         </TouchableOpacity>
       </Card.Title>
 
@@ -103,9 +110,13 @@ const WalletCard = ({token, wallet, sendTokenCallback = () => {}}) => {
 
       <Card.Divider />
 
-      {showDetails ? <Details /> : null}
-
-      <Button text="Send tokens from this wallet" onPress={()=> sendTokenCallback()} />
+      {showDetails && !minimal && <Details />}
+      {!minimal && (
+        <Button
+          text="Send tokens from this wallet"
+          onPress={() => sendTokenCallback()}
+        />
+      )}
     </Card>
   );
 };

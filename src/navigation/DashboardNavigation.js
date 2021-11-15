@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '@screens/Home';
-import CreateWalletNavigation from './CreateWalletNavigation';
+import CreateWalletNavigation from '@screens/wallet/create/CreateWalletNavigation';
 import { CREATE_WALLET_FLOW, HOME, WALLET_NAVIGATOR } from '@constants/navigation';
 import WalletNavigation from './WalletNavigation';
 

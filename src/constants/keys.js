@@ -1,8 +1,8 @@
 export const MASTER_WALLET_KEY = 'ALL_WALLETS';
 
-export const ETH_WALLET_KEY = 'ETHEREUM';
-export const BSC_WALLET_KEY = 'BSC';
-export const SOL_WALLET_KEY = 'SOLANA'
+export const ETH_WALLET_KEY = 'Ethereum';
+export const BSC_WALLET_KEY = 'Bsc';
+export const SOL_WALLET_KEY = 'Solana'
 
 export const ACTIVATED_TOKEN_WALLET_LIST = [ETH_WALLET_KEY, BSC_WALLET_KEY, SOL_WALLET_KEY]
 

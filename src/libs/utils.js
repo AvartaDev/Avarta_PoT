@@ -170,9 +170,15 @@ export const formatAmount = value =>
 
 export const copyStringToClipboard = str => {
   Clipboard.setString(str);
-  ToastAndroid.showWithGravity(
-    'Copied!',
-    ToastAndroid.SHORT,
+  showAndroidToast('Copied!', ToastAndroid.SHORT)
+};
+
+export const showAndroidToast = (message, duration) => {
+  ToastAndroid.showWithGravityAndOffset(
+    message,
+    duration,
     ToastAndroid.BOTTOM,
+    0,
+    60,
   );
 };

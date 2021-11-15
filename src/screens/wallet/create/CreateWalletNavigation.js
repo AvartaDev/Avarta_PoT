@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import CreateWalletMainScreen from '@screens/wallet/create/CreateWalletMainScreen'
-import CreateWalletDetailsScreen from '@screens/wallet/create/CreateWalletDetailsScreen';
+import CreateTokenWalletMain from '@screens/wallet/create/CreateTokenWalletMain'
+import CreateTokenWalletDetails from '@screens/wallet/create/CreateTokenWalletDetails';
 import { CREATE_WALLET_DETAILS, CREATE_WALLET_MAIN } from '@constants/navigation';
 
 const Stack = createStackNavigator();
@@ -13,8 +13,8 @@ const CreateWalletNavigation = () => {
             screenOptions={{
                 headerShown: false,
             }}>
-            <Stack.Screen name={CREATE_WALLET_MAIN} component={CreateWalletMainScreen} />
-            <Stack.Screen name={CREATE_WALLET_DETAILS} component={CreateWalletDetailsScreen} />
+            <Stack.Screen name={CREATE_WALLET_MAIN} component={CreateTokenWalletMain} />
+            <Stack.Screen name={CREATE_WALLET_DETAILS} component={CreateTokenWalletDetails} />
         </Stack.Navigator>
     );
 };
