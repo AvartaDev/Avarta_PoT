@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from '@screens/Home';
 import CreateWalletNavigation from '@screens/wallet/create/CreateWalletNavigation';
 import { CREATE_WALLET_FLOW, HOME, WALLET_NAVIGATOR } from '@constants/navigation';
-import WalletNavigation from './WalletNavigation';
+import WalletNavigation from '@screens/wallet/main/WalletNavigation';
 
 const Stack = createStackNavigator();
 

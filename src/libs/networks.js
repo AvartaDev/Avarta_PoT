@@ -1,3 +1,4 @@
+import { ETH_WALLET_KEY } from '@constants/keys.js';
 import URL from 'url-parse';
 import {
   MAINNET,
@@ -18,6 +19,7 @@ import {
  * This values are used in certain places like
  * navbar and the network switcher.
  */
+
 export const NetworkList = {
   [MAINNET]: {
     name: 'Ethereum Main Network',
@@ -35,11 +37,10 @@ export const NetworkList = {
     networkId: 3,
     chainId: 3,
     rpcUrl:'https://ropsten.infura.io/v3/b4e2adbc89864b418a28043c075c625b',
-    // rpcUrl: 'https://ropsten.infura.io/v3/e9c4665d91a343e295308d5995ff5a72',
-    // rpcUrl: 'wss://rinkeby.infura.io/ws/v3/b4e2adbc89864b418a28043c075c625b',
     hexChainId: '0x3',
     color: '#ff4a8d',
     networkType: 'ropsten',
+    getTransactionUrl: (txHash) => (`https://ropsten.etherscan.io/tx/${txHash}`)
   },
   [KOVAN]: {
     name: 'Kovan Test Network',
@@ -85,9 +86,15 @@ export const NetworkList = {
   },
 };
 
+
+
 const NetworkListKeys = Object.keys(NetworkList);
 
 export default NetworkList;
+
+export const TokenNetworkMapping = {
+  [ETH_WALLET_KEY]: {...NetworkList.ropsten}
+}
 
 export const getAllNetworks = () =>
   NetworkListKeys.filter(name => name !== RPC);

@@ -1,18 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {Card, Icon, Text} from 'react-native-elements';
+import {ToastAndroid, View} from 'react-native';
+import {Button, Card, Icon, Text} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import SmallText from '@components/text/SmallText';
 import {getWalletBalance} from '@libs/WalletUtils';
-import {copyStringToClipboard} from '@libs/utils';
-import Button from '@components/Button';
+import {copyStringToClipboard, showAndroidToast} from '@libs/utils';
+import {TOKEN_TRANSFER_SCREEN, WALLET_HISTORY_SCREEN} from '@constants/navigation';
 
-const WalletCard = ({
-  token,
-  wallet,
-  sendTokenCallback = () => {},
-  minimal = false,
-}) => {
+const WalletCard = ({token, index, wallet, minimal = false, navigation}) => {
   const [balance, setBalance] = useState(0.0);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -63,6 +58,26 @@ const WalletCard = ({
     );
   };
 
+  const Buttons = () => (
+    <View style={{flexDirection: 'row'}}>
+      <Button
+        containerStyle={{flex: 1, margin: 4}}
+        title="Transfer Token"
+        onPress={() => {
+          navigation.navigate(TOKEN_TRANSFER_SCREEN, {wallet, token});
+        }}
+      />
+
+      <Button
+        containerStyle={{flex: 1, margin: 4}}
+        title="View History"
+        onPress={() => {
+          navigation.navigate(WALLET_HISTORY_SCREEN, {wallet, token});
+        }}
+      />
+    </View>
+  );
+
   return (
     <Card>
       <Card.Title>
@@ -71,7 +86,7 @@ const WalletCard = ({
           onPress={() => {
             setShowDetails(!showDetails);
           }}>
-          <Text>{token}</Text>
+          <Text>{`Wallet ${index}`}</Text>
           {!minimal && (
             <Icon name={showDetails ? 'expand-less' : 'expand-more'} />
           )}
@@ -95,7 +110,11 @@ const WalletCard = ({
 
       <Card.Divider />
 
-      <TouchableOpacity onPress={() => init()}>
+      <TouchableOpacity
+        onPress={() => {
+          showAndroidToast('Refreshing balance...', ToastAndroid.LONG);
+          init();
+        }}>
         <View style={{flexDirection: 'row'}}>
           <SmallText
             text="Current Balance"
@@ -111,12 +130,7 @@ const WalletCard = ({
       <Card.Divider />
 
       {showDetails && !minimal && <Details />}
-      {!minimal && (
-        <Button
-          text="Send tokens from this wallet"
-          onPress={() => sendTokenCallback()}
-        />
-      )}
+      {!minimal && <Buttons />}
     </Card>
   );
 };

@@ -2,8 +2,9 @@ import React, {useEffect} from 'react';
 import Button from '@components/Button';
 import ImageBackGroundView from '@components/views/ImageBackGroundView';
 import WalletCard from '@components/wallets/WalletCard';
-import {TRANSFER_TOKEN_SCREEN} from '@constants/navigation';
+import {TOKEN_TRANSFER_SCREEN} from '@constants/navigation';
 import BigText from '@components/text/BigText';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const MainWalletScreen = ({route, navigation}) => {
   const {token, walletList} = route.params;
@@ -12,16 +13,12 @@ const MainWalletScreen = ({route, navigation}) => {
   }, []);
   return (
     <ImageBackGroundView>
-      <BigText text={`${token} WALLETS`} />
-      {walletList.map((value, index) => (
-        <WalletCard
-          wallet={value}
-          token={`Wallet ${index + 1}`}
-          sendTokenCallback={() =>
-            navigation.navigate(TRANSFER_TOKEN_SCREEN, {value, token})
-          }
-        />
-      ))}
+      <BigText text={`Your ${token} Wallets`} />
+      <ScrollView>
+        {walletList.map((value, index) => (
+          <WalletCard wallet={value} token={token} index={index + 1} navigation={navigation} />
+        ))}
+      </ScrollView>
     </ImageBackGroundView>
   );
 };

@@ -62,7 +62,13 @@ const tokenTransferMap = {
   [BSC_WALLET_KEY]: sendBsc,
 };
 
-export const sendTokens = async (targetAddr, value, token, wallet) => {
+export const sendTokens = async (
+  targetAddr,
+  value,
+  token,
+  wallet,
+  onTransactionHash,
+) => {
   const currBalance = parseFloat(await getWalletBalance(wallet.address, token));
   const transferAmount = parseFloat(value);
   let res;
@@ -77,7 +83,7 @@ export const sendTokens = async (targetAddr, value, token, wallet) => {
     console.log(
       `SENDING ${value} on ${token} to ${targetAddr}, balance: ${currBalance}`,
     );
-    await tokenTransferMap[token](targetAddr, value, wallet);
+    await tokenTransferMap[token](targetAddr, value, wallet, onTransactionHash);
     res = true;
   }
 

@@ -20,8 +20,8 @@ export const getMasterWallet = async () => {
 export const storeTokenWallet = async (key, wallet) => {
   try {
     const masterWallet = await getMasterWallet();
-    const tokenWallets = masterWallet[key] ? masterWallet[key] : []
-    tokenWallets.push(wallet)
+    const tokenWallets = masterWallet[key] ? masterWallet[key] : [];
+    tokenWallets.push(wallet);
     masterWallet[key] = tokenWallets;
     await setItem(MASTER_WALLET_KEY, masterWallet);
   } catch (e) {
@@ -39,18 +39,35 @@ export const getLatestExternalDatabaseRefID = async () => {
 
 export const setLatestExternalDatabaseRefID = async value => {
   await setItem(LATEST_EXTERNAL_DATABASE_REF_ID, {value});
-  console.log(`saved ${{value}}`)
+  console.log(`saved ${{value}}`);
   return await getLatestExternalDatabaseRefID();
 };
 
 export const deleteLatestExternalDatabaseRefID = async () => {
- await deleteItem(LATEST_EXTERNAL_DATABASE_REF_ID);
-}
+  await deleteItem(LATEST_EXTERNAL_DATABASE_REF_ID);
+};
 
+export const addTransactionHistory = async (
+  token,
+  fromAddr,
+  toAddr,
+  value,
+  url,
+) => {
+  const {history} = await getTransactionHistory(token, fromAddr);
+  history.push({from: fromAddr, to: toAddr, value, url});
+  console.log(`${token}::${fromAddr}`)
+  console.log(history)
+  setItem(`${token}::${fromAddr}`, {history});
+};
 
-
+export const getTransactionHistory = async (token, addr) => {
+  const res = await getItem(`${token}::${addr}`);
+  return res ? res : {history: []};
+};
 
 const setItem = async (key, object) => {
+  console.log(`saving ${object}`);
   await AsyncStorage.setItem(key, JSON.stringify(object));
 };
 

@@ -13,7 +13,7 @@ import {HOME} from '@constants/navigation';
 import {Icon} from 'react-native-elements';
 import {copyStringToClipboard, showAndroidToast} from '@libs/utils';
 import WalletCard from '@components/wallets/WalletCard';
-import { authenticate } from '@libs/facetecUtils';
+import {authenticate} from '@libs/facetecUtils';
 
 const CreateTokenWalletDetails = ({route, navigation}) => {
   const {token} = route.params;

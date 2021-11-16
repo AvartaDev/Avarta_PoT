@@ -1,7 +1,8 @@
 import Web3 from 'web3';
-import {NetworkList} from './networks';
+import {NetworkList, TokenNetworkMapping} from './networks';
 import {FeeMarketEIP1559Transaction, Transaction} from '@ethereumjs/tx';
 import Common, {Chain, Hardfork} from '@ethereumjs/common';
+import { ETH_WALLET_KEY } from '@constants/keys';
 
 export const getEthBalance = async address => {
   const web3 = new Web3(
@@ -13,9 +14,14 @@ export const getEthBalance = async address => {
   return eth;
 };
 
-export const sendEth = async (target, value, wallet) => {
+export const sendEth = async (
+  target,
+  value,
+  wallet,
+  onReceiveTxHash,
+) => {
   const web3 = new Web3(
-    new Web3.providers.HttpProvider(NetworkList.ropsten.rpcUrl),
+    new Web3.providers.HttpProvider(TokenNetworkMapping[ETH_WALLET_KEY].rpcUrl),
   );
   web3.eth.defaultChain = 'ropsten';
   // nonce starts counting from 0
@@ -50,18 +56,7 @@ export const sendEth = async (target, value, wallet) => {
   const serializedTx = signedTx.serialize();
   web3.eth
     .sendSignedTransaction('0x' + serializedTx.toString('hex'))
-    .once('sending', payload => console.log('SENDING', payload))
-    .once('sent', payload => console.log('sent', payload))
-    .once('transactionHash', hash => console.log('transactionHash', hash))
-    .once('receipt', receipt => console.log(receipt))
-    .on('confirmation', (confNumber, receipt, latestBlockHash) =>
-      console.log(confNumber, receipt, latestBlockHash),
-    )
-    .on('error', error => console.log(error))
-    .then(receipt => {
-      console.log('mined', receipt);
-      // will be fired once the receipt is mined
-    });
+    .once('transactionHash', hash => onReceiveTxHash(hash));
   return true;
 };
 
