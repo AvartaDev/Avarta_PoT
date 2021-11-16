@@ -353,7 +353,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
             String error = "";
 
             if (tryToParseSCExceptionCode(throwable) == ApiErrorCode.USER_ALREADY_ENROLLED) {
-              error = "User Alerady Enroll De Enroll First";
+              error = "User already enrolled. Please de-enroll first.";
             } else if (TextUtils.isEmpty(error)) {
               if (throwable instanceof NoConnectionError)
                 if (throwable.getCause() instanceof SSLHandshakeException)
@@ -564,7 +564,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
         @Override
         public void onDlockProcessSucess(DlockOperation dlockOperation, String s) {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User deleted from dlock succes",Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User deleted from dlock success",Toast.LENGTH_LONG).show();
         }
 
         @Override

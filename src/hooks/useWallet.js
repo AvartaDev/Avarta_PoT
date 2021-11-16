@@ -50,8 +50,9 @@ export const useWallet = () => {
       if (Platform.OS == 'ios') {
         seed = await mnemonicToSeed(mnemonic);
       } else {
-        const res = await mnemonicToSeed({mnemonic, passphrase: null});
-        seed = new Buffer(res, 'base64');
+        // const res = await mnemonicToSeed({mnemonic, passphrase: null});
+        seed = await mnemonicToSeed({mnemonic, passphrase: null});
+        // seed = new Buffer(res.data, 'base64');
       }
       console.log('before hd');
       const hdWallet = hdkey.fromMasterSeed(seed);

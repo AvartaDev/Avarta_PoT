@@ -49,17 +49,24 @@ const Register = ({navigation}) => {
     setLoginLoading(true);
     try {
       const msg = await Solus.StepUpProcess(username, password);
-      if (msg !== SolusSuccessMsg) {
-        Alert.alert('Avarta Wallet', msg);
+      console.log(msg);
+
+      if (!msg.toLowerCase().includes('completed')) {
+        setTimeout(() => {
+          Alert.alert('Avarta Wallet', msg);
+        }, 500);
+
         setLoginLoading(false);
         return 0;
       }
       setLoginLoading(false);
       if (solWallet === null) {
-        Alert.alert(
-          'Avarta Wallet',
-          'Wallet is not created on this device. Please create wallet first by clicking "New User"',
-        );
+        setTimeout(() => {
+          Alert.alert(
+            'Avarta Wallet',
+            'Wallet is not created on this device. Please create wallet first by clicking "New User"',
+          );
+        }, 500);
         return 0;
       }
       navigation.navigate('dashboard');
@@ -73,8 +80,8 @@ const Register = ({navigation}) => {
 
     try {
       let msg = await Solus.EnrollProcess(username, password);
-      console.log(msg);
-      if (msg === SolusSuccessMsg) {
+      console.log('Enroll Message:', msg);
+      if (msg.toLowerCase().includes('completed')) {
         await createWallet(password);
         setRegisterLoading(false);
         navigation.navigate('dashboard');
@@ -82,10 +89,11 @@ const Register = ({navigation}) => {
         Alert.alert('Avarta Wallet', msg);
       }
     } catch (e) {
+      console.log(e.message);
       if (e.message.includes('de-enroll')) {
         await Solus.DeEnrollProcess(username, password);
         msg = await Solus.EnrollProcess(username, password);
-        if (msg === SolusSuccessMsg) {
+        if (msg.toLowerCase().includes('completed')) {
           await createWallet(password);
           setRegisterLoading(false);
           navigation.navigate('dashboard');

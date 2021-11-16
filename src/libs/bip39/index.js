@@ -14,6 +14,7 @@ const WORDLIST_REQUIRED =
 import {randomBytes as _randomBytes} from 'crypto';
 
 import {arrayify} from '@ethersproject/bytes';
+var unorm = require('unorm');
 
 export function randomBytes(length) {
   return arrayify(_randomBytes(length));
@@ -41,7 +42,7 @@ function pbkdf2Promise(password, saltMixin, iterations, keylen, digest) {
   );
 }
 function normalize(str) {
-  return (str || '').normalize('NFKD');
+  return unorm.nfkd(str);
 }
 function lpad(str, padString, length) {
   while (str.length < length) {

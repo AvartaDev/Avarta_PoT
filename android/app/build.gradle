@@ -123,7 +123,7 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 29
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -153,6 +153,7 @@ android {
             keyPassword 'android'
         }
     }
+    buildToolsVersion = '29.0.2'
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
