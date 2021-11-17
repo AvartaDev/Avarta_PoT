@@ -157,7 +157,10 @@ export const useWallet = () => {
       SERVER_BASE_URL,
       ORGANISATION_KEY,
     );
-    const msg = await Solus.StepUpProcess('hong.loon', 'Abcd123a');
+    const msg = await Solus.StepUpProcess(
+      authStore.username,
+      authStore.password,
+    );
     if (!msg.toLowerCase().includes('completed')) {
       return;
     }
