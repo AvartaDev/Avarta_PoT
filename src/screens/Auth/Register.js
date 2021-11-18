@@ -2,22 +2,22 @@ import React, {useEffect} from 'react';
 import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
-import {LabelInput} from '../../components/Input';
 import {SpinnerButton} from '@components/Button';
 import useAuth from '@hooks/useAuth';
-import {useStore, useDispatch, actions} from '@store/AuthStore';
+import useWallet from '@hooks/useWallet';
+import {useStore} from '@store/AuthStore';
 import Solus from 'rnsolus';
 
 const Register = ({navigation}) => {
-  const {colors, gutter} = useTheme();
+  const {gutter} = useTheme();
   const store = useStore();
 
   const [registerLoading, setRegisterLoading] = React.useState(false);
   const [loginLoading, setLoginLoading] = React.useState(false);
 
-  const {username, password, solWallet} = store;
+  const {username, password} = store;
   const {createWallet} = useAuth();
-  const dispatch = useDispatch();
+  const {getWallet} = useWallet();
 
   const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
   const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
@@ -48,7 +48,6 @@ const Register = ({navigation}) => {
     try {
       const msg = await Solus.StepUpProcess(username, password);
       console.log(msg);
-
       if (!msg.toLowerCase().includes('completed')) {
         setTimeout(() => {
           Alert.alert('Avarta Wallet', msg);
@@ -58,7 +57,8 @@ const Register = ({navigation}) => {
         return 0;
       }
       setLoginLoading(false);
-      if (solWallet === null) {
+      const wallet = await getWallet();
+      if (wallet.ethWallet === null) {
         setTimeout(() => {
           Alert.alert(
             'Avarta Wallet',
@@ -87,7 +87,7 @@ const Register = ({navigation}) => {
       }
     } catch (e) {
       console.log(e.message);
-      if (e.message.includes('User already enrolled')) {
+      if (e.message.includes('already enrolled')) {
         await Solus.DeEnrollProcess(username, password);
         msg = await Solus.EnrollProcess(username, password);
         if (msg.toLowerCase().includes('completed')) {
@@ -132,7 +132,7 @@ const Register = ({navigation}) => {
             style={{display: 'flex', alignItems: 'center', marginTop: '7%'}}>
             <SpinnerButton
               loading={loginLoading}
-              text="Login"
+              text="Access Wallet"
               onPress={onClickLogin}
               style={{justifyContent: 'center'}}
             />

@@ -353,11 +353,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
             String error = "";
 
             if (tryToParseSCExceptionCode(throwable) == ApiErrorCode.USER_ALREADY_ENROLLED) {
-<<<<<<< HEAD
-              error = "User already enrolled. Please de-enroll first.";
-=======
               error = "User is already enrolled. De-enroll first";
->>>>>>> 7c829f8 (register update)
             } else if (TextUtils.isEmpty(error)) {
               if (throwable instanceof NoConnectionError)
                 if (throwable.getCause() instanceof SSLHandshakeException)

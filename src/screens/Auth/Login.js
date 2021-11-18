@@ -3,15 +3,13 @@ import {View, Text, ImageBackground, Image, Alert} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {Button, SpinnerButton} from '@components/Button';
-import {PrimaryModal} from '@components/Modal';
-import Solus from 'rnsolus';
+import {SpinnerButton} from '@components/Button';
 import {useDispatch, actions} from '@store/AuthStore';
 
 const Login = ({navigation}) => {
   const [formData, setFormData] = React.useState({
-    username: 'jordan.avarta',
-    password: '12345678',
+    username: '',
+    password: '',
   });
 
   const {username, password} = formData;
@@ -22,7 +20,6 @@ const Login = ({navigation}) => {
   };
 
   const {colors, gutter} = useTheme();
-  const [modalVisible, setModalVisible] = React.useState(false);
 
   const onClickLogin = async () => {
     if (username === '') {

@@ -5,25 +5,28 @@ import {
   ImageBackground,
   Alert,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
+import {PrimaryModal} from '@components/Modal';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {SpinnerButton} from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
-import useAuth from '../hooks/useAuth';
 import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-toast-message';
 
 const TransferSol = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendSolana, walletBalance} = useWallet();
-  const {solWallet} = useAuth();
+  const {sendSolana, walletBalance, solanaWallet} = useWallet();
 
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     amount: '',
     recepient: '',
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHash, setNewHash] = useState('');
 
   const {amount, recepient} = formData;
 
@@ -34,27 +37,14 @@ const TransferSol = ({navigation}) => {
   const onTranfer = async () => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
-      Alert.alert('Enter an amount or recepient');
+      Alert.alert("Enter an amount or recepient's address");
       return;
     }
-    const newHash = await sendSolana(recepient, amount, solWallet.privateKey);
+    const hash = await sendSolana(recepient, amount, solanaWallet.privateKey);
     setLoading(false);
-    if (newHash) {
-      setTimeout(() => {
-        Alert.alert(
-          'Avarta Wallet',
-          `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://explorer.solana.com/tx/${newHash}?cluster=devnet`,
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                navigation.pop();
-              },
-            },
-          ],
-        );
-      }, 200);
-    } else {
+    setNewHash(hash);
+    setModalVisible(true);
+    if (!hash) {
       setTimeout(() => {
         Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
       }, 200);
@@ -81,8 +71,11 @@ const TransferSol = ({navigation}) => {
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
           <TouchableOpacity
             onPress={() => {
-              Clipboard.setString(solWallet.address);
-              Alert.alert('Address is copied');
+              Clipboard.setString(solanaWallet.address);
+              Toast.show({
+                type: 'success',
+                text1: 'Address is copied',
+              });
             }}>
             <Text
               style={{
@@ -91,7 +84,7 @@ const TransferSol = ({navigation}) => {
                 fontWeight: 'bold',
                 fontSize: 16,
               }}>
-              Address: {solWallet.address}
+              Address: {solanaWallet.address}
             </Text>
           </TouchableOpacity>
           <Text
@@ -127,8 +120,6 @@ const TransferSol = ({navigation}) => {
             />
           </View>
         </View>
-<<<<<<< HEAD
-=======
         <PrimaryModal visible={modalVisible}>
           <View>
             <Text style={{fontSize: 20}}>
@@ -158,8 +149,8 @@ const TransferSol = ({navigation}) => {
             </View>
           </View>
         </PrimaryModal>
->>>>>>> 7c829f8 (register update)
       </BgView>
+      <Toast />
     </ImageBackground>
   );
 };

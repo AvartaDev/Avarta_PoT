@@ -8,13 +8,13 @@ import useAuth from '@hooks/useAuth';
 
 const Home = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {wallet, getWalletBalance, walletBalance} = useWallet();
-  const {solWallet} = useAuth();
+  const {ethWallet, solanaWallet, getWalletBalance, walletBalance} =
+    useWallet();
   const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
-    await getWalletBalance(wallet.address, solWallet.address);
-  }, [wallet, solWallet]);
+    await getWalletBalance(ethWallet.address, solanaWallet.address);
+  }, [ethWallet, solanaWallet]);
 
   return (
     <ImageBackground
@@ -51,7 +51,7 @@ const Home = ({navigation}) => {
                 fontWeight: 'bold',
                 fontSize: 16,
               }}>
-              SOL: {solWallet.address}
+              SOL: {solanaWallet.address}
             </Text> */}
             <View style={{marginTop: '10%'}}>
               <SpinnerButton
@@ -59,7 +59,10 @@ const Home = ({navigation}) => {
                 text="Refresh Balance"
                 onPress={async () => {
                   setLoading(true);
-                  await getWalletBalance(wallet.address, solWallet.address);
+                  await getWalletBalance(
+                    ethWallet.address,
+                    solanaWallet.address,
+                  );
                   setLoading(false);
                 }}
               />
