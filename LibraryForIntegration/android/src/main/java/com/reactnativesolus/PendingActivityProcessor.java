@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.facebook.react.bridge.Promise;
 import com.facetec.sdk.FaceTecCustomization;
 import com.facetec.sdk.FaceTecFaceScanProcessor;
 import com.facetec.sdk.FaceTecFaceScanResultCallback;
@@ -46,7 +49,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
   private WorkflowType mWorkflowType;
   private String mActivityKey;
-
+  private Promise promised;
   private AuthResultCallback callback;
   private Context mContext;
   private UserData mUserData;
@@ -55,13 +58,14 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
   private final int MAX_ATTEMPT = 3;
   private final int PIN_LENGTH = 4;
 
-  PendingActivityProcessor(Context context, UserData userData, WorkflowType workflowType, String activityKey, AuthResultCallback mcallback) {
+  PendingActivityProcessor(Context context, UserData userData, WorkflowType workflowType, String activityKey, AuthResultCallback mcallback, Promise promise) {
     super(context, workflowType, activityKey);
     mContext = context;
     mWorkflowType = workflowType;
     mActivityKey = activityKey;
     mUserData = userData;
     callback = mcallback;
+    promised=promise;
   }
 
   @Override
@@ -343,6 +347,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
       if (faceTecSessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
         NetworkingHelpers.cancelPendingRequests();
         faceTecFaceScanResultCallback.cancel();
+        promised.reject(null,"Facetec Session unsuccessful");
         return;
       }
       JSONObject parameters = new JSONObject();
@@ -410,6 +415,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
               faceTecFaceScanResultCallback.cancel();
               callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+              promised.reject(null,"Facetec Session failed during process");
 
             }
           } catch (JSONException e) {
@@ -417,6 +423,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             e.printStackTrace();
             Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
             faceTecFaceScanResultCallback.cancel();
+            promised.reject(null,"Exception raised while attempting to parse JSON result");
           }
         }
 
@@ -425,12 +432,14 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
           // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
           Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
           faceTecFaceScanResultCallback.cancel();
+          promised.reject(null,"Exception raised while attempting HTTPS call");
         }
       });
     } else {
       if (faceTecSessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
         NetworkingHelpers.cancelPendingRequests();
         faceTecFaceScanResultCallback.cancel();
+        promised.reject(null,"FaceTec session unsuccessful");
         return;
       }
       //
@@ -485,13 +494,13 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             Log.e("Response from zoom : ", responseJSON.toString());
             boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
             String scanResultBlob = responseJSON.getString("scanResultBlob");
-
+            boolean isMatched = responseJSON.getBoolean("success");
             // In v9.2.0+, we key off a new property called wasProcessed to determine if we successfully processed the Session result on the Server.
             // Device SDK UI flow is now driven by the proceedToNextStep function, which should receive the scanResultBlob from the Server SDK response.
-            if (wasProcessed) {
+            if (wasProcessed && isMatched) {
 
               // Demonstrates dynamically setting the Success Screen Message.
-              FaceTecCustomization.overrideResultScreenSuccessMessage = "Enrollment\nConfirmed";
+              FaceTecCustomization.overrideResultScreenSuccessMessage = "Authenticated";
 
               // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
               // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
@@ -506,8 +515,15 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             } else {
               // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.
 
+              new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                  callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+                  promised.reject(null,"Facetec session failed while Processing");
+                }
+              },100);
               faceTecFaceScanResultCallback.cancel();
-              callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+
 
             }
           } catch (JSONException e) {
@@ -515,6 +531,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             e.printStackTrace();
             Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
             faceTecFaceScanResultCallback.cancel();
+            promised.reject(null,"Exception raised while attempting to parse JSON result");
           }
         }
 
@@ -523,6 +540,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
           // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
           Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
           faceTecFaceScanResultCallback.cancel();
+          promised.reject(null,"Exception raised while attempting HTTPS call");
         }
       });
     }
@@ -535,6 +553,4 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
                 "Partial Liveness Success",
                 1.1f));*/
   }
-
-
 }
