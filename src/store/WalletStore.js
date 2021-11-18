@@ -8,7 +8,7 @@ const initialState = {
     solana: 0,
   },
   currentChainId: 1,
-  usersWallet: null,
+  ethWallet: null,
   solanaWallet: null,
   fundWalletData: null,
 };
@@ -18,7 +18,7 @@ export const reducer = (state, action) => {
     case 'CREATE_WALLET':
       return {
         ...state,
-        usersWallet: action.payload,
+        ethWallet: action.payload,
         walletError: null,
       };
     case 'SET_WALLET_BALANCE':
@@ -30,7 +30,7 @@ export const reducer = (state, action) => {
     case 'CREATE_WALLET_FROMKEY':
       return {
         ...state,
-        usersWallet: action.payload,
+        ethWallet: action.payload,
         walletError: null,
       };
     case 'FUND_WALLET':
@@ -49,6 +49,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         solanaWallet: action.payload,
+      };
+    case 'SET_ETH_WALLET':
+      return {
+        ...state,
+        ethWallet: action.payload,
       };
     default:
       return state;
@@ -72,6 +77,7 @@ export const actions = {
   SIGN_DATA_ERROR: 'SIGN_DATA_ERROR',
   FUND_WALLET_ERROR: 'FUND_WALLET_ERROR',
   SET_WALLET_BALANCE: 'SET_WALLET_BALANCE',
+  SET_ETH_WALLET: 'SET_ETH_WALLET',
   SET_SOLANA_WALLET: 'SET_SOLANA_WALLET',
   //network action
   SWITCH_NETWORK: 'SWITCH_NETWORK',

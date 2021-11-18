@@ -2,7 +2,6 @@ import {makeStore} from './MakeStore';
 const initialState = {
   setPassword: false,
   createPasswordError: null,
-  solWallet: null,
   loginError: null,
   loginSuccess: false,
   username: '',
@@ -15,12 +14,6 @@ export const reducer = (state, action) => {
       return {
         ...state,
         setPassword: action.payload,
-        walletError: null,
-      };
-    case 'CREATE_SOLANA_WALLET':
-      return {
-        ...state,
-        solWallet: action.payload,
         walletError: null,
       };
     case 'CREATE_PASSWORD_ERROR':
@@ -65,7 +58,6 @@ export const actions = {
   CREATE_PASSWORD_ERROR: 'CREATE_PASSWORD_ERROR',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_FAILED: 'LOGIN_FAILED',
-  CREATE_SOLANA_WALLET: 'CREATE_SOLANA_WALLET',
   CLEAR_ERRORS: 'CLEAR_ERRORS',
   SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS',
 };

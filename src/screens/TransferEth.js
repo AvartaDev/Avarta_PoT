@@ -5,23 +5,27 @@ import {
   ImageBackground,
   Alert,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
+import {PrimaryModal} from '@components/Modal';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {SpinnerButton} from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
 import Clipboard from '@react-native-community/clipboard';
 
 const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds, wallet, walletBalance} = useWallet();
+  const {sendFunds, ethWallet, walletBalance} = useWallet();
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     amount: '',
     recepient: '',
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHash, setNewHash] = useState('');
 
   const {amount, recepient} = formData;
 
@@ -32,33 +36,19 @@ const TransferEth = ({navigation}) => {
   const onTransfer = async () => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
-      Alert.alert('Enter an amount or recepient');
+      Alert.alert("Enter an amount or recepient's address");
       return;
     }
-
-    const newHash = await sendFunds(
+    const hash = await sendFunds(
       recepient,
       amount,
       'eth',
-      wallet.privateKey,
+      ethWallet.privateKey,
     );
+    setNewHash(hash);
     setLoading(false);
-    if (newHash) {
-      setTimeout(() => {
-        Alert.alert(
-          'Avarta Wallet',
-          `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
-          [
-            {
-              text: 'OK',
-              onPress: () => {
-                navigation.pop();
-              },
-            },
-          ],
-        );
-      }, 200);
-    } else {
+    setModalVisible(true);
+    if (!hash) {
       setTimeout(() => {
         Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
       }, 200);
@@ -85,7 +75,7 @@ const TransferEth = ({navigation}) => {
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
           <TouchableOpacity
             onPress={() => {
-              Clipboard.setString(wallet.address);
+              Clipboard.setString(ethWallet.address);
               Alert.alert('Address is copied');
             }}>
             <Text
@@ -95,7 +85,7 @@ const TransferEth = ({navigation}) => {
                 fontWeight: 'bold',
                 fontSize: 16,
               }}>
-              Address: {wallet.address}
+              Address: {ethWallet.address}
             </Text>
           </TouchableOpacity>
           <Text
@@ -131,6 +121,34 @@ const TransferEth = ({navigation}) => {
             />
           </View>
         </View>
+
+        <PrimaryModal visible={modalVisible}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              Transaction successful!{'\n\n'}
+              Transaction Id:{'\n'}
+              {newHash}
+            </Text>
+            <View>
+              <Button
+                text={'OK'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.pop();
+                }}
+              />
+              <Button
+                text={'View Transaction'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  Linking.openURL(`https://ropsten.etherscan.io/tx/${newHash}`);
+                }}
+              />
+            </View>
+          </View>
+        </PrimaryModal>
       </BgView>
     </ImageBackground>
   );
