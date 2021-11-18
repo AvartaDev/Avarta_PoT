@@ -119,8 +119,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
 
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Enrollment Process Start.",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_SHORT).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Enrollment Process Start.",Toast.LENGTH_SHORT).show();
     mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.ENROL.toString(), Username, false);
 
     Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
@@ -136,18 +136,17 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
         if (resultCode == Activity.RESULT_OK && resultData != null) {
 //                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_SHORT).show();
           //promised.resolve("InAuth."+resultData.getString("message"));
         } else {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_SHORT).show();
          // promised.reject(null,"InAuth.Error");
         }
 
       }
     });
     //  startService(inauthService);
-    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
-    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch(Exception e) {
               Log.d("asd", "EnrollProcess: ",e);
             }
@@ -161,8 +160,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
         promised=promise;
         initializeIntigration(Username, Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
         mIntegrationApiManager.setProcessListener(workflowProccessListener);
-        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Solus Loaded ...", Toast.LENGTH_LONG).show();
-        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Authenticate Process Start.", Toast.LENGTH_LONG).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Solus Loaded ...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "Authenticate Process Start.", Toast.LENGTH_SHORT).show();
         mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.AUTH.toString(), userData.getUsername(), false);
 
         Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
@@ -177,14 +176,13 @@ public class SolusModule extends ReactContextBaseJavaModule {
             super.onReceiveResult(resultCode, resultData);
 
             if (resultCode == Activity.RESULT_OK && resultData != null) {
-              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth." + resultData.getString("message"), Toast.LENGTH_LONG).show();
+              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth." + resultData.getString("message"), Toast.LENGTH_SHORT).show();
             } else {
-              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth.Error", Toast.LENGTH_LONG).show();
+              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(), "InAuth.Error", Toast.LENGTH_SHORT).show();
             }
           }
         });
-        //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
-        //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+        InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
     }catch (Exception e){
       Log.d("asd", "AuthenticationProcess: ",e);
     }
@@ -196,7 +194,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
   ){
     try{
         promised=promise;
-        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"DeEnrollment Process Start.",Toast.LENGTH_LONG).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"DeEnrollment Process Start.",Toast.LENGTH_SHORT).show();
         userData = new com.reactnativesolus.UserData();
         initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
         mIntegrationApiManager.setProcessListener(workflowProccessListener);
@@ -214,8 +212,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
       promised=promise;
     initializeIntigration(Username,Password);//,SERVER_BASE_URL,ORGANISATION_KEY);
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Process Start.",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_SHORT).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Process Start.",Toast.LENGTH_SHORT).show();
     mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.STEPUP.toString(), Username, false);
 
     Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
@@ -231,14 +229,14 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
         if (resultCode == Activity.RESULT_OK && resultData != null) {
 //                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_SHORT).show();
         }
       }
     });
     //  startService(inauthService);
-    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e){
       Log.d("asd", "StepUpProcess: ",e);
     }
@@ -251,8 +249,8 @@ public class SolusModule extends ReactContextBaseJavaModule {
     promised=promise;
     initializeIntigration(Username,Password);
     mIntegrationApiManager.setProcessListener(workflowProccessListener);
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_LONG).show();
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Elevated Process Start.",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus Loaded ...",Toast.LENGTH_SHORT).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Step Up Elevated Process Start.",Toast.LENGTH_SHORT).show();
     mIntegrationApiManager.startWorkflow(ApplicationCode.BANKINGAPP, this.getCurrentActivity().getApplicationContext(), WorkflowType.STEPUP_ELEVATED.toString(), Username, false);
 
     Intent inauthService = new Intent(this.getCurrentActivity().getApplicationContext(), InauthService.class);
@@ -268,14 +266,14 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
         if (resultCode == Activity.RESULT_OK && resultData != null) {
 //                    inauthResult.setText("InAuth:  " + resultData.getString("message"));
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth."+resultData.getString("message"),Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"InAuth.Error", Toast.LENGTH_SHORT).show();
         }
       }
     });
     //  startService(inauthService);
-    //InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
+    InauthService.enqueueWork(this.getCurrentActivity().getApplicationContext(), inauthService);
   }catch (Exception e) {
       Log.d("asd", "StepUpElevatedProcess: ",e);
     }
@@ -311,7 +309,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onError(Exception e) {
-        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User not verified message from calculateUserScore",Toast.LENGTH_LONG).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User not verified message from calculateUserScore",Toast.LENGTH_SHORT).show();
         promised.reject(null,"Solus workflow failed : User not verified");
       }
     });
@@ -320,10 +318,10 @@ public class SolusModule extends ReactContextBaseJavaModule {
   public void handleResponse(ScoreResponse response, boolean isAfterError) {
     if (!isAfterError) {
       DbUserController.saveUser(userData.getUsername());
-      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Verification done successfully",Toast.LENGTH_LONG).show();
-      promised.resolve("Verification completed");
+      //Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Verification done successfully",Toast.LENGTH_SHORT).show();
+      //promised.resolve("Verification completed");
     } else {
-      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Sorry. Not verified.",Toast.LENGTH_LONG).show();
+      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Sorry. Not verified.",Toast.LENGTH_SHORT).show();
       promised.reject(null,"Solus workflow failed : User not verified");
     }
   }
@@ -353,7 +351,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
             String error = "";
 
             if (tryToParseSCExceptionCode(throwable) == ApiErrorCode.USER_ALREADY_ENROLLED) {
-              error = "User already enrolled. Please de-enroll first.";
+              error = "User Alerady Enroll De Enroll First";
             } else if (TextUtils.isEmpty(error)) {
               if (throwable instanceof NoConnectionError)
                 if (throwable.getCause() instanceof SSLHandshakeException)
@@ -366,26 +364,26 @@ public class SolusModule extends ReactContextBaseJavaModule {
                 error = "Sorry,Not Verified";
             }
 //                            Log.e("+++++++++++++++", "Solus workflow failed with :"+error );
-            Toast.makeText(SolusModule.this.getCurrentActivity(),"Solus workflow failed with : " + error,Toast.LENGTH_LONG).show();
+            Toast.makeText(SolusModule.this.getCurrentActivity(),"Solus workflow failed with : " + error,Toast.LENGTH_SHORT).show();
 //                            txtErrorMessage.setText("Solus workflow failed with : " + error);
-            promised.reject(null,"Solus workflow failed with : "+error);
+            if(errorMessage == null) {
+              promised.reject(null, "Solus workflow failed because : " + error);
+            }else{
+              promised.reject(null, "Solus workflow failed because : " + errorMessage);
+            }
             return;
 
           case AUTH:
           case REMOVE:
             if (tryToParseSCExceptionCode(throwable) == ApiErrorCode.USER_NOT_ENROLLED) {
-              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus workflow failed with : user_not_enrolled_on_this_device " ,Toast.LENGTH_LONG).show();
+              Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Solus workflow failed because : user_not_enrolled_on_this_device " ,Toast.LENGTH_SHORT).show();
 //                                txtErrorMessage.setText("Solus workflow failed with : " + getString(R.string.error_user_not_enrolled_on_this_device));
-              promised.reject(null,"Solus workflow failed with : user_not_enrolled_on_this_device");
+              promised.reject(null,"Solus workflow failed because : user not enrolled on this device");
               return;
             }
             break;
           case STEPUP:
-            promised.reject(null,"Solus workflow failed");
-            return;
           case STEPUP_ELEVATED:
-            promised.reject(null,"Solus workflow failed");
-            return;
         }
       }
 
@@ -401,9 +399,13 @@ public class SolusModule extends ReactContextBaseJavaModule {
           else
             message ="No Internet Connection";
         else
+          promised.reject(null, "Solus workflow failed because : " + message);
           message = throwable.getMessage();
       }
 //                mIntegrationApiManager.cancelAllRequests(this.getApplicationContext());
+      else{
+        promised.reject(null, "Solus workflow failed because : " + message);
+      }
     }
 
     @Override
@@ -443,7 +445,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
             deleteZoomUser();
           break;
       }
-      Toast.makeText(SolusModule.this.getCurrentActivity(),"Process Completed: "+workflowType,Toast.LENGTH_LONG).show();
+      Toast.makeText(SolusModule.this.getCurrentActivity(),"Process Completed: "+workflowType,Toast.LENGTH_SHORT).show();
       promised.resolve("Process Completed: "+workflowType);
     }
   };
@@ -452,7 +454,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     final String activity = task.getCode();
 
     if (TextUtils.isEmpty(activity)) {
-      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_LONG).show();
+      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_SHORT).show();
 //            txtErrorMessage.setText("Error! No suitable pending activities on enroll");
       return;
     }
@@ -472,18 +474,18 @@ public class SolusModule extends ReactContextBaseJavaModule {
         AuthProcessor authProcessor;
 
         try {
-          authProcessor = new PendingActivityProcessor(this.getCurrentActivity(),userData, workflowType, task.getCode(), mAuthResultCallback);
+          authProcessor = new PendingActivityProcessor(this.getCurrentActivity(),userData, workflowType, task.getCode(), mAuthResultCallback,promised);
           mActiveAuthProcessor = authProcessor;
           authProcessor.doAuthOperation();
         } catch (Exception error) {
           error.printStackTrace();
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_SHORT).show();
 //                    txtErrorMessage.setText("Error! No suitable pending activities on enroll");
         }
         break;
 
       default:
-        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_LONG).show();
+        Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Error! No suitable pending activities on enroll",Toast.LENGTH_SHORT).show();
 //                txtErrorMessage.setText("Error! No suitable pending activities on enroll");
         break;
     }
@@ -499,7 +501,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
     @Override
     public void onAuthError(/*AuthProcessor authProcessor,*/String message, Throwable throwable) {
       throwable.printStackTrace();
-      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),""+message,Toast.LENGTH_LONG).show();
+      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),""+message,Toast.LENGTH_SHORT).show();
 //            txtErrorMessage.setText(message);
       if (message.contains("An enrollment already exists for this enrollmentIdentifier.")) {
       } else {
@@ -512,7 +514,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
     @Override
     public void processingMessage(String message) {
-      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),""+message,Toast.LENGTH_LONG).show();
+      Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),""+message,Toast.LENGTH_SHORT).show();
     }
 
     private void continueWorkflowProcess(String activity, String data) {
@@ -550,7 +552,7 @@ public class SolusModule extends ReactContextBaseJavaModule {
 
   private void deleteLocalSavedUser() {
     DbUserController.deleteUser(userData.getUsername());
-    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User Removed Successfully",Toast.LENGTH_LONG).show();
+    Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User Removed Successfully",Toast.LENGTH_SHORT).show();
 
   }
 
@@ -559,17 +561,17 @@ public class SolusModule extends ReactContextBaseJavaModule {
       .setDlockListener(new DlockProcessListener() {
         @Override
         public void onDlockProcessFailed(DlockOperation dlockOperation, Throwable throwable) {
-//          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Dlock operation failed",Toast.LENGTH_LONG).show();
+//          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Dlock operation failed",Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDlockProcessSucess(DlockOperation dlockOperation, String s) {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User deleted from dlock success",Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"User deleted from dlock succes",Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDlockProcessCanceled(DlockOperation dlockOperation) {
-          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Dlock operation canceled",Toast.LENGTH_LONG).show();
+          Toast.makeText(com.reactnativesolus.SolusModule.this.getCurrentActivity(),"Dlock operation canceled",Toast.LENGTH_SHORT).show();
         }
       });
     DlockManager.getInstance(getCurrentActivity().getApplicationContext()).removeUser(getCurrentActivity().getApplicationContext(), userData.getUsername());
