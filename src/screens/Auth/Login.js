@@ -8,12 +8,10 @@ import {PrimaryModal} from '@components/Modal';
 import Solus from 'rnsolus';
 import {useDispatch, actions} from '@store/AuthStore';
 
-const SolusStepUpSuccessMsg = 'Workflow completed successfully';
-
 const Login = ({navigation}) => {
   const [formData, setFormData] = React.useState({
-    username: 'hong.loon',
-    password: 'Abcd123a',
+    username: 'jordan.avarta',
+    password: '12345678',
   });
 
   const {username, password} = formData;

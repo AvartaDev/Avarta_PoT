@@ -1,10 +1,17 @@
 import React, {useState} from 'react';
-import {View, Text, ImageBackground, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
 import {SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
+import Clipboard from '@react-native-community/clipboard';
 
 const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
@@ -37,20 +44,24 @@ const TransferEth = ({navigation}) => {
     );
     setLoading(false);
     if (newHash) {
-      Alert.alert(
-        'Avarta Wallet',
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              navigation.navigate('dashboard');
+      setTimeout(() => {
+        Alert.alert(
+          'Avarta Wallet',
+          `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                navigation.pop();
+              },
             },
-          },
-        ],
-      );
+          ],
+        );
+      }, 200);
     } else {
-      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      setTimeout(() => {
+        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      }, 200);
     }
   };
   return (
@@ -72,15 +83,21 @@ const TransferEth = ({navigation}) => {
         </View>
 
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 16,
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(wallet.address);
+              Alert.alert('Address is copied');
             }}>
-            Address: {wallet.address}
-          </Text>
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Address: {wallet.address}
+            </Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.white,

@@ -15,8 +15,6 @@ import Solus from 'rnsolus';
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
 
-const SolusStepUpSuccessMsg = 'Workflow completed successfully';
-
 const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
 const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
 
@@ -51,10 +49,10 @@ export const useWallet = () => {
         seed = await mnemonicToSeed(mnemonic);
       } else {
         // const res = await mnemonicToSeed({mnemonic, passphrase: null});
-        seed = await mnemonicToSeed({mnemonic, passphrase: null});
+        seed = await mnemonicToSeed(mnemonic);
         // seed = new Buffer(res.data, 'base64');
       }
-      console.log('before hd');
+      console.log('before hd', seed);
       const hdWallet = hdkey.fromMasterSeed(seed);
 
       const root = hdWallet.derivePath(DEFAULT_HD_PATH);
@@ -124,7 +122,7 @@ export const useWallet = () => {
         authStore.username,
         authStore.password,
       );
-      if (msg !== SolusStepUpSuccessMsg) {
+      if (!msg.toLowerCase().includes('completed')) {
         return;
       }
 
@@ -159,8 +157,11 @@ export const useWallet = () => {
       SERVER_BASE_URL,
       ORGANISATION_KEY,
     );
-    const msg = await Solus.StepUpProcess('hong.loon', 'Abcd123a');
-    if (msg !== SolusStepUpSuccessMsg) {
+    const msg = await Solus.StepUpProcess(
+      authStore.username,
+      authStore.password,
+    );
+    if (!msg.toLowerCase().includes('completed')) {
       return;
     }
     try {

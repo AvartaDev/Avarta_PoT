@@ -5,6 +5,7 @@ export default {
     secondary: '#2C85FB',
     basic: '#1BCA7F',
     white: '#ffffff',
+    black: '#000',
     primary_grey: '#C0C6CD',
     danger: 'crimson',
   },

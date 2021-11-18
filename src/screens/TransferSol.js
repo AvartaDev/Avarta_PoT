@@ -1,11 +1,18 @@
 import React, {useState} from 'react';
-import {View, Text, ImageBackground, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
 import {SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
 import useAuth from '../hooks/useAuth';
+import Clipboard from '@react-native-community/clipboard';
 
 const TransferSol = ({navigation}) => {
   const {colors, gutter} = useTheme();
@@ -33,21 +40,24 @@ const TransferSol = ({navigation}) => {
     const newHash = await sendSolana(recepient, amount, solWallet.privateKey);
     setLoading(false);
     if (newHash) {
-      Alert.alert(
-        'Avarta Wallet',
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://explorer.solana.com/tx/${newHash}?cluster=devnet`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('Navigation: ', navigation);
-              navigation.navigate('dashboard');
+      setTimeout(() => {
+        Alert.alert(
+          'Avarta Wallet',
+          `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://explorer.solana.com/tx/${newHash}?cluster=devnet`,
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                navigation.pop();
+              },
             },
-          },
-        ],
-      );
+          ],
+        );
+      }, 200);
     } else {
-      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      setTimeout(() => {
+        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      }, 200);
     }
   };
   return (
@@ -69,15 +79,21 @@ const TransferSol = ({navigation}) => {
         </View>
 
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 16,
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(solWallet.address);
+              Alert.alert('Address is copied');
             }}>
-            Address: {solWallet.address}
-          </Text>
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Address: {solWallet.address}
+            </Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.white,

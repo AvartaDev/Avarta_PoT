@@ -8,8 +8,6 @@ import useAuth from '@hooks/useAuth';
 import {useStore, useDispatch, actions} from '@store/AuthStore';
 import Solus from 'rnsolus';
 
-const SolusSuccessMsg = 'Workflow completed successfully';
-
 const Register = ({navigation}) => {
   const {colors, gutter} = useTheme();
   const store = useStore();
@@ -54,7 +52,7 @@ const Register = ({navigation}) => {
       if (!msg.toLowerCase().includes('completed')) {
         setTimeout(() => {
           Alert.alert('Avarta Wallet', msg);
-        }, 500);
+        }, 200);
 
         setLoginLoading(false);
         return 0;
@@ -66,7 +64,7 @@ const Register = ({navigation}) => {
             'Avarta Wallet',
             'Wallet is not created on this device. Please create wallet first by clicking "New User"',
           );
-        }, 500);
+        }, 200);
         return 0;
       }
       navigation.navigate('dashboard');
@@ -80,7 +78,6 @@ const Register = ({navigation}) => {
 
     try {
       let msg = await Solus.EnrollProcess(username, password);
-      console.log('Enroll Message:', msg);
       if (msg.toLowerCase().includes('completed')) {
         await createWallet(password);
         setRegisterLoading(false);
