@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import {NetworkList, TokenNetworkMapping} from './networks';
 import {FeeMarketEIP1559Transaction, Transaction} from '@ethereumjs/tx';
 import Common, {Chain, Hardfork} from '@ethereumjs/common';
-import { ETH_WALLET_KEY } from '@constants/keys';
+import {BSC_WALLET_KEY, ETH_WALLET_KEY} from '@constants/keys';
 
 export const getEthBalance = async address => {
   const web3 = new Web3(
@@ -14,12 +14,7 @@ export const getEthBalance = async address => {
   return eth;
 };
 
-export const sendEth = async (
-  target,
-  value,
-  wallet,
-  onReceiveTxHash,
-) => {
+export const sendEth = async (target, value, wallet, onReceiveTxHash) => {
   const web3 = new Web3(
     new Web3.providers.HttpProvider(TokenNetworkMapping[ETH_WALLET_KEY].rpcUrl),
   );
@@ -63,7 +58,7 @@ export const sendEth = async (
 //TODO: abstract out duplicate code
 export const getBscBalance = async address => {
   const web3 = new Web3(
-    new Web3.providers.HttpProvider(NetworkList.BSC_TEST.rpcUrl),
+    new Web3.providers.HttpProvider(TokenNetworkMapping[BSC_WALLET_KEY].rpcUrl),
   );
 
   const wei = await web3.eth.getBalance(address);
@@ -71,6 +66,35 @@ export const getBscBalance = async address => {
   return eth;
 };
 
-export const sendBsc = async (target, value, wallet) => {
-  console.log('SEND BSC');
+export const sendBsc = async (target, value, wallet, onReceiveTxHash) => {
+  const web3 = new Web3(
+    new Web3.providers.HttpProvider(TokenNetworkMapping[BSC_WALLET_KEY].rpcUrl),
+  );
+
+  const nonce = await web3.eth.getTransactionCount(wallet.address, 'latest');
+
+  const txData = {
+    from: wallet.address,
+    to: target,
+    value: web3.utils.toBN(web3.utils.toWei(value.toString(), 'ether')),
+    nonce: `0x${nonce.toString(16)}`,
+    gasLimit: web3.utils.toHex(700000),
+    gasPrice: web3.utils.toHex(web3.utils.toWei('21', 'gwei')),
+  };
+
+  const common = Common.forCustomChain('mainnet', {
+    name: 'bnb',
+    networkId: 97,
+    chainId: 97
+  }, 'petersburg');
+
+  const tx = Transaction.fromTxData(txData, {common});
+  const signedTx = tx.sign(Buffer.from(wallet.walletPrv.substring(2), 'hex'));
+  const serializedTx = signedTx.serialize();
+  console.log('sending')
+  web3.eth
+    .sendSignedTransaction('0x' + serializedTx.toString('hex'))
+    .once('transactionHash', hash => onReceiveTxHash(hash));
+  return true;
+
 };

@@ -1,4 +1,4 @@
-import { ETH_WALLET_KEY } from '@constants/keys.js';
+import { BSC_WALLET_KEY, ETH_WALLET_KEY } from '@constants/keys.js';
 import URL from 'url-parse';
 import {
   MAINNET,
@@ -78,6 +78,7 @@ export const NetworkList = {
     hexChainId: '0x61',
     color: '#3099f2',
     networkType: 'bscTest',
+    getTransactionUrl: (txHash) => (`https://testnet.bscscan.com/tx/${txHash}`)
   },
   [RPC]: {
     name: 'Private Network',
@@ -93,7 +94,8 @@ const NetworkListKeys = Object.keys(NetworkList);
 export default NetworkList;
 
 export const TokenNetworkMapping = {
-  [ETH_WALLET_KEY]: {...NetworkList.ropsten}
+  [ETH_WALLET_KEY]: {...NetworkList.ropsten},
+  [BSC_WALLET_KEY]: {...NetworkList.BSC_TEST}
 }
 
 export const getAllNetworks = () =>
