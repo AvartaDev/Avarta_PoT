@@ -87,7 +87,7 @@ const Register = ({navigation}) => {
       }
     } catch (e) {
       console.log(e.message);
-      if (e.message.includes('de-enroll')) {
+      if (e.message.includes('User already enrolled')) {
         await Solus.DeEnrollProcess(username, password);
         msg = await Solus.EnrollProcess(username, password);
         if (msg.toLowerCase().includes('completed')) {

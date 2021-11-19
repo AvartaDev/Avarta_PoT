@@ -137,7 +137,9 @@ const TransferSol = ({navigation}) => {
                 style={{marginTop: 20}}
                 onPress={() => {
                   setModalVisible(false);
-                  Linking.openURL(`https://testnet.bscscan.com/tx/${newHash}`);
+                  Linking.openURL(
+                    `https://explorer.solana.com/tx/${newHash}?cluster=devnet`,
+                  );
                 }}
               />
             </View>
