@@ -127,6 +127,38 @@ const TransferSol = ({navigation}) => {
             />
           </View>
         </View>
+<<<<<<< HEAD
+=======
+        <PrimaryModal visible={modalVisible}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              Transaction successful!{'\n\n'}
+              Transaction Id:{'\n'}
+              {newHash}
+            </Text>
+            <View>
+              <Button
+                text={'OK'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.pop();
+                }}
+              />
+              <Button
+                text={'View Transaction'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  Linking.openURL(
+                    `https://explorer.solana.com/tx/${newHash}?cluster=devnet`,
+                  );
+                }}
+              />
+            </View>
+          </View>
+        </PrimaryModal>
+>>>>>>> 7c829f8 (register update)
       </BgView>
     </ImageBackground>
   );
