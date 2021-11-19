@@ -4,18 +4,15 @@ import {useStore, useDispatch, actions} from '../store/WalletStore';
 import {useStore as useAuthStore} from '../store/AuthStore';
 import axios from 'axios';
 import {Wallet} from '@ethersproject/wallet';
-import Buffer from 'buffer';
-import {addHexPrefix, isValidAddress, toChecksumAddress} from 'ethereumjs-util';
-import {Linking, NativeModules, Platform} from 'react-native';
+import {addHexPrefix, toChecksumAddress} from 'ethereumjs-util';
+import {Platform} from 'react-native';
 import {hdkey} from 'ethereumjs-wallet';
-import {JsonRpcProvider} from '@ethersproject/providers';
 import {mnemonicToSeed} from '../libs/bip39/index';
 import Solus from 'rnsolus';
+import * as keychain from '@libs/keychain';
 
 export const DEFAULT_HD_PATH = `m/44'/60'/0'/0`;
 export const DEFAULT_WALLET_NAME = 'My Wallet';
-
-const SolusStepUpSuccessMsg = 'Workflow completed successfully';
 
 const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
 const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
@@ -50,10 +47,11 @@ export const useWallet = () => {
       if (Platform.OS == 'ios') {
         seed = await mnemonicToSeed(mnemonic);
       } else {
-        const res = await mnemonicToSeed({mnemonic, passphrase: null});
-        seed = new Buffer(res, 'base64');
+        // const res = await mnemonicToSeed({mnemonic, passphrase: null});
+        seed = await mnemonicToSeed(mnemonic);
+        // seed = new Buffer(res.data, 'base64');
       }
-      console.log('before hd');
+      console.log('before hd', seed);
       const hdWallet = hdkey.fromMasterSeed(seed);
 
       const root = hdWallet.derivePath(DEFAULT_HD_PATH);
@@ -123,7 +121,8 @@ export const useWallet = () => {
         authStore.username,
         authStore.password,
       );
-      if (msg !== SolusStepUpSuccessMsg) {
+      console.log(msg);
+      if (!msg.toLowerCase().includes('completed')) {
         return;
       }
 
@@ -137,13 +136,9 @@ export const useWallet = () => {
           network: network,
         },
       );
-      console.log(
-        'Address: ',
-        store.usersWallet.address,
-        store.solanaWallet.address,
-      );
+
       await getWalletBalance(
-        store.usersWallet.address,
+        store.ethWallet.address,
         store.solanaWallet.address,
       );
       return res.data.hash;
@@ -158,8 +153,11 @@ export const useWallet = () => {
       SERVER_BASE_URL,
       ORGANISATION_KEY,
     );
-    const msg = await Solus.StepUpProcess('hong.loon', 'Abcd123a');
-    if (msg !== SolusStepUpSuccessMsg) {
+    const msg = await Solus.StepUpProcess(
+      authStore.username,
+      authStore.password,
+    );
+    if (!msg.toLowerCase().includes('completed')) {
       return;
     }
     try {
@@ -173,7 +171,7 @@ export const useWallet = () => {
         },
       );
       await getWalletBalance(
-        store.usersWallet.address,
+        store.ethWallet.address,
         store.solanaWallet.address,
       );
       return res.data.hash;
@@ -182,12 +180,53 @@ export const useWallet = () => {
     }
   };
 
+  const getWallet = async () => {
+    try {
+      const key = `${authStore.username}Wallet`;
+      const wallet = await keychain.loadObject(key);
+
+      if (wallet) {
+        if (!store.ethWallet) {
+          await dispatch({
+            type: actions.SET_ETH_WALLET,
+            payload: wallet.ethWallet,
+          });
+        }
+        if (!store.solanaWalelt) {
+          await dispatch({
+            type: actions.SET_SOLANA_WALLET,
+            payload: wallet.solanaWallet,
+          });
+        }
+      }
+      return wallet || null;
+    } catch (err) {
+      console.log(err.message);
+      return null;
+    }
+  };
+
+  const saveWallet = async wallet => {
+    try {
+      const key = `${authStore.username}Wallet`;
+      await dispatch({type: actions.SET_ETH_WALLET, payload: wallet.ethWallet});
+      await dispatch({
+        type: actions.SET_SOLANA_WALLET,
+        payload: wallet.solanaWallet,
+      });
+      return keychain.saveObject(key, wallet);
+    } catch (err) {
+      console.log(err.message);
+      return null;
+    }
+  };
+
   const setSolanaWallet = async wallet => {
     dispatch({type: actions.SET_SOLANA_WALLET, payload: wallet});
   };
 
   return {
-    wallet: store.usersWallet,
+    ethWallet: store.ethWallet,
     solanaWallet: store.solanaWallet,
     walletBalance: store.walletBalance,
     loading: loading,
@@ -197,6 +236,8 @@ export const useWallet = () => {
     sendFunds,
     sendSolana,
     setSolanaWallet,
+    getWallet,
+    saveWallet,
   };
 };
 

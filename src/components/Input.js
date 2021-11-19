@@ -17,6 +17,7 @@ const StyledInput = styled(TextInput_)`
   background-color: ${colors('white')};
   font-size: ${responsive([12, 16])}px;
   padding: ${responsive([15, 18])}px ${responsive([15, 15])}px;
+  color: #000;
 `;
 
 StyledInput.defaultProps = {

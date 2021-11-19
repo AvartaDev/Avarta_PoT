@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && npx jetify"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.0.9",
@@ -30,6 +30,7 @@
     "@ethersproject/wallet": "^5.0.9",
     "@metamask/controllers": "^14.2.0",
     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.0",
     "@react-navigation/native": "^5.6.1",
@@ -80,6 +81,7 @@
     "react-native-screens": "^2.9.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-tcp": "^3.3.2",
+    "react-native-toast-message": "^2.0.1",
     "react-native-udp": "^2.7.0",
     "react-native-vector-icons": "^8.1.0",
     "react-navigation": "^4.4.0",

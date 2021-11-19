@@ -67,7 +67,7 @@ export const SpinnerButton = ({
 }) => {
   return (
     <StyledPrimaryButton style={[style]} onPress={onPress} {...props}>
-      <ActivityIndicator color="white" animating={loading} />
+      {loading && <ActivityIndicator color="white" animating={loading} />}
       <ButtonText
         style={{color: textColor ? textColor : 'white', textAlign: 'center'}}>
         {text}

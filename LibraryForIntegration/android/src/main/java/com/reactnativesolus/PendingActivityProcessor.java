@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.facebook.react.bridge.Promise;
 import com.facetec.sdk.FaceTecCustomization;
 import com.facetec.sdk.FaceTecFaceScanProcessor;
 import com.facetec.sdk.FaceTecFaceScanResultCallback;
@@ -46,7 +49,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
   private WorkflowType mWorkflowType;
   private String mActivityKey;
-
+  private Promise promised;
   private AuthResultCallback callback;
   private Context mContext;
   private UserData mUserData;
@@ -55,13 +58,14 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
   private final int MAX_ATTEMPT = 3;
   private final int PIN_LENGTH = 4;
 
-  PendingActivityProcessor(Context context, UserData userData, WorkflowType workflowType, String activityKey, AuthResultCallback mcallback) {
+  PendingActivityProcessor(Context context, UserData userData, WorkflowType workflowType, String activityKey, AuthResultCallback mcallback, Promise promise) {
     super(context, workflowType, activityKey);
     mContext = context;
     mWorkflowType = workflowType;
     mActivityKey = activityKey;
     mUserData = userData;
     callback = mcallback;
+    promised=promise;
   }
 
   @Override
@@ -157,17 +161,19 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 //               String oneSignalUserID = "test-nouserid";
         //SolusPrefManager.getInstance(mContext).getCurrentOneSignalUserID();
         String oneSignalUserID = SolusPrefManager.getInstance(mContext).getCurrentOneSignalUserID();
-        if (TextUtils.isEmpty(oneSignalUserID)) {
-          callback.onAuthError(mContext.getString(R.string.error_gcm), new Exception(mContext.getString(R.string.error_gcm)));
-        } else {
-          callback.onAuthSuccess(new TextResult(mWorkflowType, mActivityKey, "ANDROID" + ":" + oneSignalUserID));
-        }
+//        if (TextUtils.isEmpty(oneSignalUserID)) {
+//          callback.onAuthError(mContext.getString(R.string.error_gcm), new Exception(mContext.getString(R.string.error_gcm)));
+//        } else {
+          callback.onAuthSuccess(new TextResult(mWorkflowType, mActivityKey, "ANDROID" + ":"
+//                  + oneSignalUserID
+          ));
+//        }
         break;
       case PendingActivity.CODE_LOCATION:
         callback.onAuthSuccess(new LocationResult(mWorkflowType,
-          mActivityKey,
-          (SolusPrefManager.getInstance(mContext).getLatitude()),
-          (SolusPrefManager.getInstance(mContext).getLongitude())));
+                mActivityKey,
+                (SolusPrefManager.getInstance(mContext).getLatitude()),
+                (SolusPrefManager.getInstance(mContext).getLongitude())));
         break;
       case PendingActivity.CODE_VALIDATEENROLCODE:
         break;
@@ -207,24 +213,24 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
   private void deleteDlockUser() {
     DlockManager.getInstance(mContext)
-      .setDlockListener(new DlockProcessListener() {
-        @Override
-        public void onDlockProcessFailed(DlockOperation dlockOperation, Throwable throwable) {
-          callback.processingMessage("Solus Dlock operation failed");
+            .setDlockListener(new DlockProcessListener() {
+              @Override
+              public void onDlockProcessFailed(DlockOperation dlockOperation, Throwable throwable) {
+                callback.processingMessage("Solus Dlock operation failed");
 
-        }
+              }
 
-        @Override
-        public void onDlockProcessSucess(DlockOperation dlockOperation, String s) {
-          callback.processingMessage("From Solus Dlock: User deleted from dlock success");
-        }
+              @Override
+              public void onDlockProcessSucess(DlockOperation dlockOperation, String s) {
+                callback.processingMessage("From Solus Dlock: User deleted from dlock success");
+              }
 
-        @Override
-        public void onDlockProcessCanceled(DlockOperation dlockOperation) {
-          callback.processingMessage("Solus Dlock operation canceled by user");
+              @Override
+              public void onDlockProcessCanceled(DlockOperation dlockOperation) {
+                callback.processingMessage("Solus Dlock operation canceled by user");
 
-        }
-      });
+              }
+            });
     DlockManager.getInstance(mContext).removeUser(mContext, mUserData.getUsername());
   }
 
@@ -261,24 +267,24 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
   DlockConfig createDlockConfig(Context context, boolean isRegistration) {
     return DlockConfig.newBuilder()
-      .setPinLength(PIN_LENGTH)
-      .setMaxAttemptCount(MAX_ATTEMPT)
-      .setDlockTheming(createDlockTheming(context, isRegistration))
-      .build();
+            .setPinLength(PIN_LENGTH)
+            .setMaxAttemptCount(MAX_ATTEMPT)
+            .setDlockTheming(createDlockTheming(context, isRegistration))
+            .build();
   }
 
   private DlockTheming createDlockTheming(Context context, boolean isRegistration) {
     return DlockTheming.newBuilder()
-      .setActionbarLogo(R.drawable.ic_main_logo)
-      .setColorActionbarBg(ContextCompat.getColor(context, R.color.colorMainBlue))
-      .setColorPinDoneBtnBg(ContextCompat.getColor(context, R.color.colorMainBlue))
-      .setColorPinDoneBtnBgPressed(ContextCompat.getColor(context, R.color.colorMainBlueSel))
-      .setColorPinDigitText(ContextCompat.getColor(context, R.color.colorMainBlue))
-      .setColorPinDigitTextPressed(ContextCompat.getColor(context, R.color.white))
-      .setColorPinDigitBgPressed(ContextCompat.getColor(context, R.color.colorMainBlueSel))
-      .setColorPinProgressLine(ContextCompat.getColor(context, R.color.colorMainBlue))
-      .setActionbarTitle(mContext.getString(isRegistration ? R.string.actionbar_registration : R.string.actionbar_authorization))
-      .build();
+            .setActionbarLogo(R.drawable.ic_main_logo)
+            .setColorActionbarBg(ContextCompat.getColor(context, R.color.colorMainBlue))
+            .setColorPinDoneBtnBg(ContextCompat.getColor(context, R.color.colorMainBlue))
+            .setColorPinDoneBtnBgPressed(ContextCompat.getColor(context, R.color.colorMainBlueSel))
+            .setColorPinDigitText(ContextCompat.getColor(context, R.color.colorMainBlue))
+            .setColorPinDigitTextPressed(ContextCompat.getColor(context, R.color.white))
+            .setColorPinDigitBgPressed(ContextCompat.getColor(context, R.color.colorMainBlueSel))
+            .setColorPinProgressLine(ContextCompat.getColor(context, R.color.colorMainBlue))
+            .setActionbarTitle(mContext.getString(isRegistration ? R.string.actionbar_registration : R.string.actionbar_authorization))
+            .build();
   }
 
   /* dlock verification process end*/
@@ -343,6 +349,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
       if (faceTecSessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
         NetworkingHelpers.cancelPendingRequests();
         faceTecFaceScanResultCallback.cancel();
+        promised.reject(null,"Facetec Session unsuccessful");
         return;
       }
       JSONObject parameters = new JSONObject();
@@ -356,19 +363,19 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
         Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to create JSON payload for upload.");
       }
       request = new okhttp3.Request.Builder()
-        .url(baseURLNew + "/enrollment-3d")
-        .header("Content-Type", "application/json")
-        .header("X-Device-Key", SolusConstants.ZOOM_DEV_KEY)
-        .header("User-Agent", FaceTecSDK.createFaceTecAPIUserAgentString(faceTecSessionResult.getSessionId()))
-        .post(new ProgressRequestBody(RequestBody.create(parameters.toString(), MediaType.parse("application/json; charset=utf-8")),
-          new ProgressRequestBody.Listener() {
-            @Override
-            public void onUploadProgressChanged(long bytesWritten, long totalBytes) {
-              final float uploadProgressPercent = ((float) bytesWritten) / ((float) totalBytes);
-              faceTecFaceScanResultCallback.uploadProgress(uploadProgressPercent);
-            }
-          }))
-        .build();
+              .url(baseURLNew + "/enrollment-3d")
+              .header("Content-Type", "application/json")
+              .header("X-Device-Key", SolusConstants.ZOOM_DEV_KEY)
+              .header("User-Agent", FaceTecSDK.createFaceTecAPIUserAgentString(faceTecSessionResult.getSessionId()))
+              .post(new ProgressRequestBody(RequestBody.create(parameters.toString(), MediaType.parse("application/json; charset=utf-8")),
+                      new ProgressRequestBody.Listener() {
+                        @Override
+                        public void onUploadProgressChanged(long bytesWritten, long totalBytes) {
+                          final float uploadProgressPercent = ((float) bytesWritten) / ((float) totalBytes);
+                          faceTecFaceScanResultCallback.uploadProgress(uploadProgressPercent);
+                        }
+                      }))
+              .build();
       NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
         @Override
         public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
@@ -410,6 +417,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
 
               faceTecFaceScanResultCallback.cancel();
               callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+              promised.reject(null,"Facetec Session failed during process");
 
             }
           } catch (JSONException e) {
@@ -417,6 +425,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             e.printStackTrace();
             Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
             faceTecFaceScanResultCallback.cancel();
+            promised.reject(null,"Exception raised while attempting to parse JSON result");
           }
         }
 
@@ -425,12 +434,14 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
           // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
           Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
           faceTecFaceScanResultCallback.cancel();
+          promised.reject(null,"Exception raised while attempting HTTPS call");
         }
       });
     } else {
       if (faceTecSessionResult.getStatus() != FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY) {
         NetworkingHelpers.cancelPendingRequests();
         faceTecFaceScanResultCallback.cancel();
+        promised.reject(null,"FaceTec session unsuccessful");
         return;
       }
       //
@@ -451,23 +462,23 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
       // Part 5:  Make the Networking Call to Your Servers.  Below is just example code, you are free to customize based on how your own API works.
       //
       request = new okhttp3.Request.Builder()
-        .url(baseURLNew + "/match-3d-3d")
-        .header("Content-Type", "application/json")
-        .header("X-Device-Key", SolusConstants.ZOOM_DEV_KEY)
-        .header("User-Agent", FaceTecSDK.createFaceTecAPIUserAgentString(faceTecSessionResult.getSessionId()))
+              .url(baseURLNew + "/match-3d-3d")
+              .header("Content-Type", "application/json")
+              .header("X-Device-Key", SolusConstants.ZOOM_DEV_KEY)
+              .header("User-Agent", FaceTecSDK.createFaceTecAPIUserAgentString(faceTecSessionResult.getSessionId()))
 
-        //
-        // Part 7:  Demonstrates updating the Progress Bar based on the progress event.
-        //
-        .post(new ProgressRequestBody(RequestBody.create(parameters.toString(),MediaType.parse("application/json; charset=utf-8")),
-          new ProgressRequestBody.Listener() {
-            @Override
-            public void onUploadProgressChanged(long bytesWritten, long totalBytes) {
-              final float uploadProgressPercent = ((float) bytesWritten) / ((float) totalBytes);
-              faceTecFaceScanResultCallback.uploadProgress(uploadProgressPercent);
-            }
-          }))
-        .build();
+              //
+              // Part 7:  Demonstrates updating the Progress Bar based on the progress event.
+              //
+              .post(new ProgressRequestBody(RequestBody.create(parameters.toString(),MediaType.parse("application/json; charset=utf-8")),
+                      new ProgressRequestBody.Listener() {
+                        @Override
+                        public void onUploadProgressChanged(long bytesWritten, long totalBytes) {
+                          final float uploadProgressPercent = ((float) bytesWritten) / ((float) totalBytes);
+                          faceTecFaceScanResultCallback.uploadProgress(uploadProgressPercent);
+                        }
+                      }))
+              .build();
       NetworkingHelpers.getApiClient().newCall(request).enqueue(new Callback() {
         @Override
         public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
@@ -485,13 +496,13 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             Log.e("Response from zoom : ", responseJSON.toString());
             boolean wasProcessed = responseJSON.getBoolean("wasProcessed");
             String scanResultBlob = responseJSON.getString("scanResultBlob");
-
+            boolean isMatched = responseJSON.getBoolean("success");
             // In v9.2.0+, we key off a new property called wasProcessed to determine if we successfully processed the Session result on the Server.
             // Device SDK UI flow is now driven by the proceedToNextStep function, which should receive the scanResultBlob from the Server SDK response.
-            if (wasProcessed) {
+            if (wasProcessed && isMatched) {
 
               // Demonstrates dynamically setting the Success Screen Message.
-              FaceTecCustomization.overrideResultScreenSuccessMessage = "Enrollment\nConfirmed";
+              FaceTecCustomization.overrideResultScreenSuccessMessage = "Authenticated";
 
               // In v9.2.0+, simply pass in scanResultBlob to the proceedToNextStep function to advance the User flow.
               // scanResultBlob is a proprietary, encrypted blob that controls the logic for what happens next for the User.
@@ -506,8 +517,15 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             } else {
               // CASE:  UNEXPECTED response from API.  Our Sample Code keys off a wasProcessed boolean on the root of the JSON object --> You define your own API contracts with yourself and may choose to do something different here based on the error.
 
+              new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                  callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+                  promised.reject(null,"Facetec session failed while Processing");
+                }
+              },100);
               faceTecFaceScanResultCallback.cancel();
-              callback.onAuthError("ZOOM : " + "Error message here", new Exception("WasProcessed false from zoom enroll" + " => " + mWorkflowType));
+
 
             }
           } catch (JSONException e) {
@@ -515,6 +533,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
             e.printStackTrace();
             Log.d("FaceTecSDKSampleApp", "Exception raised while attempting to parse JSON result.");
             faceTecFaceScanResultCallback.cancel();
+            promised.reject(null,"Exception raised while attempting to parse JSON result");
           }
         }
 
@@ -523,6 +542,7 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
           // CASE:  Network Request itself is erroring --> You define your own API contracts with yourself and may choose to do something different here based on the error.
           Log.d("FaceTecSDKSampleApp", "Exception raised while attempting HTTPS call.");
           faceTecFaceScanResultCallback.cancel();
+          promised.reject(null,"Exception raised while attempting HTTPS call");
         }
       });
     }
@@ -535,6 +555,4 @@ public class PendingActivityProcessor extends BaseZoomProcessor implements AuthP
                 "Partial Liveness Success",
                 1.1f));*/
   }
-
-
 }

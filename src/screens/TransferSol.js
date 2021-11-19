@@ -1,22 +1,32 @@
 import React, {useState} from 'react';
-import {View, Text, ImageBackground, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Alert,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import {PrimaryModal} from '@components/Modal';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {SpinnerButton} from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
-import useAuth from '../hooks/useAuth';
+import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-toast-message';
 
 const TransferSol = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendSolana, walletBalance} = useWallet();
-  const {solWallet} = useAuth();
+  const {sendSolana, walletBalance, solanaWallet} = useWallet();
 
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     amount: '',
     recepient: '',
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHash, setNewHash] = useState('');
 
   const {amount, recepient} = formData;
 
@@ -27,27 +37,17 @@ const TransferSol = ({navigation}) => {
   const onTranfer = async () => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
-      Alert.alert('Enter an amount or recepient');
+      Alert.alert("Enter an amount or recepient's address");
       return;
     }
-    const newHash = await sendSolana(recepient, amount, solWallet.privateKey);
+    const hash = await sendSolana(recepient, amount, solanaWallet.privateKey);
     setLoading(false);
-    if (newHash) {
-      Alert.alert(
-        'Avarta Wallet',
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://explorer.solana.com/tx/${newHash}?cluster=devnet`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('Navigation: ', navigation);
-              navigation.navigate('dashboard');
-            },
-          },
-        ],
-      );
-    } else {
-      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+    setNewHash(hash);
+    setModalVisible(true);
+    if (!hash) {
+      setTimeout(() => {
+        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      }, 200);
     }
   };
   return (
@@ -69,15 +69,24 @@ const TransferSol = ({navigation}) => {
         </View>
 
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 16,
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(solanaWallet.address);
+              Toast.show({
+                type: 'success',
+                text1: 'Address is copied',
+              });
             }}>
-            Address: {solWallet.address}
-          </Text>
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Address: {solanaWallet.address}
+            </Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.white,
@@ -111,7 +120,37 @@ const TransferSol = ({navigation}) => {
             />
           </View>
         </View>
+        <PrimaryModal visible={modalVisible}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              Transaction successful!{'\n\n'}
+              Transaction Id:{'\n'}
+              {newHash}
+            </Text>
+            <View>
+              <Button
+                text={'OK'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.pop();
+                }}
+              />
+              <Button
+                text={'View Transaction'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  Linking.openURL(
+                    `https://explorer.solana.com/tx/${newHash}?cluster=devnet`,
+                  );
+                }}
+              />
+            </View>
+          </View>
+        </PrimaryModal>
       </BgView>
+      <Toast />
     </ImageBackground>
   );
 };

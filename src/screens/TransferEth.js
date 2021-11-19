@@ -1,20 +1,32 @@
 import React, {useState} from 'react';
-import {View, Text, ImageBackground, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Alert,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import {PrimaryModal} from '@components/Modal';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {SpinnerButton} from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
+import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-toast-message';
 
 const TransferEth = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds, wallet, walletBalance} = useWallet();
+  const {sendFunds, ethWallet, walletBalance} = useWallet();
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     amount: '',
     recepient: '',
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHash, setNewHash] = useState('');
 
   const {amount, recepient} = formData;
 
@@ -25,32 +37,22 @@ const TransferEth = ({navigation}) => {
   const onTransfer = async () => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
-      Alert.alert('Enter an amount or recepient');
+      Alert.alert("Enter an amount or recepient's address");
       return;
     }
-
-    const newHash = await sendFunds(
+    const hash = await sendFunds(
       recepient,
       amount,
       'eth',
-      wallet.privateKey,
+      ethWallet.privateKey,
     );
+    setNewHash(hash);
     setLoading(false);
-    if (newHash) {
-      Alert.alert(
-        'Avarta Wallet',
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://ropsten.etherscan.io/tx/${newHash}`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              navigation.navigate('dashboard');
-            },
-          },
-        ],
-      );
-    } else {
-      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+    setModalVisible(true);
+    if (!hash) {
+      setTimeout(() => {
+        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      }, 200);
     }
   };
   return (
@@ -72,15 +74,24 @@ const TransferEth = ({navigation}) => {
         </View>
 
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 16,
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(ethWallet.address);
+              Toast.show({
+                type: 'success',
+                text1: 'Address is copied',
+              });
             }}>
-            Address: {wallet.address}
-          </Text>
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Address: {ethWallet.address}
+            </Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.white,
@@ -114,7 +125,36 @@ const TransferEth = ({navigation}) => {
             />
           </View>
         </View>
+
+        <PrimaryModal visible={modalVisible}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              Transaction successful!{'\n\n'}
+              Transaction Id:{'\n'}
+              {newHash}
+            </Text>
+            <View>
+              <Button
+                text={'OK'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.pop();
+                }}
+              />
+              <Button
+                text={'View Transaction'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  Linking.openURL(`https://ropsten.etherscan.io/tx/${newHash}`);
+                }}
+              />
+            </View>
+          </View>
+        </PrimaryModal>
       </BgView>
+      <Toast />
     </ImageBackground>
   );
 };

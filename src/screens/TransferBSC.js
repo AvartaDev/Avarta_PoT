@@ -3,24 +3,29 @@ import {
   View,
   Text,
   ImageBackground,
-  Image,
   TouchableOpacity,
   Alert,
+  Linking,
 } from 'react-native';
+import {PrimaryModal} from '@components/Modal';
 import {BgView} from '@components/Layout';
 import useTheme from '@hooks/useTheme';
 import {LabelInput} from '@components/Input';
-import {SpinnerButton} from '@components/Button';
+import {Button, SpinnerButton} from '@components/Button';
 import useWallet from '@hooks/useWallet';
+import Clipboard from '@react-native-community/clipboard';
+import Toast from 'react-native-toast-message';
 
 const TransferBSC = ({navigation}) => {
   const {colors, gutter} = useTheme();
-  const {sendFunds, wallet, walletBalance} = useWallet();
+  const {sendFunds, ethWallet, walletBalance} = useWallet();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = React.useState({
     amount: '',
     recepient: '',
   });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newHash, setNewHash] = useState('');
 
   const {amount, recepient} = formData;
 
@@ -31,32 +36,23 @@ const TransferBSC = ({navigation}) => {
   const onTranfer = async () => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
-      Alert.alert('Enter an amount or recepient');
+      Alert.alert("Enter an amount or recepient's address");
       return;
     }
 
-    const newHash = await sendFunds(
+    const hash = await sendFunds(
       recepient,
       amount,
       'bsc',
-      wallet.privateKey,
+      ethWallet.privateKey,
     );
     setLoading(false);
-    if (newHash) {
-      Alert.alert(
-        'Avarta Wallet',
-        `Transaction successful!\n Transaction Id: ${newHash}\n\nhttps://testnet.bscscan.com/tx/${newHash}`,
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              navigation.navigate('dashboard');
-            },
-          },
-        ],
-      );
-    } else {
-      Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+    setNewHash(hash);
+    setModalVisible(true);
+    if (!hash) {
+      setTimeout(() => {
+        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
+      }, 200);
     }
   };
   return (
@@ -77,15 +73,24 @@ const TransferBSC = ({navigation}) => {
           </Text>
         </View>
         <View style={{marginHorizontal: gutter.md, marginTop: '20%'}}>
-          <Text
-            style={{
-              color: colors.white,
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 16,
+          <TouchableOpacity
+            onPress={() => {
+              Clipboard.setString(ethWallet.address);
+              Toast.show({
+                type: 'success',
+                text1: 'Address is copied',
+              });
             }}>
-            Address: {wallet.address}
-          </Text>
+            <Text
+              style={{
+                color: colors.white,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>
+              Address: {ethWallet.address}
+            </Text>
+          </TouchableOpacity>
           <Text
             style={{
               color: colors.white,
@@ -119,7 +124,35 @@ const TransferBSC = ({navigation}) => {
             />
           </View>
         </View>
+        <PrimaryModal visible={modalVisible}>
+          <View>
+            <Text style={{fontSize: 20}}>
+              Transaction successful!{'\n\n'}
+              Transaction Id:{'\n'}
+              {newHash}
+            </Text>
+            <View>
+              <Button
+                text={'OK'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.pop();
+                }}
+              />
+              <Button
+                text={'View Transaction'}
+                style={{marginTop: 20}}
+                onPress={() => {
+                  setModalVisible(false);
+                  Linking.openURL(`https://testnet.bscscan.com/tx/${newHash}`);
+                }}
+              />
+            </View>
+          </View>
+        </PrimaryModal>
       </BgView>
+      <Toast />
     </ImageBackground>
   );
 };
