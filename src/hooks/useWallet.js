@@ -130,7 +130,6 @@ export const useWallet = () => {
         `https://avarta-api.herokuapp.com/api/transfer`,
         {
           privateKey: privateKey,
-          // '0bab7eff841e2d8988b2b06f258deac1c29dd96a37310301d1177b8fc3559719',
           amount,
           receiver: address,
           network: network,

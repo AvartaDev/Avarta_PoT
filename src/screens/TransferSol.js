@@ -38,16 +38,19 @@ const TransferSol = ({navigation}) => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
       Alert.alert("Enter an amount or recepient's address");
+      setLoading(false);
       return;
     }
     const hash = await sendSolana(recepient, amount, solanaWallet.privateKey);
     setLoading(false);
     setNewHash(hash);
-    setModalVisible(true);
+
     if (!hash) {
       setTimeout(() => {
         Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
       }, 200);
+    } else {
+      setModalVisible(true);
     }
   };
   return (

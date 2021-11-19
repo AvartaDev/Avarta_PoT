@@ -49,11 +49,10 @@ const Register = ({navigation}) => {
       const msg = await Solus.StepUpProcess(username, password);
       console.log(msg);
       if (!msg.toLowerCase().includes('completed')) {
+        setLoginLoading(false);
         setTimeout(() => {
           Alert.alert('Avarta Wallet', msg);
         }, 200);
-
-        setLoginLoading(false);
         return 0;
       }
       setLoginLoading(false);

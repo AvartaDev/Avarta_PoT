@@ -38,6 +38,7 @@ const TransferEth = ({navigation}) => {
     setLoading(true);
     if (amount === 0 || recepient === '') {
       Alert.alert("Enter an amount or recepient's address");
+      setLoading(false);
       return;
     }
     const hash = await sendFunds(
@@ -48,11 +49,14 @@ const TransferEth = ({navigation}) => {
     );
     setNewHash(hash);
     setLoading(false);
-    setModalVisible(true);
+
     if (!hash) {
-      setTimeout(() => {
-        Alert.alert('Avarta Wallet', 'Transaction failed. Please try again.');
-      }, 200);
+      Toast.show({
+        type: 'error',
+        text1: 'Transaction failed. Please try again.',
+      });
+    } else {
+      setModalVisible(true);
     }
   };
   return (
