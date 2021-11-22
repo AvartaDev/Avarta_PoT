@@ -1,11 +1,8 @@
 import React, {useEffect} from 'react';
-import Button from '@components/Button';
 import ImageBackGroundView from '@components/views/ImageBackGroundView';
 import WalletCard from '@components/wallets/WalletCard';
-import {TOKEN_TRANSFER_SCREEN} from '@constants/navigation';
 import BigText from '@components/text/BigText';
 import {ScrollView} from 'react-native-gesture-handler';
-
 const MainWalletScreen = ({route, navigation}) => {
   const {token, walletList} = route.params;
   useEffect(() => {
@@ -22,5 +19,7 @@ const MainWalletScreen = ({route, navigation}) => {
     </ImageBackGroundView>
   );
 };
+
+
 
 export default MainWalletScreen;

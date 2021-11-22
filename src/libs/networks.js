@@ -1,15 +1,16 @@
-import { BSC_WALLET_KEY, ETH_WALLET_KEY } from '@constants/keys.js';
+import {
+  BSC_WALLET_KEY,
+  ETH_WALLET_KEY,
+  SOL_WALLET_KEY,
+} from '@constants/keys.js';
 import URL from 'url-parse';
 import {
   MAINNET,
   ROPSTEN,
   KOVAN,
   RINKEBY,
-  GOERLI,
   RPC,
-  SOLANA_TEST,
   BSC_TEST,
-  BSC,
 } from '../constants/networkConstants.js';
 
 /**
@@ -21,54 +22,26 @@ import {
  */
 
 export const NetworkList = {
-  [MAINNET]: {
-    name: 'Ethereum Main Network',
-    shortName: 'Ethereum',
-    networkId: 1,
-    chainId: 1,
-    rpcUrl: 'https://mainnet.infura.io/v3/e9c4665d91a343e295308d5995ff5a72',
-    hexChainId: '0x1',
-    color: '#3cc29e',
-    networkType: 'mainnet',
-  },
   [ROPSTEN]: {
     name: 'Ropsten Test Network',
     shortName: 'Ropsten',
     networkId: 3,
     chainId: 3,
-    rpcUrl:'https://ropsten.infura.io/v3/b4e2adbc89864b418a28043c075c625b',
+    rpcUrl: 'https://ropsten.infura.io/v3/b4e2adbc89864b418a28043c075c625b',
     hexChainId: '0x3',
     color: '#ff4a8d',
     networkType: 'ropsten',
-    getTransactionUrl: (txHash) => (`https://ropsten.etherscan.io/tx/${txHash}`)
+    getTransactionUrl: txHash => `https://ropsten.etherscan.io/tx/${txHash}`,
   },
-  [KOVAN]: {
-    name: 'Kovan Test Network',
-    shortName: 'Kovan',
-    networkId: 42,
-    chainId: 42,
-    rpcUrl: 'https://kovan.infura.io/v3/e9c4665d91a343e295308d5995ff5a72',
-    hexChainId: '0x2a',
-    color: '#7057ff',
-    networkType: 'kovan',
-  },
-  [RINKEBY]: {
-    name: 'Rinkeby Test Network',
-    shortName: 'Rinkeby',
-    networkId: 4,
-    chainId: 4,
-    rpcUrl: 'https://rinkeby.infura.io/v3/e9c4665d91a343e295308d5995ff5a72',
-    hexChainId: '0x4',
-    color: '#f6c343',
-    networkType: 'rinkeby',
-  },
-  [SOLANA_TEST]: {
+  [SOL_WALLET_KEY]: {
     name: 'remote proxy - solana testnet',
     networkId: 111,
     chainId: 111,
     hexChainId: '0x6f',
     color: '#3099f2',
     networkType: 'solanaTest',
+    getTransactionUrl: txHash =>
+      `https://explorer.solana.com/tx/${txHash}?cluster=devnet`,
   },
   [BSC_TEST]: {
     name: 'Bsc Test',
@@ -78,16 +51,9 @@ export const NetworkList = {
     hexChainId: '0x61',
     color: '#3099f2',
     networkType: 'bscTest',
-    getTransactionUrl: (txHash) => (`https://testnet.bscscan.com/tx/${txHash}`)
-  },
-  [RPC]: {
-    name: 'Private Network',
-    shortName: 'Private',
-    networkType: 'rpc',
+    getTransactionUrl: txHash => `https://testnet.bscscan.com/tx/${txHash}`,
   },
 };
-
-
 
 const NetworkListKeys = Object.keys(NetworkList);
 
@@ -95,8 +61,9 @@ export default NetworkList;
 
 export const TokenNetworkMapping = {
   [ETH_WALLET_KEY]: {...NetworkList.ropsten},
-  [BSC_WALLET_KEY]: {...NetworkList.BSC_TEST}
-}
+  [BSC_WALLET_KEY]: {...NetworkList.BSC_TEST},
+  [SOL_WALLET_KEY]: {...NetworkList.Solana},
+};
 
 export const getAllNetworks = () =>
   NetworkListKeys.filter(name => name !== RPC);

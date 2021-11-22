@@ -1,7 +1,7 @@
 ## Avarta Mobile Wallet
 
 - Clone this repo and install our dependencies:
-
+- note: run https://www.npmjs.com/package/react-native-crypto every time node modules is reinstalled
 ```bash
 git clone ...
 cd AvartaWallet

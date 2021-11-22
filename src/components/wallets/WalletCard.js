@@ -5,7 +5,10 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import SmallText from '@components/text/SmallText';
 import {getWalletBalance} from '@libs/WalletUtils';
 import {copyStringToClipboard, showAndroidToast} from '@libs/utils';
-import {TOKEN_TRANSFER_SCREEN, WALLET_HISTORY_SCREEN} from '@constants/navigation';
+import {
+  TOKEN_TRANSFER_SCREEN,
+  WALLET_HISTORY_SCREEN,
+} from '@constants/navigation';
 
 const WalletCard = ({token, index, wallet, minimal = false, navigation}) => {
   const [balance, setBalance] = useState(0.0);
@@ -14,31 +17,34 @@ const WalletCard = ({token, index, wallet, minimal = false, navigation}) => {
   const init = async () => {
     const res = await getWalletBalance(wallet.address, token);
     if (res) setBalance(res);
-    else console.log(`COULD NOT FETCH BALANCE FOR ${token}::${address}`);
+    else if (res != 0)
+      console.log(`COULD NOT FETCH BALANCE FOR ${token}::${wallet.address}`);
   };
 
   useEffect(() => {
     init();
   }, []);
 
+  const PublicKey = () => (
+    <TouchableOpacity onPress={() => copyStringToClipboard(wallet.walletPub)}>
+      <View style={{flexDirection: 'row'}}>
+        <SmallText
+          text="Pub"
+          style={{color: 'black', fontSize: 10, margin: 10}}
+        />
+        <SmallText
+          text={wallet.walletPub}
+          style={{color: 'black', fontSize: 10, margin: 10}}
+        />
+      </View>
+      <Card.Divider />
+    </TouchableOpacity>
+  );
+
   const Details = () => {
     return (
       <View>
-        <TouchableOpacity
-          onPress={() => copyStringToClipboard(wallet.walletPub)}>
-          <View style={{flexDirection: 'row'}}>
-            <SmallText
-              text="Pub"
-              style={{color: 'black', fontSize: 10, margin: 10}}
-            />
-            <SmallText
-              text={wallet.walletPub}
-              style={{color: 'black', fontSize: 10, margin: 10}}
-            />
-          </View>
-        </TouchableOpacity>
-
-        <Card.Divider />
+        {wallet.walletPub && <PublicKey />}
 
         <TouchableOpacity
           onPress={() => copyStringToClipboard(wallet.walletPrv)}>

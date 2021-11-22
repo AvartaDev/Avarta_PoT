@@ -75,7 +75,7 @@ const CreateTokenWalletDetails = ({route, navigation}) => {
         onPress={async () => {
           showAndroidToast('Generating wallet...', ToastAndroid.LONG);
           setTimeout(async () => {
-            const result = await deriveAccountFromMnemonic(mnemonic);
+            const result = await deriveAccountFromMnemonic(mnemonic, token);
             setWallet(result);
             setShowMnemonic(false);
           }, 100);

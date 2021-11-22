@@ -169,8 +169,12 @@ export const formatAmount = value =>
   value ? `${value}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : '0.00';
 
 export const copyStringToClipboard = str => {
-  Clipboard.setString(str);
-  showAndroidToast('Copied!', ToastAndroid.SHORT)
+  if (typeof str != 'string') {
+    Clipboard.setString(str.toString());
+  } else {
+    Clipboard.setString(str);
+  }
+  showAndroidToast('Copied!', ToastAndroid.SHORT);
 };
 
 export const showAndroidToast = (message, duration) => {

@@ -4,10 +4,11 @@
  *
  * @format
  */
-const extraNodeModules = require('node-libs-browser')
+const extraNodeModules = require('node-libs-browser');
 module.exports = {
-  resolver:{
-    extraNodeModules
+  resolver: {
+    extraNodeModules,
+    sourceExts: ['jsx', 'js', 'ts', 'tsx', 'cjs'],
   },
   transformer: {
     getTransformOptions: async () => ({
