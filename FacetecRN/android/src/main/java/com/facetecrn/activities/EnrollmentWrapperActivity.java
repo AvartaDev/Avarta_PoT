@@ -32,6 +32,7 @@ import okhttp3.Callback;
 
 public class EnrollmentWrapperActivity extends ReactActivity {
   private String latestExternalDatabaseRefID;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -43,14 +44,13 @@ public class EnrollmentWrapperActivity extends ReactActivity {
       public void onCompletion(final boolean successful) {
         if (successful) {
           Log.d("FaceTecSDKSampleApp", "Initialization Successful.");
+          getSessionToken((String sessionToken) -> {
+            latestExternalDatabaseRefID = "android_sample_app_" + randomUUID();
+            EnrollmentProcessor processor = new EnrollmentProcessor(sessionToken, EnrollmentWrapperActivity.this, latestExternalDatabaseRefID);
+            processor.createAndLaunchSession();
+          });
         }
       }
-    });
-
-    getSessionToken((String sessionToken) -> {
-      latestExternalDatabaseRefID = "android_sample_app_" + randomUUID();
-      EnrollmentProcessor processor = new EnrollmentProcessor(sessionToken, EnrollmentWrapperActivity.this, latestExternalDatabaseRefID);
-      processor.createAndLaunchSession();
     });
 
   }
@@ -65,7 +65,7 @@ public class EnrollmentWrapperActivity extends ReactActivity {
     boolean isSuccess = res.getStatus() == FaceTecSessionStatus.SESSION_COMPLETED_SUCCESSFULLY;
     if (isSuccess) {
       emitEnrollSucess(latestExternalDatabaseRefID);
-    }else{
+    } else {
       emitEnrollFail(res.getStatus().toString());
     }
     finish();

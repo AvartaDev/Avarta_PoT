@@ -9,7 +9,8 @@
     "build": "react-native bundle",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall": "react-native link react-native-randombytes && ./node_modules/.bin/rn-nodeify --hack --install"
+    "postinstall": "react-native link react-native-randombytes && ./node_modules/.bin/rn-nodeify --hack --install",
+    "bundle-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.5.0",
