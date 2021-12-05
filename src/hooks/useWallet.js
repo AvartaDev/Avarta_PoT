@@ -17,7 +17,7 @@ export const DEFAULT_WALLET_NAME = 'My Wallet';
 const SERVER_BASE_URL = 'https://platform.solusconnect.com/';
 const ORGANISATION_KEY = 'A5014D70-7956-478E-9680-C9B6CEA67689';
 
-const DeviceKeyIdentifier = 'dr33yhXwWE7gnyZaBxraLtZppdaArzFG';
+const DeviceKeyIdentifier = 'dO0FSfPMW7eAhYqLcFWbU24lhpl1fW0R';
 const FaceScanEncryptionKey =
   '-----BEGIN PUBLIC KEY-----\n' +
   'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5PxZ3DLj+zP6T6HFgzzk\n' +
